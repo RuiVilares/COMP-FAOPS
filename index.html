@@ -36,15 +36,16 @@
     </div>
     <div class="col-md-12" style="margin-bottom:15px;">
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div id="dropzone">Drop file here (txt)</div>
             <output id="list"></output>
         </div>
     </div>
     <div class="col-md-12">
-        <h3>Code Editor
-            <button id="ch" type="button" class="btn btn-success btn-sm" onclick="read()">Open</button>
-        </h3>
+        <h3>Code Editor</h3>
+        <div id="openEditor" class="centered">
+            <button id="ch" type="button" class="btn btn-success btn-sm col-md-4" onclick="openEditor()">Open</button>
+        </div>
     </div>
     <div id="editorW" style="display:none;">
         <div class="col-md-12">
@@ -55,6 +56,7 @@
 
             <div></div>
             <div class="col-md-12" style="text-align:right;float:right;margin-top:10px;">
+                <button id="ch" type="button" class="btn btn-danger btn-md" onclick="openEditor()">Close editor</button>
                 <button id="ch" type="button" class="btn btn-success btn-md" onclick="loadEditor()">Submit Code</button>
             </div>
         </div>
@@ -62,6 +64,9 @@
 
     <br>
 
+    <div class="col-md-12">
+        <h3>Graph display</h3>
+        <div id="mynetwork"></div>
     </div>
 </div>
 
@@ -76,7 +81,10 @@
 <script type="text/javascript">
     function openEditor() {
         $('#editorW').slideToggle("fast");
+        $('#openEditor').slideToggle("fast");
     }
+
+    read(); // ------------------------------- Temporário
 </script>
 
 </body>
