@@ -27,6 +27,10 @@ Token.prototype.create = function(code) {
 
   for (var tk in TOKENS) {
     var prop = TOKENS[tk];
+    //thank this line of code to the bad design of javascript
+    //http://stackoverflow.com/questions/2851308/why-does-my-javascript-regex-test-give-alternating-results
+    //http://stackoverflow.com/questions/2630418/javascript-regex-returning-true-then-false-then-true-etc
+    prop.img.lastIndex = 0;
     if (prop.img.test(code)) {
       if (biggestMatch < prop.img.lastIndex) {
         biggestMatch = prop.img.lastIndex;
@@ -34,10 +38,6 @@ Token.prototype.create = function(code) {
         this.img = code.substring(0, biggestMatch);
       }
     }
-    //thank this line of code to the bad design of javascript
-    //http://stackoverflow.com/questions/2851308/why-does-my-javascript-regex-test-give-alternating-results
-    //http://stackoverflow.com/questions/2630418/javascript-regex-returning-true-then-false-then-true-etc
-    prop.img.lastIndex = 0;
   }
 
   return biggestMatch;
