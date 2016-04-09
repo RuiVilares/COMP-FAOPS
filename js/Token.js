@@ -22,12 +22,15 @@ var Token = function(id, img) {
   this.img = img;
 };
 
-Token.prototype.getId = function(code) {
+Token.prototype.create = function(code) {
   var biggestMatch = 0;
-  var index;
 
   for (var tk in TOKENS) {
     var prop = TOKENS[tk];
+    //thank this line of code to the bad design of javascript
+    //http://stackoverflow.com/questions/2851308/why-does-my-javascript-regex-test-give-alternating-results
+    //http://stackoverflow.com/questions/2630418/javascript-regex-returning-true-then-false-then-true-etc
+    prop.img.lastIndex = 0;
     if (prop.img.test(code)) {
       if (biggestMatch < prop.img.lastIndex) {
         biggestMatch = prop.img.lastIndex;
