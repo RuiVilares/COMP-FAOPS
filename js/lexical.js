@@ -3,7 +3,7 @@ function start() {
 
   var initial = 0;
 
-  var code = "FA A = new FA(\"ola.dot\");\nFA B = not(A);\nB.dump(\"dot.dot\");";
+  var code = "FA A = new(\"ola.dot\");\nFA B = not(A)\nB.dump(\"dot\");";
   try {
     while (initial < code.length) {
       if (code[initial] == ' ' || code[initial] == '\n') {
