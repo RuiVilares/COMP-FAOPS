@@ -9,12 +9,12 @@ var Syntactic = funtion(sequence) {
 
 SyntacticAnalysis.prototype.syntacticAnalysis = function() {
 	if(this.sequence.tokens.length == 0)
-		return;
+	return;
 
 	if(this.S())
-		console.log("Correct Syntactic construction of the statement.");
-	else 
-		console.error("Error on statement's construction.");
+	console.log("Correct Syntactic construction of the statement.");
+	else
+	console.error("Error on statement's construction.");
 };
 
 SyntacticAnalysis.prototype.S = function() {
@@ -70,7 +70,7 @@ SyntacticAnalysis.prototype.declarationHandler = function(parent) {
 	else{
 		var data = this.operation();
 		if(data != null)
-			this.tree.addTree(data, parent, this.tree.traverseDF);
+		this.tree.addTree(data, parent, this.tree.traverseDF);
 		else return false;
 	}
 };
@@ -132,19 +132,128 @@ SyntacticAnalysis.prototype.dump = function(parent) {
 	return false;
 };
 
-SyntacticAnalysis.prototype.operation = function(parent) {
+SyntacticAnalysis.prototype.operation = function() {
+	var operation = new Tree('OP' + this.opIndex++);
+	var tree;
+
+	if (this.sequence.peek().id == TOKENS.COMPLEMENT && (tree = this.checkComplement()) != null) {
+		//TODO juntar árvores
+
+	} else if (this.sequence.peek().id == TOKENS.REVERSE && (tree = this.checkReverse()) != null) {
+		//TODO juntar árvores
+
+	} else if (this.sequence.peek().id == TOKENS.IDENTIFIER && (tree = this.checkIdentifier()) != null) {
+		//TODO juntar árvores
+
+	} else if (this.sequence.peek().id == TOKENS.OPEN && (tree = this.operation()) != null) {
+		//TODO juntar árvores
+
+		if (this.nextToken() != TOKENS.CLOSE) {
+			return null;
+		}
+
+		var treeR = this.operationR();
+		if (treeR != null) {
+			//TODO juntar árvores
+
+		}
+	}
+
+	return null;
+};
+
+SyntacticAnalysis.prototype.checkReverse = function() {
 	var operation = new Tree('OP' + this.opIndex++);
 
-	if(this.sequence.peek().id == TOKENS.COMPLEMENT) {
-		var complementId = this.sequence.peek().img + parent;
+	if(this.sequence.peek().id == TOKENS.REVERSE) {
+		var reverseId = this.sequence.peek().img + this.opIndex++;
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.OPEN) {
 			this.sequence.nextToken();
-			if(this.operation(complementId)) {
+			var tree = this.operation(reverseId);
+			if (tree != null) {
+				operation.addTree(tree, this.opIndex++, operation.traverseDF);
 				this.sequence.nextToken();
+				if (this.sequence.peek().id == TOKENS.CLOSE) {
+					this.sequence.nextToken();
+					var r = this.sequence.peek().img + this.opIndex++;
+					var treeR = this.operationR();
+					//TODO é assim que se junta uma árvore?
+					if (treeR != null) {
+						treeR.addTree(operation, this.opIndex++, treeR.traverseDF);
+					}
+
+					return operation;
+				}
 			}
 		}
 	}
 
 	return null;
+};
+
+SyntacticAnalysis.prototype.checkComplement = function() {
+	var operation = new Tree('OP' + this.opIndex++);
+
+	if(this.sequence.peek().id == TOKENS.COMPLEMENT) {
+		var complementId = this.sequence.peek().img + this.opIndex++;
+		this.sequence.nextToken();
+		if(this.sequence.peek().id == TOKENS.OPEN) {
+			this.sequence.nextToken();
+			var tree = this.operation(complementId);
+			if (tree != null) {
+				operation.addTree(tree, this.opIndex++, operation.traverseDF);
+				this.sequence.nextToken();
+				if (this.sequence.peek().id == TOKENS.CLOSE) {
+					this.sequence.nextToken();
+					var r = this.sequence.peek().img + this.opIndex++;
+					var treeR = this.operationR();
+					//TODO é assim que se junta uma árvore?
+					if (treeR != null) {
+						treeR.addTree(operation, this.opIndex++, treeR.traverseDF);
+					}
+
+					return operation;
+				}
+			}
+		}
+	}
+
+	return null;
+};
+
+SyntacticAnalysis.prototype.operationR = function() {
+	var operation = new Tree('OP' + this.opIndex++);
+	var token;
+
+	if((token = this.checkOPC(this.sequence.nextToken())) != null) {
+		//TODO adicionar à árvore
+
+		var op = this.operation();
+		if (op != null) {
+			//TODO juntar árvores
+
+			var opr = this.operationR();
+			if (opr != null) {
+				//TODO juntar árvores
+
+				return operation;
+			}
+		}
+
+		return null;
+	}
+
+	return operation;
+};
+
+SyntacticAnalysis.prototype.checkOPC = function(token) {
+	if (token.id == TOKENS.MULTIPLY
+		|| token.id == TOKENS.CONCATENATE
+		|| token.id == TOKENS.INTERSECTION
+		|| token.id == TOKENS.UNION) {
+			return token;
+		}
+
+		return null;
 };
