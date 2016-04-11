@@ -71,6 +71,24 @@ Tree.prototype.add = function(data, toData, traversal) {
     }
 };
 
+Tree.prototype.addTree = function(tree, toData, traversal) {
+    var parent = null;
+    callback = function(node) {
+            if (node.data === toData) {
+                parent = node;
+            }
+        };
+
+    this.contains(callback, traversal);
+
+    if(parent != null) {
+        tree._root.parent = parent;
+        for (var i = 0; i < tree._root.children.length; i++) {
+          parent.children.push(tree._root.children[i]);
+        }
+    }
+};
+
 Tree.prototype.remove = function(data, fromData, traversal) {
     var tree = this,
         parent = null,

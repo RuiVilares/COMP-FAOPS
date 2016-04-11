@@ -34,7 +34,7 @@ Token.prototype.create = function(code) {
     if (prop.img.test(code)) {
       if (biggestMatch < prop.img.lastIndex) {
         biggestMatch = prop.img.lastIndex;
-        this.id = tk;
+        this.id = prop;
         this.img = code.substring(0, biggestMatch);
       }
     }
