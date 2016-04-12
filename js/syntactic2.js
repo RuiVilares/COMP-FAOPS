@@ -68,7 +68,7 @@ SyntacticAnalysis.prototype.declarationHandler = function(parent) {
 		return this.newExpression(parent);
 	}
 	else{
-		var data = this.operation();
+		var data = this.operation(parent);
 		if(data != null)
 		this.tree.addTree(data, parent, this.tree.traverseDF);
 		else return false;
@@ -132,17 +132,17 @@ SyntacticAnalysis.prototype.dump = function(parent) {
 	return false;
 };
 
-SyntacticAnalysis.prototype.operation = function() {
+SyntacticAnalysis.prototype.operation = function(parent) {
 	var operation = new Tree('OP' + this.opIndex++);
 	var tree;
 
-	if (this.sequence.peek().id == TOKENS.COMPLEMENT && (tree = this.checkComplement()) != null) {
+	if (this.sequence.peek().id == TOKENS.COMPLEMENT && (tree = this.checkComplement(parent)) != null) {
 		//TODO juntar árvores
 
-	} else if (this.sequence.peek().id == TOKENS.REVERSE && (tree = this.checkReverse()) != null) {
+	} else if (this.sequence.peek().id == TOKENS.REVERSE && (tree = this.checkReverse(parent)) != null) {
 		//TODO juntar árvores
 
-	} else if (this.sequence.peek().id == TOKENS.IDENTIFIER && (tree = this.checkIdentifier()) != null) {
+	} else if (this.sequence.peek().id == TOKENS.IDENTIFIER && (tree = this.checkIdentifier(parent)) != null) {
 		//TODO juntar árvores
 
 	} else if (this.sequence.peek().id == TOKENS.OPEN && (tree = this.operation()) != null) {
@@ -162,7 +162,7 @@ SyntacticAnalysis.prototype.operation = function() {
 	return null;
 };
 
-SyntacticAnalysis.prototype.checkReverse = function() {
+SyntacticAnalysis.prototype.checkReverse = function(parent) {
 	var operation = new Tree('OP' + this.opIndex++);
 
 	if(this.sequence.peek().id == TOKENS.REVERSE) {
@@ -172,12 +172,12 @@ SyntacticAnalysis.prototype.checkReverse = function() {
 			this.sequence.nextToken();
 			var tree = this.operation(reverseId);
 			if (tree != null) {
-				operation.addTree(tree, this.opIndex++, operation.traverseDF);
+				operation.addTree(tree, reverseId, operation.traverseDF);
 				this.sequence.nextToken();
 				if (this.sequence.peek().id == TOKENS.CLOSE) {
 					this.sequence.nextToken();
 					var r = this.sequence.peek().img + this.opIndex++;
-					var treeR = this.operationR();
+					var treeR = this.operationR(r);
 					//TODO é assim que se junta uma árvore?
 					if (treeR != null) {
 						treeR.addTree(operation, this.opIndex++, treeR.traverseDF);
@@ -192,7 +192,7 @@ SyntacticAnalysis.prototype.checkReverse = function() {
 	return null;
 };
 
-SyntacticAnalysis.prototype.checkComplement = function() {
+SyntacticAnalysis.prototype.checkComplement = function(parent) {
 	var operation = new Tree('OP' + this.opIndex++);
 
 	if(this.sequence.peek().id == TOKENS.COMPLEMENT) {
@@ -222,7 +222,7 @@ SyntacticAnalysis.prototype.checkComplement = function() {
 	return null;
 };
 
-SyntacticAnalysis.prototype.operationR = function() {
+SyntacticAnalysis.prototype.operationR = function(parent) {
 	var operation = new Tree('OP' + this.opIndex++);
 	var token;
 
