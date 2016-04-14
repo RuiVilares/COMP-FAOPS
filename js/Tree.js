@@ -72,6 +72,25 @@ Tree.prototype.add = function(data, toData, traversal) {
     }
 };
 
+Tree.prototype.addBegining = function(data, toData, traversal) {
+    var child = new Node(data),
+        parent = null,
+        callback = function(node) {
+            if (node.data === toData) {
+                parent = node;
+            }
+        };
+
+    this.contains(callback, traversal);
+
+    if (parent) {
+        parent.children.unshift(child);
+        child.parent = parent;
+    } else {
+        throw new Error('Cannot add node to a non-existent parent.');
+    }
+};
+
 Tree.prototype.addTree = function(tree, toData, traversal) {
     var parent = null;
     callback = function(node) {
@@ -85,6 +104,22 @@ Tree.prototype.addTree = function(tree, toData, traversal) {
     if(parent != null) {
         tree._root.parent = parent;
         parent.children.push(tree._root);
+    }
+};
+
+Tree.prototype.addTreeBegining = function(tree, toData, traversal) {
+    var parent = null;
+    callback = function(node) {
+            if (node.data === toData) {
+                parent = node;
+            }
+        };
+
+    this.contains(callback, traversal);
+
+    if(parent != null) {
+        tree._root.parent = parent;
+        parent.children.unshift(tree._root);
     }
 };
 

@@ -1,23 +1,23 @@
-var Syntactic = funtion(sequence) {
+var Syntactic = function(sequence) {
 	this.sequence = sequence;
 	this.tree = null;
-	this.complementIndex = 0;
+	this.opIndex = 0;
 
 	this.syntacticAnalysis();
 	console.log(this.tree);
 };
 
-SyntacticAnalysis.prototype.syntacticAnalysis = function() {
+Syntactic.prototype.syntacticAnalysis = function() {
 	if(this.sequence.tokens.length == 0)
-	return;
+		return;
 
 	if(this.S())
-	console.log("Correct Syntactic construction of the statement.");
+		console.log("Correct Syntactic construction of the statement.");
 	else
-	console.error("Error on statement's construction.");
+		console.error("Error on statement's construction.");
 };
 
-SyntacticAnalysis.prototype.S = function() {
+Syntactic.prototype.S = function() {
 	this.tree = new Tree('START');
 	var loop = true;
 	var i = 0;
@@ -30,12 +30,12 @@ SyntacticAnalysis.prototype.S = function() {
 		}
 
 		this.sequence.nextToken();
-	};
+	}
 
 	return true;
 };
 
-SyntacticAnalysis.prototype.expressionHandler = function(parent) {
+Syntactic.prototype.expressionHandler = function(parent) {
 	this.tree.add(parent, 'START', this.tree.traverseDF);
 
 	if(this.sequence.peek().id == TOKENS.DECLARATION) {
@@ -45,39 +45,38 @@ SyntacticAnalysis.prototype.expressionHandler = function(parent) {
 	return this.dump(parent);
 };
 
-SyntacticAnalysis.prototype.declaration = function(parent) {
+Syntactic.prototype.declaration = function(parent) {
 	var identifier = null;
 	var equalsId = null;
-
+	console.log("DECLARATION");
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
 		identifier = this.sequence.peek();
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.EQUAL) {
 			equalsId = this.sequence.peek().img + parent;
 			this.tree.add(equalsId, parent, this.tree.traverseDF);
-			this.tree.add(identifier, equalsId, this.tree.traverseDF);
-			return this.declarationHandler(equalsId);
+			this.declarationHandler(equalsId);
+			this.tree.addBegining(identifier, equalsId, this.tree.traverseDF);
+			return true;
 		}
 	}
 	return false;
 };
 
-SyntacticAnalysis.prototype.declarationHandler = function(parent) {
+Syntactic.prototype.declarationHandler = function(parent) {
 	this.sequence.nextToken();
 	if(this.sequence.peek().id == TOKENS.NEW) {
 		return this.newExpression(parent);
 	}
 	else{
-		
-		var data = this.operation(parent);
-
-		if(data != null)
-		this.tree.addTree(data, parent, this.tree.traverseDF);
-		else return false;
+		var data = this.operation(parent, this.tree);
+		console.log("Data :" );
+		console.log(data);
+		return true;
 	}
 };
 
-SyntacticAnalysis.prototype.newExpression = function(parent) {
+Syntactic.prototype.newExpression = function(parent) {
 	this.sequence.nextToken();
 	if(this.sequence.peek().id == TOKENS.OPEN) {
 		this.sequence.nextToken();
@@ -99,11 +98,12 @@ SyntacticAnalysis.prototype.newExpression = function(parent) {
 	return false;
 };
 
-SyntacticAnalysis.prototype.dump = function(parent) {
+Syntactic.prototype.dump = function(parent) {
+	console.log(this.sequence.peek().img);
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
 		var filename = this.sequence.peek();
 		this.sequence.nextToken();
-		if(this.sequence.peel().id == TOKENS.CONCATENATE) {
+		if(this.sequence.peek().id == TOKENS.CONCATENATE) {
 			this.sequence.nextToken();
 			if(this.sequence.peek().id == TOKENS.DUMP) {
 				var dumpId = this.sequence.peek().img + parent;
@@ -114,7 +114,7 @@ SyntacticAnalysis.prototype.dump = function(parent) {
 					this.sequence.nextToken();
 					if(this.sequence.peek().id == TOKENS.QUOTE) {
 						this.sequence.nextToken();
-						if(this.sequence.peek().id == TOKENS.FILENAME) {
+						if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
 							this.tree.add(this.sequence.peek(), dumpId, this.tree.traverseDF);
 							this.sequence.nextToken();
 							if(this.sequence.peek().id == TOKENS.QUOTE) {
@@ -135,59 +135,85 @@ SyntacticAnalysis.prototype.dump = function(parent) {
 };
 
 
+//retorna arvore modificada ou null em caso de erro
+Syntactic.prototype.operation = function(parent, tree_) {
+	console.log("OPERATION");
+	if (this.sequence.peek().id == TOKENS.COMPLEMENT) {
 
-SyntacticAnalysis.prototype.operation = function(parent) {
-	var operation = new Tree('OP' + this.opIndex++);
-	var tree;
-
-	if (this.sequence.peek().id == TOKENS.COMPLEMENT && (tree = this.checkComplement(parent)) != null) {
-		//TODO juntar árvores
-
-	} else if (this.sequence.peek().id == TOKENS.REVERSE && (tree = this.checkReverse(parent)) != null) {
-		//TODO juntar árvores
-
-	} else if (this.sequence.peek().id == TOKENS.IDENTIFIER && (tree = this.checkIdentifier(parent)) != null) {
-		//TODO juntar árvores
-
-	} else if (this.sequence.peek().id == TOKENS.OPEN && (tree = this.operation()) != null) {
-		//TODO juntar árvores
-
-		if (this.nextToken() != TOKENS.CLOSE) {
-			return null;
+		newTree = this.checkComplement(parent);
+		if(newTree != null){
+			var newParentTree = this.operationR(parent, tree_);
+			if(newParentTree != null)
+			{
+				newParentTree.addTreeBegining(newTree, newParentTree._root.data, tree_.traverseDF);
+				tree_.addTree(newParentTree, parent, tree_.traverseDF);
+				return tree_;
+			}
+			
+			tree_.addTree(newTree, parent, tree_.traverseDF);
+			return tree_;
 		}
 
-		var treeR = this.operationR();
-		if (treeR != null) {
-			//TODO juntar árvores
+	} else if (this.sequence.peek().id == TOKENS.REVERSE) {
 
+		newTree = this.checkComplement(parent);
+		if(newTree != null){
+			var newParentTree = this.operationR(parent, tree_);
+			if(newParentNode != null)
+			{
+				newParentTree.addTreeBegining(newTree, newParentTree._root.data, tree_.traverseDF);
+				return newParentTree;
+			}
+			
+			tree_.addTree(newTree, parent, tree_.traverseDF);
+			return tree_;
 		}
+
+	} else if (this.sequence.peek().id == TOKENS.IDENTIFIER) {
+		console.log("IDENTIFIER");
+		var ident = this.sequence.peek().img;
+		this.sequence.nextToken();
+		var newParentNode = this.operationR(parent, tree_);
+		if (newParentNode != null){
+			tree_.addTree(newParentNode, parent, tree_.traverseDF);
+			tree_.addBegining(ident, newParentNode._root.data, tree_.traverseDF);
+		}
+		else tree_.add(ident, parent, tree_.traverseDF);
+		return tree_;
+
+	} else if (this.sequence.peek().id == TOKENS.OPEN) {
+		this.sequence.nextToken();
+		newTree = this.checkParenteses(parent);
+		if(newTree != null){
+			var newParentTree = this.operationR(parent, tree_);
+			if(newParentNode != null)
+			{
+				newParentTree.addTree(newTree, newParentTree._root, tree_.traverseDF);
+				return newParentTree;
+			}
+			
+			tree_.addTree(newTree, parent, tree_.traverseDF);
+			return tree_;
+		}
+	} else if (this.sequence.peek().id == TOKENS.SEMI_COLON) {
+		return _tree;
 	}
 
-	return null;
+	return tree_;
 };
 
-SyntacticAnalysis.prototype.checkReverse = function(parent) {
-	var operation = new Tree('OP' + this.opIndex++);
-
+Syntactic.prototype.checkReverse = function(parent) {
 	if(this.sequence.peek().id == TOKENS.REVERSE) {
-		var reverseId = this.sequence.peek().img + this.opIndex++;
+		var complementId = this.sequence.peek().img + this.opIndex++;
+		var newTree = new Tree(complementId);
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.OPEN) {
 			this.sequence.nextToken();
-			var tree = this.operation(reverseId);
-			if (tree != null) {
-				operation.addTree(tree, reverseId, operation.traverseDF);
-				this.sequence.nextToken();
+			var newTree_ = this.operation(complementId, newTree); //returns a updated version of 'newTree' with all the nodes of the expression inside the not operation
+			if (newTree_ != null) {
 				if (this.sequence.peek().id == TOKENS.CLOSE) {
 					this.sequence.nextToken();
-					var r = this.sequence.peek().img + this.opIndex++;
-					var treeR = this.operationR(r);
-					//TODO é assim que se junta uma árvore?
-					if (treeR != null) {
-						treeR.addTree(operation, this.opIndex++, treeR.traverseDF);
-					}
-
-					return operation;
+					return newTree_;
 				}
 			}
 		}
@@ -196,30 +222,61 @@ SyntacticAnalysis.prototype.checkReverse = function(parent) {
 	return null;
 };
 
-SyntacticAnalysis.prototype.checkComplement = function(parent) {
-	var operation = new Tree('OP' + this.opIndex++);
-
+Syntactic.prototype.checkComplement = function(parent) {
 	if(this.sequence.peek().id == TOKENS.COMPLEMENT) {
 		var complementId = this.sequence.peek().img + this.opIndex++;
+		var newTree = new Tree(complementId);
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.OPEN) {
 			this.sequence.nextToken();
-			var tree = this.operation(complementId);
-			if (tree != null) {
-				operation.addTree(tree, this.opIndex++, operation.traverseDF);
-				this.sequence.nextToken();
+			var newTree_ = this.operation(complementId, newTree); //returns a updated version of 'newTree' with all the nodes of the expression inside the not operation
+			if (newTree_ != null) {
 				if (this.sequence.peek().id == TOKENS.CLOSE) {
 					this.sequence.nextToken();
-					var r = this.sequence.peek().img + this.opIndex++;
-					var treeR = this.operationR();
-					//TODO é assim que se junta uma árvore?
-					if (treeR != null) {
-						treeR.addTree(operation, this.opIndex++, treeR.traverseDF);
-					}
-
-					return operation;
+					return newTree_;
 				}
 			}
 		}
 	}
+
+	return null;
+};
+
+
+Syntactic.prototype.checkParenteses = function(parent) {
+		var newTree_ = this.operation(parent, null); //returns a updated version of 'newTree' with all the nodes of the expression inside the not operation
+		if (newTree_ != null) {
+			if (this.sequence.peek().id == TOKENS.CLOSE) {
+				this.sequence.nextToken();
+				return newTree_;
+			}
+		}
+
+	return null;
+};
+
+
+// retorna o novo parentNode respetivo à OPC detetada. se nao houver qualquer OPC, retorna null
+Syntactic.prototype.operationR = function(parent) {
+	var tokenOP = this.checkOPC();
+	if (tokenOP != null) {
+		var tokenOPId = tokenOP.img + this.opIndex++;
+		var newTree = new Tree(tokenOPId);
+		this.sequence.nextToken();
+		var data = this.operation(tokenOPId, newTree);
+		return data;
+	}
+
+	return null;
+};
+
+Syntactic.prototype.checkOPC = function() {
+	if (this.sequence.peek().id == TOKENS.MULTIPLY
+		|| this.sequence.peek().id == TOKENS.CONCATENATE
+		|| this.sequence.peek().id == TOKENS.INTERSECTION
+		|| this.sequence.peek().id == TOKENS.UNION) {
+			return this.sequence.peek();
+		}
+
+		return null;
 };
