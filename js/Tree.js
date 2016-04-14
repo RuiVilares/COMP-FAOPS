@@ -83,9 +83,7 @@ Tree.prototype.addTree = function(tree, toData, traversal) {
 
     if(parent != null) {
         tree._root.parent = parent;
-        for (var i = 0; i < tree._root.children.length; i++) {
-          parent.children.push(tree._root.children[i]);
-        }
+        parent.children.push(tree._root);
     }
 };
 

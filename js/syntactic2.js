@@ -1,7 +1,7 @@
 var Syntactic = funtion(sequence) {
 	this.sequence = sequence;
 	this.tree = null;
-	this.opIndex = 0;
+	this.complementIndex = 0;
 
 	this.syntacticAnalysis();
 	console.log(this.tree);
@@ -68,7 +68,7 @@ SyntacticAnalysis.prototype.declarationHandler = function(parent) {
 		return this.newExpression(parent);
 	}
 	else{
-		var data = this.operation();
+		var data = this.operation(this.tree, parent);
 		if(data != null)
 			this.tree.addTree(data, parent, this.tree.traverseDF);
 		else return false;
@@ -132,19 +132,26 @@ SyntacticAnalysis.prototype.dump = function(parent) {
 	return false;
 };
 
-SyntacticAnalysis.prototype.operation = function(parent) {
-	var operation = new Tree('OP' + this.opIndex++);
-
+SyntacticAnalysis.prototype.operation = function(tree, parent) {
 	if(this.sequence.peek().id == TOKENS.COMPLEMENT) {
-		var complementId = this.sequence.peek().img + parent;
+		var complementId = this.sequence.peek();
+		complementId.img = complementId.img + this.complementIndex++;
+		var complementTree = new Tree(complementIndex);
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.OPEN) {
 			this.sequence.nextToken();
-			if(this.operation(complementId)) {
+			complementTree = this.operation(complementTree, complementId); 
+			if(data != null) {
 				this.sequence.nextToken();
+				if(this.sequence.peek().id == TOKENS.CLOSE){
+					this.sequence.nextToken();
+					return this.operationAux(complementTree, parent))
+						return complementTree;
+				}
 			}
 		}
 	}
+
 
 	return null;
 };
