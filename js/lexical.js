@@ -3,7 +3,9 @@ function start() {
 
   var initial = 0;
 
-  var code = "FA A = new(\"ola.dot\");\nFA B = T + not(A+C) * Y;\nB.dump(\"dot\");";
+  var code = "FA A = new(\"ola.dot\");\n"
+            +"FA B = T + not(A+C) * Y;\n"
+            +"B.dump(\"dot\");";
   try {
     while (initial < code.length) {
       if (code[initial] == ' ' || code[initial] == '\n') {
@@ -29,7 +31,7 @@ function start() {
   //can be deleted
   //for debug only
   for (var i = 0; i < sequence.tokens.length; i++) {
-    console.log(sequence.tokens[i]);
+    //console.log(sequence.tokens[i]);
   }
 
   var syntax = new Syntactic(sequence);
