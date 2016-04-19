@@ -3,8 +3,9 @@
 //https://github.com/tutsplus/data-structures
 //http://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393
 
-function Node(data) {
+function Node(data, token) {
     this.data = data;
+    this.token = token;
     this.parent = null;
     this.children = [];
 }
@@ -53,8 +54,8 @@ Tree.prototype.contains = function(callback, traversal) {
     traversal.call(this, callback);
 };
 
-Tree.prototype.add = function(data, toData, traversal) {
-    var child = new Node(data),
+Tree.prototype.add = function(data, toData, traversal, token) {
+    var child = new Node(data, token),
         parent = null,
         callback = function(node) {
             if (node.data === toData) {
@@ -72,8 +73,8 @@ Tree.prototype.add = function(data, toData, traversal) {
     }
 };
 
-Tree.prototype.addBegining = function(data, toData, traversal) {
-    var child = new Node(data),
+Tree.prototype.addBegining = function(data, toData, traversal, token) {
+    var child = new Node(data, token),
         parent = null,
         callback = function(node) {
             if (node.data === toData) {
