@@ -48,7 +48,7 @@ Syntactic.prototype.expressionHandler = function(parent) {
 Syntactic.prototype.declaration = function(parent) {
 	var identifier = null;
 	var equalsId = null;
-	console.log("DECLARATION");
+
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
 		identifier = this.sequence.peek();
 		this.sequence.nextToken();
@@ -102,7 +102,7 @@ Syntactic.prototype.newExpression = function(parent) {
 };
 
 Syntactic.prototype.dump = function(parent) {
-	console.log(this.sequence.peek().img);
+
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
 		var filename = this.sequence.peek();
 		this.sequence.nextToken();
@@ -141,7 +141,7 @@ Syntactic.prototype.dump = function(parent) {
 //retorna arvore modificada ou null em caso de erro
 Syntactic.prototype.operation = function(parent, tree_) {
 	if (this.sequence.peek().id == TOKENS.COMPLEMENT) {
-		console.log("COMPLEMENT");
+
 		var newTree = this.checkComplement();
 		if(newTree != null)
 		{
@@ -156,7 +156,7 @@ Syntactic.prototype.operation = function(parent, tree_) {
 		}
 
 	} else if (this.sequence.peek().id == TOKENS.REVERSE) {
-		console.log("REVERSE");
+
 		var newTree = this.checkReverse();
 		if(newTree != null)
 		{
@@ -172,7 +172,7 @@ Syntactic.prototype.operation = function(parent, tree_) {
 		}
 
 	} else if (this.sequence.peek().id == TOKENS.IDENTIFIER) {
-		console.log("IDENTIFIER");
+		
 		var ident = this.sequence.peek();
 		this.sequence.nextToken();
 		var newParentTree = this.operationR(parent, tree_);
@@ -187,15 +187,17 @@ Syntactic.prototype.operation = function(parent, tree_) {
 	} else if (this.sequence.peek().id == TOKENS.OPEN) {
 		this.sequence.nextToken();
 		newTree = this.checkParenteses(parent);
-		if(newTree != null){
+		if(newTree != null)
+		{
 			var newParentTree = this.operationR(parent, tree_);
 			if(newParentTree != null)
 			{
-				newParentTree.addTree(newTree, newParentTree._root, tree_.traverseDF);
-
-				tree_.addTree(newTree, parent, tree_.traverseDF);
-				return tree_;
+				newParentTree.addTreeBegining(newTree, newParentTree._root.data, tree_.traverseDF);
+				tree_.addTree(newParentTree, parent, tree_.traverseDF);
 			}
+			else tree_.addTree(newTree, parent, tree_.traverseDF);
+
+			return tree_;
 		}
 	}
 
@@ -210,7 +212,6 @@ Syntactic.prototype.checkReverse = function() {
 	if(this.sequence.peek().id == TOKENS.OPEN) {
 		this.sequence.nextToken();
 		var newTree_ = this.operation(reverseId, newTree); //returns a updated version of 'newTree' with all the nodes of the expression inside the not operation
-		console.log(newTree_);
 		if (newTree_ != null) {
 			if (this.sequence.peek().id == TOKENS.CLOSE) {
 				this.sequence.nextToken();
@@ -230,7 +231,6 @@ Syntactic.prototype.checkComplement = function() {
 	if(this.sequence.peek().id == TOKENS.OPEN) {
 		this.sequence.nextToken();
 		var newTree_ = this.operation(complementId, newTree); //returns a updated version of 'newTree' with all the nodes of the expression inside the not operation
-		console.log(newTree_);
 		if (newTree_ != null) {
 			if (this.sequence.peek().id == TOKENS.CLOSE) {
 				this.sequence.nextToken();
@@ -245,14 +245,14 @@ Syntactic.prototype.checkComplement = function() {
 
 Syntactic.prototype.checkParenteses = function() {
 	var	parent = "precedence" + this.opIndex++;
-		var tree_ = new Tree(parent);
-		var newTree_ = this.operation(parent, tree_); //returns a updated version of 'newTree' with all the nodes of the expression inside the not operation
-		if (newTree_ != null) {
-			if (this.sequence.peek().id == TOKENS.CLOSE) {
-				this.sequence.nextToken();
-				return newTree_;
-			}
+	var tree_ = new Tree(parent);
+	var newTree_ = this.operation(parent, tree_); //returns a updated version of 'newTree' with all the nodes of the expression inside the not operation
+	if (newTree_ != null) {
+		if (this.sequence.peek().id == TOKENS.CLOSE) {
+			this.sequence.nextToken();
+			return newTree_;
 		}
+	}
 
 	return null;
 };
