@@ -43,6 +43,21 @@ NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
     return retDFA;
   }
 
+  //TODO closure
+  //TODO goto
+
+  /*
+  Perform closure on the current state set
+  For each input symbol do the GOTO operation on the closure set.
+     If the state set you get from the GOTO is not empty
+        Do a closure of the state set.
+        If it is a new set of states:
+           add a transition between the state sets on the input
+           repeat the entire operation on this new set
+        Else
+           add a transition between the state sets on the input
+  */
+
   var currentState = statesToVisit[0].split(", ");
   var edges = this.dfa.data.edges;
 
