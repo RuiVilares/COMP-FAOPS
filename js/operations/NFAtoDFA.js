@@ -1,10 +1,19 @@
 var NFA_to_DFA = function nfa_to_dfa(dfa) {
   // provide data in the DOT language
+  /*var DOTstring =  'dinetwork {'+
+  'A -> B [label="0"];' +
+  'A -> A [label="2"]; ' +
+  'B -> A [label="1"];'+
+  'A[ color=red, shape=triangle]'+
+  'B[ color=blue, shape=circle]'+
+  '}';*/
   var DOTstring =  'dinetwork {'+
-  'A1 -> B1 [label="sd"];' +
-  'A1 -> A1 [label="sda"]; ' +
-  'B1 -> A1 [label="dfs"];'+
-  'A1[ color=red, shape=triangle]'+
+  'A -> B [label="$"];' +
+  'A -> C [label="0"]; ' +
+  'B -> C [label="1"];'+
+  'A[ color=blue, shape=triangle]'+
+  'B[ color=blue, shape=circle]'+
+  'C[ color=red, shape=circle]'+
   '}';
   var parsedData = vis.network.convertDot(DOTstring);
 
@@ -20,22 +29,63 @@ var NFA_to_DFA = function nfa_to_dfa(dfa) {
     color: 'red'
   }
 
-  var dfa_test = new DFA(data, options);
+  var dfa_test = new DFA(options);
+  dfa_test.setData(data);
 
-  console.log(dfa_test);
+  //console.log(dfa_test);
 
   //TODO every above this comment should be deleted
   //TODO replace the word dfa_test by dfa
   this.dfa = dfa_test;
-  this.createSamples();
   this.getAllInputs();
 };
 
 NFA_to_DFA.prototype.convert = function() {
-  var retDFA = this.createDFA(data, options);
+  var retDFA = this.createDFA(this.dfa.data, this.dfa.options);
   var initial = this.getInitialState(this.dfa.data.nodes);
 
-  return this.convert(retDFA, [initial]);
+  retDFA.data.nodes.push(this.createNode("triangle", initial, initial, "blue"));
+
+  retDFA = this.compute(retDFA, [initial]);
+
+  return this.paint(retDFA);
+};
+
+NFA_to_DFA.prototype.convert = function() {
+  var retDFA = this.createDFA(this.dfa.data, this.dfa.options);
+  var initial = this.getInitialState(this.dfa.data.nodes);
+
+  retDFA.data.nodes.push(this.createNode("triangle", initial, initial, "blue"));
+
+  retDFA = this.compute(retDFA, [initial]);
+
+  return this.paint(retDFA);
+};
+
+NFA_to_DFA.prototype.paint = function(retDFA) {
+  var nodes = this.dfa.data.nodes;
+  var nodesRet = retDFA.data.nodes;
+  //dfa antigo
+  for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i].color.background != "red") {
+      continue;
+    }
+    var state = nodes[i].label.split(", ");
+
+    //um circulo pode representar vários estados
+    for (var j = 0; j < state.length; j++) {
+      //dfa novo
+      for (var w = 0; w < nodesRet.length; w++) {
+        var stateRet = nodesRet[w].label.split(", ");
+        if (stateRet.indexOf(state[j]) != -1) {
+          retDFA.data.nodes[w].color.background = "red";
+          retDFA.data.nodes[w].color.border = "red";
+        }
+      }
+    }
+  }
+
+  return retDFA;
 };
 
 NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
@@ -43,55 +93,104 @@ NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
     return retDFA;
   }
 
-  //TODO closure
-  //TODO goto
-
   /*
-  Perform closure on the current state set
-  For each input symbol do the GOTO operation on the closure set.
-     If the state set you get from the GOTO is not empty
+    Perform closure on the current state set
+    For each input symbol do the GOTO operation on the closure set.
+      If the state set you get from the GOTO is not empty
         Do a closure of the state set.
-        If it is a new set of states:
-           add a transition between the state sets on the input
-           repeat the entire operation on this new set
-        Else
-           add a transition between the state sets on the input
+          If it is a new set of states:
+            add a transition between the state sets on the input
+            repeat the entire operation on this new set
+          Else
+            add a transition between the state sets on the input
   */
 
-  var currentState = statesToVisit[0].split(", ");
-  var edges = this.dfa.data.edges;
+  var currentState = statesToVisit[0];
+  var epsilonClosure = this.closure(currentState.split(", "), 0);
+  for (var i = 0; i < this.allEdges.length; i++) {
 
-  for (var j = 0; j < this.allEdges.length; j++) {
-    var stateNew = null;
-    for (var i = 0; i < currentState.length; i++) {
-      for (var k = 0; k < edges.length; k++) {
-        if (edges[k].label == this.allEdges[j] && edges[k].from == currentState[i]) {
-          if (stateNew == null) {
-            stateNew = edges[k].to;
-          } else {
-            stateNew = stateNew + ", " + edges[k].to;
+    var input = this.allEdges[i].split(", ");
+
+    for (var j = 0; j < input.length; j++) {
+      var stateTo = this.goto(input[j], epsilonClosure);
+      if (stateTo == null) {
+        retDFA = this.to(retDFA, epsilonClosure, "DS", input[j]);
+
+      } else {
+        var temp_epsilonClosure = this.closure(stateTo.split(", "), 0);
+        var nodes = retDFA.data.nodes;
+        var found = false;
+        for (var w = 0; w < nodes.length && !found; w++) {
+          if (nodes[w].label == temp_epsilonClosure) {
+            found = true;
           }
+        }
+
+        retDFA = this.to(retDFA, epsilonClosure, temp_epsilonClosure, input[j]);
+
+        if (!found) {
+          retDFA.data.nodes.push(this.createNode("circle", temp_epsilonClosure, temp_epsilonClosure, "blue"));
+          statesToVisit.push(temp_epsilonClosure);
         }
       }
     }
   }
 
   statesToVisit.shift();
-  return this.convert(retDFA, statesToVisit);
+  return this.compute(retDFA, statesToVisit);
 };
 
-NFA_to_DFA.prototype.closureEpsilon = function(state) {
+NFA_to_DFA.prototype.goto = function(edgeLabel, stateSA) {
 
+  var state = stateSA.split(", ");
+  var stateToGo = [];
   var edges = this.dfa.data.edges;
-  var out = state;
 
-  for (var i = 0; i < edges.length; i++) {
-    if (edges[i].from == state && edges[i].label == "$") {
-      out = out + ", " + closureEpsilon(edges[i].to);
+  for (var i = 0; i < state.length; i++) {
+    for (var j = 0; j < edges.length; j++) {
+      if (edges[j].from != state[i]) {
+        continue;
+      }
+
+      var trans = edges[j].label.split(", ");
+      if (trans.indexOf(edgeLabel) == -1) {
+        continue;
+      }
+
+      stateToGo.push(edges[j].to.split(", "));
     }
   }
 
-  return out;
+  if (stateToGo.length == 0) {
+    return null;
+  }
+
+  stateToGo.sort();
+  return stateToGo.join(", ");
+};
+
+NFA_to_DFA.prototype.closure = function(state, index) {
+
+  if (index >= state.length) {
+    state.sort();
+    return state.join(", ");
+  }
+
+  var edges = this.dfa.data.edges;
+
+  for (var i = 0; i < edges.length; i++) {
+    if (edges[i].from == state[i] && edges[i].label == "$") {
+      var toState = edges[i].to.split(", ");
+      for (var j = 0; j < toState.length; j++) {
+        if (state.indexOf(toState[j]) == -1) {
+          state.push(toState[j]);
+        }
+      }
+    }
+  }
+
+  index++;
+  return this.closure(state, index);
 };
 
 NFA_to_DFA.prototype.getAllInputs = function() {
@@ -107,47 +206,64 @@ NFA_to_DFA.prototype.getAllInputs = function() {
       }
     }
   }
+
+  this.allEdges.sort();
 };
 
 NFA_to_DFA.prototype.getInitialState = function(states) {
   for (var i = 0; i < states.length; i++) {
     if (states[i].shape != null && states[i].shape == "triangle") {
-      return states[i];
+      var state = states[i].label.split(", ");
+      state.sort();
+      return this.closure(state, 0);
     }
   }
 };
 
+NFA_to_DFA.prototype.to = function(dfa, state, to, input) {
+
+  var edges = dfa.data.edges;
+
+  for (var i = 0; i < edges.length; i++) {
+    if (edges[i].from == state && edges[i].to == to) {
+      var str = edges[i].label.split(", ");
+      str.push(input);
+      str.sort();
+      dfa.data.edges[i].label = str.join(", ");
+      return dfa;
+    }
+  }
+
+  dfa.data.edges.push(this.createEdge(state, to, input));
+  return dfa;
+};
+
 NFA_to_DFA.prototype.createDFA = function(data, options) {
-  var retDFA = new DFA(data, options);
-  retDFA.data.edges = [];
-  retDFA.data.nodes = [];
+  var retDFA = new DFA(options);
 
-  retDFA.data.nodes.push(this.sampleState);
-  retDFA.data.nodes[0].shape = "circle";
-  retDFA.data.nodes[0].id = "DS"; //Dead State
-  retDFA.data.nodes[0].label = "DS"; //Dead State
+  retDFA.data.nodes.push(this.createNode("circle", "DS", "DS", "blue"));
 
-  retDFA.data.edges.push(this.sampleEdge);
-  retDFA.data.edges[0].from = "DS";
-  retDFA.data.edges[0].to = "DS";
-  retDFA.data.edges[0].label = this.allEdges.join(", ");
+  retDFA.data.edges.push(this.createEdge("DS", "DS", this.allEdges.join(", ")));
 
   return retDFA;
 };
 
-NFA_to_DFA.prototype.createSamples = function() {
-  // provide data in the DOT language
-  var DOTstring =  'dinetwork {'+
-  'A1 -> B1 [label=1];' +
-  'A1[ color=red, shape=triangle]'+
-  '}';
-  var parsedData = vis.network.convertDot(DOTstring);
+NFA_to_DFA.prototype.createEdge = function(fromObj, toObj, labelObj) {
+  return {
+    from: fromObj,
+    to: toObj,
+    label: labelObj
+  };
+};
 
-  var data = {
-    nodes: parsedData.nodes,
-    edges: parsedData.edges
-  }
-
-  this.sampleEdge = data.edges[0];
-  this.sampleState = data.nodes[0];
+NFA_to_DFA.prototype.createNode = function(shapeObj, idObj, labelObj, colorObj) {
+  return {
+    shape: shapeObj,
+    id: idObj,
+    label: labelObj,
+    color: {
+      background: colorObj,
+      border: colorObj
+    }
+  };
 };

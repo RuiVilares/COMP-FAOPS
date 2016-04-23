@@ -45,7 +45,8 @@ TreeProcess.prototype.decide2Arg = function(op, left, right) {
     case TOKENS.MULTIPLY:
       return multiply(left, right);
     case TOKENS.CONCATENATE:
-      return concatenate(left, right);
+      var dfa = new Concatenation(left, right);
+      return dfa.compute();
     case TOKENS.INTERSECTION:
       return intersection(left, right);
     case TOKENS.EQUAL:
