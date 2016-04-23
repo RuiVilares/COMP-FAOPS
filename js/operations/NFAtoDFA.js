@@ -7,7 +7,7 @@ var NFA_to_DFA = function nfa_to_dfa(dfa) {
   'A[ color=red, shape=triangle]'+
   'B[ color=blue, shape=circle]'+
   '}';*/
-  var DOTstring =  'dinetwork {'+
+  /*var DOTstring =  'dinetwork {'+
   'A -> B [label="$"];' +
   'A -> C [label="0"]; ' +
   'B -> C [label="1"];'+
@@ -30,25 +30,14 @@ var NFA_to_DFA = function nfa_to_dfa(dfa) {
   }
 
   var dfa_test = new DFA(options);
-  dfa_test.setData(data);
+  dfa_test.setData(data);*/
 
   //console.log(dfa_test);
 
   //TODO every above this comment should be deleted
   //TODO replace the word dfa_test by dfa
-  this.dfa = dfa_test;
+  this.dfa = dfa;
   this.getAllInputs();
-};
-
-NFA_to_DFA.prototype.convert = function() {
-  var retDFA = this.createDFA(this.dfa.data, this.dfa.options);
-  var initial = this.getInitialState(this.dfa.data.nodes);
-
-  retDFA.data.nodes.push(this.createNode("triangle", initial, initial, "blue"));
-
-  retDFA = this.compute(retDFA, [initial]);
-
-  return this.paint(retDFA);
 };
 
 NFA_to_DFA.prototype.convert = function() {
@@ -179,7 +168,7 @@ NFA_to_DFA.prototype.closure = function(state, index) {
   var edges = this.dfa.data.edges;
 
   for (var i = 0; i < edges.length; i++) {
-    if (edges[i].from == state[i] && edges[i].label == "$") {
+    if (edges[i].from == state[index] && edges[i].label == "$") {
       var toState = edges[i].to.split(", ");
       for (var j = 0; j < toState.length; j++) {
         if (state.indexOf(toState[j]) == -1) {

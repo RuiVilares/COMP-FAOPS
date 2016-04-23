@@ -32,6 +32,9 @@ function start() {
   //compute
   var processTree = new TreeProcess(syntax.tree);
   //processTree.compute();
-  var nfa = new NFA_to_DFA("");
-  console.log(nfa.convert());
+  //var nfa = new NFA_to_DFA("");
+  //console.log(nfa.convert());
+
+  var dfa = new Concatenation("", "");
+  console.log(dfa.compute());
 };
