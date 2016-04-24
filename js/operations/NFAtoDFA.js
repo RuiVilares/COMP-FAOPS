@@ -1,3 +1,4 @@
+//Constructor (dfa already parsed)
 var NFA_to_DFA = function nfa_to_dfa(dfa) {
   // provide data in the DOT language
   /*var DOTstring =  'dinetwork {'+
@@ -40,17 +41,19 @@ var NFA_to_DFA = function nfa_to_dfa(dfa) {
   this.getAllInputs();
 };
 
+//Convert the nfa to dfa
 NFA_to_DFA.prototype.convert = function() {
   var retDFA = this.createDFA(this.dfa.data, this.dfa.options);
   var initial = this.getInitialState(this.dfa.data.nodes);
 
-  retDFA.data.nodes.push(this.createNode("triangle", initial, initial, "blue"));
+  retDFA.insertNode("triangle", initial, initial, "blue");
 
   retDFA = this.compute(retDFA, [initial]);
 
   return this.paint(retDFA);
 };
 
+//Paint the final states as red
 NFA_to_DFA.prototype.paint = function(retDFA) {
   var nodes = this.dfa.data.nodes;
   var nodesRet = retDFA.data.nodes;
@@ -77,6 +80,7 @@ NFA_to_DFA.prototype.paint = function(retDFA) {
   return retDFA;
 };
 
+//Performs the conversion
 NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
   if (statesToVisit.length == 0) {
     return retDFA;
@@ -118,7 +122,7 @@ NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
         retDFA = this.to(retDFA, epsilonClosure, temp_epsilonClosure, input[j]);
 
         if (!found) {
-          retDFA.data.nodes.push(this.createNode("circle", temp_epsilonClosure, temp_epsilonClosure, "blue"));
+          retDFA.insertNode("circle", temp_epsilonClosure, temp_epsilonClosure, "blue");
           statesToVisit.push(temp_epsilonClosure);
         }
       }
@@ -129,6 +133,7 @@ NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
   return this.compute(retDFA, statesToVisit);
 };
 
+//Performs the operation GOTO for a given state and input
 NFA_to_DFA.prototype.goto = function(edgeLabel, stateSA) {
 
   var state = stateSA.split(", ");
@@ -158,6 +163,8 @@ NFA_to_DFA.prototype.goto = function(edgeLabel, stateSA) {
   return stateToGo.join(", ");
 };
 
+//Performs the closure of a given state
+//index should be 0
 NFA_to_DFA.prototype.closure = function(state, index) {
 
   if (index >= state.length) {
@@ -182,6 +189,7 @@ NFA_to_DFA.prototype.closure = function(state, index) {
   return this.closure(state, index);
 };
 
+//Get all the inputs on the nfa
 NFA_to_DFA.prototype.getAllInputs = function() {
 
   var edges = this.dfa.data.edges;
@@ -199,6 +207,7 @@ NFA_to_DFA.prototype.getAllInputs = function() {
   this.allEdges.sort();
 };
 
+//Get the initial state from the nfa
 NFA_to_DFA.prototype.getInitialState = function(states) {
   for (var i = 0; i < states.length; i++) {
     if (states[i].shape != null && states[i].shape == "triangle") {
@@ -209,6 +218,7 @@ NFA_to_DFA.prototype.getInitialState = function(states) {
   }
 };
 
+//Create (or update) one edge from a state to another
 NFA_to_DFA.prototype.to = function(dfa, state, to, input) {
 
   var edges = dfa.data.edges;
@@ -223,36 +233,17 @@ NFA_to_DFA.prototype.to = function(dfa, state, to, input) {
     }
   }
 
-  dfa.data.edges.push(this.createEdge(state, to, input));
+  dfa.insertEdge(state, to, input);
   return dfa;
 };
 
+//Create an empty dfa with a dead state (DS) and an edge pointing to itself
 NFA_to_DFA.prototype.createDFA = function(data, options) {
   var retDFA = new DFA(options);
 
-  retDFA.data.nodes.push(this.createNode("circle", "DS", "DS", "blue"));
+  retDFA.insertNode("circle", "DS", "DS", "blue");
 
-  retDFA.data.edges.push(this.createEdge("DS", "DS", this.allEdges.join(", ")));
+  retDFA.insertEdge("DS", "DS", this.allEdges.join(", "));
 
   return retDFA;
-};
-
-NFA_to_DFA.prototype.createEdge = function(fromObj, toObj, labelObj) {
-  return {
-    from: fromObj,
-    to: toObj,
-    label: labelObj
-  };
-};
-
-NFA_to_DFA.prototype.createNode = function(shapeObj, idObj, labelObj, colorObj) {
-  return {
-    shape: shapeObj,
-    id: idObj,
-    label: labelObj,
-    color: {
-      background: colorObj,
-      border: colorObj
-    }
-  };
 };

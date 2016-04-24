@@ -1,3 +1,4 @@
+//Constructor (both arguments are dfa parsed)
 var Concatenation = function concatenation(left, right) {
 
   var DOTstring =  'dinetwork {'+
@@ -16,6 +17,8 @@ var Concatenation = function concatenation(left, right) {
 	this.right = this.parseDFA(DOTstring);
 };
 
+//Performs the concatenation between the two dfas
+//http://math.stackexchange.com/questions/657868/combining-two-dfas-into-an-nfa-to-recognize-concatenation
 Concatenation.prototype.compute = function() {
 	var startR = this.getInitialR();
 
@@ -23,7 +26,7 @@ Concatenation.prototype.compute = function() {
 	for (var i = 0; i < nodes.length; i++) {
 		if (nodes[i].color != null && nodes[i].color.background == "red") {
 			this.left.data.nodes[i].color.background = "blue";
-			this.left.data.edges.push(this.createEdge(this.left.data.nodes[i].label, startR, "$"));
+			this.left.insertEdge(this.left.data.nodes[i].label, startR, "$");
 		}
 	}
 
@@ -35,6 +38,7 @@ Concatenation.prototype.compute = function() {
 	return this.left;
 };
 
+//Copy the dfa from the right to the dfa from the left
 Concatenation.prototype.compressToL = function() {
 
 	//copy nodes
@@ -47,7 +51,7 @@ Concatenation.prototype.compressToL = function() {
 		if (info.color != null && info.color.background != null) {
 			color = info.color.background;
 		}
-		this.left.data.nodes.push(this.createNode("circle", info.id, info.label, color));
+		this.left.insertNode("circle", info.id, info.label, color);
 	}
 
 
@@ -57,11 +61,12 @@ Concatenation.prototype.compressToL = function() {
 	for (var i = 0; i < edges.length; i++) {
 		var info = edges[i];
 
-		this.left.data.edges.push(this.createEdge(info.from, info.to, info.label));
+		this.left.insertEdge(info.from, info.to, info.label);
 	}
 
 };
 
+//get initial state from the dfa of the right
 Concatenation.prototype.getInitialR = function() {
 	var nodes = this.right.data.nodes;
 
@@ -73,6 +78,7 @@ Concatenation.prototype.getInitialR = function() {
 	}
 };
 
+//parse a string to dfa
 Concatenation.prototype.parseDFA = function(str) {
 	var parsedData = vis.network.convertDot(str);
 
@@ -91,24 +97,4 @@ Concatenation.prototype.parseDFA = function(str) {
   dfa_test.setData(data);
 
   return dfa_test;
-};
-
-Concatenation.prototype.createEdge = function(fromObj, toObj, labelObj) {
-  return {
-    from: fromObj,
-    to: toObj,
-    label: labelObj
-  };
-};
-
-Concatenation.prototype.createNode = function(shapeObj, idObj, labelObj, colorObj) {
-  return {
-    shape: shapeObj,
-    id: idObj,
-    label: labelObj,
-    color: {
-      background: colorObj,
-      border: colorObj
-    }
-  };
 };
