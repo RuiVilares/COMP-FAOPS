@@ -35,6 +35,6 @@ function start() {
   //var nfa = new NFA_to_DFA("");
   //console.log(nfa.convert());
 
-  var dfa = new Concatenation("", "");
+  var dfa = new Intersection("", "");
   console.log(dfa.compute());
 };
