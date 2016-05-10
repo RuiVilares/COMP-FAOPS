@@ -35,6 +35,6 @@ function start() {
   //var nfa = new NFA_to_DFA("");
   //console.log(nfa.convert());
 
-  var dfa = new Intersection("", "");
+  var dfa = new Union("", "");
   console.log(dfa.compute());
 };

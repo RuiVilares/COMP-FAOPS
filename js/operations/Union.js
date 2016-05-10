@@ -1,78 +1,63 @@
 var Union = function union(node) {
     var DOTstring = 'dinetwork {' +
-        'A -> B [label="0"];' +
-        'A[ color=blue, shape=triangle]' +
-        'B[ color=red, shape=circle]' +
+        'A -> B [label="a"];' +
+        'A -> A [label="b"];' +
+        'B -> B [label="b"];' +
+        'B -> A [label="a"];' +
+        'A[ color=red, shape=triangle]' +
+        'B[ color=blue, shape=circle]' +
         '}';
     this.left = this.parseDFA(DOTstring);
 
 
     DOTstring = 'dinetwork {' +
-        'C -> D [label="1"];' +
+        'C -> D [label="b"];' +
+        'C -> C [label="a"];' +
+        'D -> D [label="a"];' +
+        'D -> C [label="b"];' +
         'C[ color=blue, shape=triangle]' +
         'D[ color=red, shape=circle]' +
         '}';
     this.right = this.parseDFA(DOTstring);
+
+    var crossOperation = new CrossProduct(this.left, this.right);
+    this.crossResult = crossOperation.execute();
 };
 
 Union.prototype.compute = function () {
-    var startR = this.getInitialR();
+    var L = this.left.data.nodes;
+    var R = this.right.data.nodes;
 
-    var nodes = this.left.data.nodes;
-    for (var i = 0; i < nodes.length; i++) {
-        if (nodes[i].shape != null && nodes[i].shape == "triangle") {
-			this.left.insertEdge(this.left.data.nodes[i].label, startR, "$");
+    for (var i = 0; i < L.length; i++) {
+        if (L[i].color.background == "red") {
+            var pattern = new RegExp(L[i].id);
+            for (var j = 0; j < this.crossResult.data.nodes.length; j++) {
+                if(pattern.test(this.crossResult.data.nodes[j].id))
+                {
+                    this.crossResult.data.nodes[j].color.background = "red";
+                    this.crossResult.data.nodes[j].color.border = "red";
+                }
+            }
+        }
+    }
+
+    for (var i = 0; i < R.length; i++) {
+        if (R[i].color.background == "red") {
+            var pattern = new RegExp(R[i].id);
+            for (var j = 0; j < this.crossResult.data.nodes.length; j++) {
+                if(pattern.test(this.crossResult.data.nodes[j].id))
+                {
+                    this.crossResult.data.nodes[j].color.background = "red";
+                    this.crossResult.data.nodes[j].color.border = "red";
+                }
+            }
         }
     }
     
-    this.compressToL();
-
-    var nfa = new NFA_to_DFA(this.left);
-    this.left = nfa.convert();
-    
-    return this.left;
+    return this.crossResult;
 };
 
 
-//Copy the dfa from the right to the dfa from the left
-Union.prototype.compressToL = function () {
-
-	//copy nodes
-	var nodes = this.right.data.nodes;
-
-	for (var i = 0; i < nodes.length; i++) {
-		var info = nodes[i];
-
-		var color = "blue";
-		if (info.color != null && info.color.background != null) {
-			color = info.color.background;
-		}
-		this.left.insertNode("circle", info.id, info.label, color);
-	}
-	
-	
-	//copy edges
-	var edges = this.right.data.edges;
-
-	for (var i = 0; i < edges.length; i++) {
-		var info = edges[i];
-
-		this.left.insertEdge(info.from, info.to, info.label);
-	}
-
-};
-
-//get initial state from the dfa of the right
-Union.prototype.getInitialR = function () {
-    var nodes = this.right.data.nodes;
-
-    for (var i = 0; i < nodes.length; i++) {
-        if (nodes[i].shape != null && nodes[i].shape == "triangle") {
-            this.right.data.nodes[i].shape = "circle";
-            return nodes[i].label;
-        }
-    }
-};
 
 //parse a string to dfa
 Union.prototype.parseDFA = function (str) {
