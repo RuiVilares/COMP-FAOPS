@@ -14,16 +14,20 @@ var Complement = function complement(DFA) {
 Complement.prototype.compute = function() {
   var nodes = this.DFA.data.nodes;
   for (var i = 0; i < nodes.length; i++) {
-    if (nodes[i].color != null && nodes[i].color.background == "red") {
-      this.DFA.data.nodes[i].color.background = "blue";
+    if (nodes[i].color.background == "red") {
+      nodes[i].color = {
+        background: "blue",
+        border: "blue"
+      }
     }
-    if (nodes[i].color != null && nodes[i].color.background == "blue") {
-      this.DFA.data.nodes[i].color.background = "red";
+    else if (nodes[i].color.background == "blue") {
+      nodes[i].color = {
+        background: "red",
+        border: "red"
+      }
     }
   }
-
   return this.DFA;
-
 }
 
 //parse a string to dfa
