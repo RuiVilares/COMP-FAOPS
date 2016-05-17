@@ -1,3 +1,8 @@
+/*<div class="col-md-12">
+  <div id="dropzone">Drop file here (txt)</div>
+  <output id="list"></output>
+</div>
+
 var imported = document.createElement('script');
 document.head.appendChild(imported);
 
@@ -18,8 +23,8 @@ function handleFileSelect(evt) {
 
     // files is a FileList of File objects. List some properties.
     var file = files[0];
-    var textType = /text.*/;
-
+    var textType = /text.*///;
+/*
     if (file.type.match(textType)) {
         var reader = new FileReader();
 
@@ -43,7 +48,7 @@ function handleFileSelect(evt) {
             }
 
             */
-        };
+        /*};
 
 
         reader.readAsText(file);
@@ -64,3 +69,103 @@ function handleDragOver(evt) {
 var dropZone = document.getElementById('dropzone');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
+
+*/
+
+var automata = new Array();
+var index = 1;
+
+var inputElement = document.getElementById("input");
+inputElement.addEventListener("change", handleFiles, false);
+
+function handleFiles() {
+  var files = this.files;
+  var file = files[0];
+  var textType = /text.*/;
+
+  if (file.type.match(textType)) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      readerResult = reader.result;
+      automata[index] = {id:"file"+index, name:file.name, dot:readerResult};
+
+      document.getElementById("input").value = "";
+      var listFiles = document.getElementsByClassName("listFiles").innerHTML;
+      var buttonToAdd = "<li data-id='" + index +"' class='fileItem btn btn-success col-md-11'>" + automata[index].name + "</li><button data-id='" + index +"' class='btn btn-danger pull-right'>X</button>";
+      var navTabToAdd = "<li><a data-toggle='tab' href='#file" + index + "'>" + automata[index].name + "</a></li>";
+      var tabToAdd = "<div id='file" + index + "' class='tab-pane fade in'><div id='mynetwork" + index + "'></div></div>";
+      $(".listFiles").append(buttonToAdd);
+      $("#navtabs").append(navTabToAdd);
+      $("#contentTabs").append(tabToAdd);
+      $('#navtabs a:last').tab('show');
+      read(readerResult, "mynetwork" + index);
+      index++;
+      fileListener();
+    }
+    reader.readAsText(file);
+    swal("Success!", "File successfully uploaded!", "success");
+  } else {
+    swal("Error!", "File not supported!", "error");
+  }
+}
+
+function fileListener(){
+  id = $(this).attr("data-id");
+  $( ".listFiles li" ).click(function() {
+    id = $(this).attr("data-id");
+    swal(automata[id].name, automata[id].dot);
+  });
+  $( ".listFiles button" ).click(function() {
+    id = $(this).attr("data-id");
+    $(".listFiles li[data-id='" + id + "']").remove();
+    $(".listFiles button[data-id='" + id + "']").remove();
+    $("#navtabs a[href='#file" + id +"']").remove();
+    $("#contentTabs #file" + id).remove();
+    if($('#navtabs >li').size() > 0)
+      $('#navtabs a:last').tab('show');
+    automata.splice(id, 1);
+  });
+}
+
+function read(DOTstring, mynetwork){
+  var parsedData = vis.network.convertDot(DOTstring);
+  var container = document.getElementById(mynetwork);
+  var data = {
+    nodes: parsedData.nodes,
+    edges: parsedData.edges
+  }
+
+  var options = parsedData.options;
+
+  // you can extend the options like a normal JSON variable:
+  options.nodes = {
+    color: 'blue'
+  }
+
+  // create a network
+  var network = new vis.Network(container, data, options);
+};
+
+//ve se tem estado inicial e final
+function checkNodes(){
+	var initialState=searchStringInArray('shape: triangle',nodes);
+	if(searchStringInArray!=1){
+		// TODO
+		window.alert('Sem estado inicial');
+	}
+	var finalState=searchStringInArray('shape: circle',nodes);
+	var finalState1=searchStringInArray('shapeProperties:{borderDashes:true}',nodes);
+	if(finalState!=1 &&	finalState1!=1){
+		window.alert('Sem estado final');
+	}
+
+};
+
+function searchStringInArray (str, strArray) {
+	var count=0;
+    for (var j=0; j<strArray.length; j++) {
+        if (strArray[j].match(str)) return j;
+        count++;
+    }
+    return count;
+};

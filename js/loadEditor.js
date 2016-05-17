@@ -1,7 +1,16 @@
+function openEditor() {
+    $('#editorW').slideToggle("fast");
+    $('#openEditor').slideToggle("fast");
+}
+
+
 var imported = document.createElement('script');
 document.head.appendChild(imported);
 
 function loadEditor() {
+
+    read(automata[1].dot,"mynetworkResult")
+
     $(function () {
         lines = [];
         lines = document.getElementById("editor").value.split(/(?:\\[rn]|[\r\n]+)+/g);
@@ -25,7 +34,7 @@ function loadEditor() {
         data = [];
         data = [];
         //var lines = document.getElementById("editor").value.split(/(?:\\[rn]|[\r\n]+)+/g);
-        
+
 
         //FAZER AQUI AS VERIFICAÇÕES TAGS
 

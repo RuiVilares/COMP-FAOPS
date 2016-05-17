@@ -9,6 +9,7 @@
     <meta name="author" content="">
     <title>FEUP/EIC0028 Compilers  2015/2016 - FAOPS - T05G02</title>
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -22,10 +23,9 @@
     </div>
   </div>
   <div class="col-md-12">
-    <div class="col-md-12">
-      <div id="dropzone">Drop file here (txt)</div>
-      <output id="list"></output>
-    </div>
+    <span class="btn btn-info btn-file col-md-3">
+      Upload dot file<input type="file" id="input">
+    </span>
   </div>
   <div class="col-md-6">
     <h3>Code Editor</h3>
@@ -44,32 +44,24 @@
   <div class="col-md-6">
     <h3>Dot files</h3>
     <ul class="listFiles">
-      <li class="fileItem btn btn-success col-md-11">File 1</li><button class="btn btn-danger pull-right">X</button>
-      <li class="fileItem btn btn-danger col-md-11">File 2</li><button class="btn btn-danger pull-right">X</button>
-      <li class="fileItem btn btn-success col-md-11">File 3</li><button class="btn btn-danger pull-right">X</button>
-      <li class="fileItem btn btn-success col-md-11">File 4</li><button class="btn btn-danger pull-right">X</button>
     </ul>
   </div>
 
   <div class="col-md-12 dynamicTabs">
     <h3>Graph display</h3>
-    <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#file1">File 1</a></li>
-      <li><a data-toggle="tab" href="#file3">File 3</a></li>
-      <li><a data-toggle="tab" href="#file4">File 4</a></li>
+    <ul id="navtabs" class="nav nav-tabs">
+
     </ul>
 
-    <div class="tab-content">
-      <div id="file1" class="tab-pane fade in active">Grafo 1</div>
-      <div id="file3" class="tab-pane fade">Grafo 3</div>
-      <div id="file4" class="tab-pane fade">Grafo 4</div>
+    <div id="contentTabs" class="tab-content">
+
     </div>
   </div>
 
   <div class="col-md-12 result">
     <h3>Graph result</h3>
-    <div id="mynetwork"></div>
-    <button class="btn btn-success footer col-md-3">Download dot file</button>
+    <div id="mynetworkResult"></div>
+    <button class="btn btn-info footer col-md-3">Download dot file</button>
   </div>
 </div>
 
@@ -79,18 +71,8 @@
 <script src="js/loadFile.js"></script>
 <script src="js/loadEditor.js"></script>
 <script src="js/lexical.js"></script>
-<script src="js/test.js"></script>
 <script src="js/vis/dist/vis.js"></script>
-
-<script type="text/javascript">
-    function openEditor() {
-        $('#editorW').slideToggle("fast");
-        $('#openEditor').slideToggle("fast");
-    }
-
-    read(); // ------------------------------- Temporário
-</script>
+<script src="js/sweetalert.min.js"></script>
 
 </body>
-
 </html>
