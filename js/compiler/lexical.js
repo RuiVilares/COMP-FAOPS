@@ -1,11 +1,8 @@
-function start() {
+function start(code) {
   var sequence = new Seq();
 
   var initial = 0;
 
-  var code = "FA A = new(\"ola.dot\");\n"
-            +"FA B = (O + P) + rev(K+C) + L;\n"
-            +"B.dump(\"dot\");";
   try {
     while (initial < code.length) {
       if (code[initial] == ' ' || code[initial] == '\n') {
