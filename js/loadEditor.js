@@ -25,6 +25,14 @@ function loadEditor() {
         }).remove();
 
         // FAZER A ANALISE LEXICAL ---------------------------------------------------
+        //for debug for now
+        var code = "FA A = new(\"ola.dot\");\n"
+                  +"FA B = (O + P) + rev(K+C) + L;\n"
+                  +"B.dump(\"dot\");";
+
+        //Start the lexical analysis
+        //start(lines);
+        start(code);
 
         $('#output').html("");
 

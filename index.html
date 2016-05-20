@@ -65,14 +65,38 @@
   </div>
 </div>
 
-<!-- COLOCAR AQUI AS DECLARAÇÕES JAVASCRIPT -->
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/loadFile.js"></script>
 <script src="js/loadEditor.js"></script>
-<script src="js/lexical.js"></script>
-<script src="js/vis/dist/vis.js"></script>
 <script src="js/sweetalert.min.js"></script>
+
+<script src="js/vis/dist/vis.js"></script>
+
+<script src="js/compiler/Queue.js"></script>
+<script src="js/compiler/Tree.js"></script>
+<script src="js/compiler/Token.js"></script>
+<script src="js/compiler/Sequence.js"></script>
+<script src="js/compiler/Lexical.js"></script>
+<script src="js/compiler/Syntactic.js"></script>
+<script src="js/compiler/TreeProcess.js"></script>
+<script src="js/compiler/DFA.js"></script>
+
+<script src="js/operations/CrossProduct.js"></script>
+<script src="js/operations/Complement.js"></script>
+<script src="js/operations/Concatenation.js"></script>
+<script src="js/operations/Intersection.js"></script>
+<script src="js/operations/Multiplication.js"></script>
+<script src="js/operations/NFAtoDFA.js"></script>
+<script src="js/operations/Reverse.js"></script>
+<script src="js/operations/Union.js"></script>
+
+<script type="text/javascript">
+    function openEditor() {
+
+        $('#editorW').slideToggle("fast");
+    }
+</script>
 
 </body>
 </html>

@@ -3,7 +3,7 @@ var Seq = function () {
 };
 
 Seq.prototype.clear = function() {
-  this.tokens= [];
+  this.tokens = [];
   this.reinit();
 };
 
@@ -16,7 +16,7 @@ Seq.prototype.add = function(token) {
 };
 
 Seq.prototype.nextToken = function() {
-  if (this.i >= tokens.length) {
+  if (this.i >= this.tokens.length) {
     return null;
   }
 
@@ -24,18 +24,9 @@ Seq.prototype.nextToken = function() {
 };
 
 Seq.prototype.peek = function() {
-  if (this.i >= tokens.length) {
+  if (this.i >= this.tokens.length) {
     return null;
   }
 
   return this.tokens[this.i];
 };
-
-var Token = function(id, img) {
-  this.id = id;
-  this.img = img;
-}
-
-function start() {
-  window.alert("ola");
-}
