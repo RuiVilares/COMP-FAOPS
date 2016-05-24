@@ -17,6 +17,9 @@ Syntactic.prototype.syntacticAnalysis = function() {
 		console.error("Error on statement's construction.");
 };
 
+/**
+ * @return {boolean} [Returns true is the tree was successfuly created or false, otherwise]
+ */
 Syntactic.prototype.S = function() {
 	this.tree = new Tree('START');
 	var loop = true;
@@ -35,6 +38,10 @@ Syntactic.prototype.S = function() {
 	return true;
 };
 
+/**
+ * @param  {[Node]} [Parent Node to which the new subtree will be added]
+ * @return {[Tree]} [New generated subTree]
+ */
 Syntactic.prototype.expressionHandler = function(parent) {
 	this.tree.add(parent, 'START', this.tree.traverseDF, null);
 
@@ -86,7 +93,7 @@ Syntactic.prototype.newExpression = function(parent) {
 		if(this.sequence.peek().id == TOKENS.QUOTE) {
 			this.sequence.nextToken();
 			if(this.sequence.peek().id == TOKENS.FILENAME) {
-				this.tree.add(this.sequence.peek().id, parent, this.tree.traverseDF, this.sequence.peek());
+				this.tree.add(this.sequence.peek().img, parent, this.tree.traverseDF, this.sequence.peek());
 				this.sequence.nextToken();
 				if(this.sequence.peek().id == TOKENS.QUOTE) {
 					this.sequence.nextToken();
@@ -102,23 +109,22 @@ Syntactic.prototype.newExpression = function(parent) {
 };
 
 Syntactic.prototype.dump = function(parent) {
-
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
 		var filename = this.sequence.peek();
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.CONCATENATE) {
 			this.sequence.nextToken();
 			if(this.sequence.peek().id == TOKENS.DUMP) {
-				var dumpId = this.sequence.peek().img + parent;
-				this.tree.add(dumpId, parent, this.tree.traverseDF);
-				this.tree.add(filename, dumpId, this.tree.traverseDF);
+				var dump = this.sequence.peek().img + parent;
+				this.tree.add(dump, parent, this.tree.traverseDF, this.sequence.peek());
+				this.tree.add(filename.img, dump, this.tree.traverseDF, filename);
 				this.sequence.nextToken();
 				if(this.sequence.peek().id == TOKENS.OPEN) {
 					this.sequence.nextToken();
 					if(this.sequence.peek().id == TOKENS.QUOTE) {
 						this.sequence.nextToken();
 						if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
-							this.tree.add(this.sequence.peek(), dumpId, this.tree.traverseDF);
+							this.tree.add(this.sequence.peek().img, dump, this.tree.traverseDF, this.sequence.peek());
 							this.sequence.nextToken();
 							if(this.sequence.peek().id == TOKENS.QUOTE) {
 								this.sequence.nextToken();
