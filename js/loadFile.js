@@ -155,9 +155,20 @@ function read(DOTstring, mynetwork){
 
 //ve se tem estado inicial e final
 function checkNodes(nodes){
-	var initialState=searchStringInArray('triangle',nodes);
   if (!checkValidFA(nodes)) {
-
+    //TODO change error message
+    window.alert('The finite automata is required to have a initial state and at least one final.\n' +
+                  'Epsilon states require the label $ (dollar sign). Each transition can have multiple inputs. ' +
+                  'Therefore, multiple inputs can be represented by being separated by a comma.\n' +
+                  'Valid NFA (Non-Deterministic Finite Automata) example:\n' +
+                  'dinetwork { '+
+                  'A -> B [label="$"]; ' +
+                  'A -> C [label="0"]; ' +
+                  'B -> C [label="1"]; ' +
+                  'A[ color=blue, shape=triangle] '+
+                  'B[ color=blue, shape=circle] '+
+                  'C[ color=red, shape=circle] '+
+                  '}';
   }
 	if(!checkInitial(nodes)){
 		//TODO change error message
@@ -167,18 +178,4 @@ function checkNodes(nodes){
     //TODO change error message
 		window.alert('Final state is not correctly defined. Its color is red.');
   }
-	var finalState=searchStringInArray('circle',nodes);
-	var finalState1=searchStringInArray('shapeProperties:{borderDashes:true}',nodes);
-	if(finalState!=1 &&	finalState1!=1){
-	}
-
-};
-
-function searchStringInArray (str, strArray) {
-	var count=0;
-    for (var j=0; j<strArray.length; j++) {
-        if (strArray[j].shape != null && strArray[j].shape.match(str)) return j;
-        count++;
-    }
-    return count;
 };
