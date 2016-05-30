@@ -168,7 +168,7 @@ function checkNodes(nodes){
                   'A[ color=blue, shape=triangle] '+
                   'B[ color=blue, shape=circle] '+
                   'C[ color=red, shape=circle] '+
-                  '}';
+                  '}');
   }
 	if(!checkInitial(nodes)){
 		//TODO change error message
@@ -181,7 +181,29 @@ function checkNodes(nodes){
 };
 
 function checkValidFA(nodes) {
+  for (var i = 0; i < nodes.length; i++) {
+    if (!(validShape(nodes[i]) && validTransition(nodes[i]) && validColor(nodes[i]))) {
+      return false;
+    }
+  }
 
+  return true;
+};
+
+function validShape(node) {
+  return node.shape == "triangle" || node.shape == "circle";
+};
+
+function validTransition(node) {
+  return node.to != null && node.from != null;
+};
+
+function validColor(node) {
+  return node.color != null && (checkColor(node, "red") || checkColor(node, "blue"));
+};
+
+function checkColor(node, color) {
+  return node.background == color && node.border == color;
 };
 
 function checkInitial(nodes) {
