@@ -81,9 +81,9 @@ inputElement.addEventListener("change", handleFiles, false);
 function handleFiles() {
   var files = this.files;
   var file = files[0];
-  var textType = /text.*/;
+  var textType = /^[a-zA-Z][a-zA-Z0-9_\- \.]*\.dot/g;
 
-  if (file.type.match(textType)) {
+  if (textType.test(file.name)) {
     var reader = new FileReader();
     reader.onload = function (e) {
       readerResult = reader.result;
@@ -99,9 +99,14 @@ function handleFiles() {
       $("#contentTabs").append(tabToAdd);
       $('#navtabs a:last').tab('show');
       read(readerResult, "mynetwork" + index);
+
+      var nfa = new NFA_to_DFA(readerResult);
+      TreeProcess.hashmapFiles[file.name] = nfa.convert();
+
       index++;
       fileListener();
     }
+    textType.lastIndex = 0;
     reader.readAsText(file);
     swal("Success!", "File successfully uploaded!", "success");
   } else {
@@ -144,19 +149,27 @@ function read(DOTstring, mynetwork){
 
   // create a network
   var network = new vis.Network(container, data, options);
+
+  checkNodes(data.nodes);
 };
 
 //ve se tem estado inicial e final
-function checkNodes(){
-	var initialState=searchStringInArray('shape: triangle',nodes);
-	if(searchStringInArray!=1){
-		// TODO
-		window.alert('Sem estado inicial');
+function checkNodes(nodes){
+	var initialState=searchStringInArray('triangle',nodes);
+  if (!checkValidFA(nodes)) {
+
+  }
+	if(!checkInitial(nodes)){
+		//TODO change error message
+		window.alert('Initial state is not correctly defined. Its shape is a triangle.');
 	}
-	var finalState=searchStringInArray('shape: circle',nodes);
+  if (!checkFinal(nodes)) {
+    //TODO change error message
+		window.alert('Final state is not correctly defined. Its color is red.');
+  }
+	var finalState=searchStringInArray('circle',nodes);
 	var finalState1=searchStringInArray('shapeProperties:{borderDashes:true}',nodes);
 	if(finalState!=1 &&	finalState1!=1){
-		window.alert('Sem estado final');
 	}
 
 };
@@ -164,7 +177,7 @@ function checkNodes(){
 function searchStringInArray (str, strArray) {
 	var count=0;
     for (var j=0; j<strArray.length; j++) {
-        if (strArray[j].match(str)) return j;
+        if (strArray[j].shape != null && strArray[j].shape.match(str)) return j;
         count++;
     }
     return count;
