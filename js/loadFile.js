@@ -179,3 +179,29 @@ function checkNodes(nodes){
 		window.alert('Final state is not correctly defined. Its color is red.');
   }
 };
+
+function checkValidFA(nodes) {
+
+};
+
+function checkInitial(nodes) {
+  var cnt = 0;
+
+  for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i].shape == "triangle")
+      cnt++;
+  }
+
+  return cnt == 1;
+};
+
+function checkFinal(nodes) {
+  var cnt = 0;
+
+  for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i].color != null && nodes[i].color.background == "red" && nodes[i].color.border == "red")
+      cnt++;
+  }
+
+  return cnt > 0;
+};
