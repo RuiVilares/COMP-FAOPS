@@ -32,9 +32,9 @@ Intersection.prototype.compute = function () {
     for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].color != null && nodes[i].color.background == "red") {
             leftFinalStates.push(nodes[i]);
-        }        
+        }
     }
-    
+
     nodes = this.right.data.nodes;
     for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].color != null && nodes[i].color.background == "red") {
@@ -51,10 +51,10 @@ Intersection.prototype.compute = function () {
 Intersection.prototype.intersectFinalStates = function (leftFinalStates, rightFinalStates) {
     var nodes = this.crossResult.data.nodes;
     for (var i = 0; i < nodes.length; i++) {
-                
+
         var setToFinal = false;
         var pattern = null;
-        
+
         //comparing id's with the original final states from the left dfa
         for (var l = 0; l < leftFinalStates.length; l++) {
             pattern = new RegExp(leftFinalStates[l].id);
@@ -65,13 +65,13 @@ Intersection.prototype.intersectFinalStates = function (leftFinalStates, rightFi
                 break;
             }
         }
-        
+
         //only proceeds to compare with right dfa if the left the node matched one of the left dfa final states
         if(!setToFinal)
             continue;
-        
+
         pattern = null;
-        
+
         //comparing id's with the original final states from the right dfa
         for (var r = 0; r < rightFinalStates.length; r++) {
             pattern = new RegExp(rightFinalStates[r].id);
@@ -81,7 +81,7 @@ Intersection.prototype.intersectFinalStates = function (leftFinalStates, rightFi
             }
             else break;
         }
-    }  
+    }
 };
 
 //parse a string to dfa

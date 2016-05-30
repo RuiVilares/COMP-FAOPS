@@ -61,7 +61,13 @@
   <div class="col-md-12 result">
     <h3>Graph result</h3>
     <div id="mynetworkResult"></div>
-    <button class="btn btn-info footer col-md-3">Download dot file</button>
+
+    <script type="text/javascript">
+      var content = dump();
+      console.log(content);
+    </script>
+
+    <button class="btn btn-info footer col-md-3" onclick="downloadFile('test.dot',content);">Download dot file</button>
   </div>
 </div>
 
@@ -69,6 +75,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/loadFile.js"></script>
 <script src="js/loadEditor.js"></script>
+<script src="js/downloadFile.js"></script>
 <script src="js/sweetalert.min.js"></script>
 
 <script src="js/vis/dist/vis.js"></script>
@@ -90,6 +97,7 @@
 <script src="js/operations/NFAtoDFA.js"></script>
 <script src="js/operations/Reverse.js"></script>
 <script src="js/operations/Union.js"></script>
+<script src="js/operations/Dump.js"></script>
 
 <script type="text/javascript">
     function openEditor() {
