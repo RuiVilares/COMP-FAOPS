@@ -9,9 +9,13 @@ A aplicação consiste numa única página web, de design e utilização simples
 
 //inserir print de pagina web
 
-Os Autómatos Finitos usados nas expressões devem ser inseridos com recurso a ficheiros DOT, segundo o formato especificado na imagem que se segue:
+Os Autómatos Finitos usados nas expressões devem ser inseridos com recurso ao _upload_ de ficheiros DOT, segundo o formato especificado na imagem que se segue:
 
 ![Example of DOT file] [dotFile]
+
+Recorrendo à framework [GraphViz](http://www.graphviz.org/), necessitamos de definir um padrão de modo a distinguir estados iniciais e estados finais dos restantes estados intermédios. Para tal, estabelecemos que estados finais serão distinguidos com '**shape=**triangle' e estados finais com '**color=**red'
+
+
 
 
 
