@@ -1,42 +1,5 @@
 //Constructor (dfa already parsed)
 var NFA_to_DFA = function nfa_to_dfa(dfa) {
-  // provide data in the DOT language
-  /*var DOTstring =  'dinetwork {'+
-  'A -> B [label="0"];' +
-  'A -> A [label="2"]; ' +
-  'B -> A [label="1"];'+
-  'A[ color=red, shape=triangle]'+
-  'B[ color=blue, shape=circle]'+
-  '}';*/
-  /*var DOTstring =  'dinetwork {'+
-  'A -> B [label="$"];' +
-  'A -> C [label="0"]; ' +
-  'B -> C [label="1"];'+
-  'A[ color=blue, shape=triangle]'+
-  'B[ color=blue, shape=circle]'+
-  'C[ color=red, shape=circle]'+
-  '}';
-  var parsedData = vis.network.convertDot(DOTstring);
-
-  var data = {
-    nodes: parsedData.nodes,
-    edges: parsedData.edges
-  }
-
-  var options = parsedData.options;
-
-  // you can extend the options like a normal JSON variable:
-  options.nodes = {
-    color: 'red'
-  }
-
-  var dfa_test = new DFA(options);
-  dfa_test.setData(data);*/
-
-  //console.log(dfa_test);
-
-  //TODO every above this comment should be deleted
-  //TODO replace the word dfa_test by dfa
   this.dfa = dfa;
   this.getAllInputs();
 };
@@ -165,9 +128,9 @@ NFA_to_DFA.prototype.goto = function(edgeLabel, stateSA) {
 
 //Performs the closure of a given state
 //index should be 0
-NFA_to_DFA.prototype.closure = function(state, index) {
+NFA_to_DFA.prototype.closure = function(state, index1) {
 
-  if (index >= state.length) {
+  if (index1 >= state.length) {
     state.sort();
     return state.join(", ");
   }
@@ -175,7 +138,7 @@ NFA_to_DFA.prototype.closure = function(state, index) {
   var edges = this.dfa.data.edges;
 
   for (var i = 0; i < edges.length; i++) {
-    if (edges[i].from == state[index] && edges[i].label == "$") {
+    if (edges[i].from == state[index1] && edges[i].label == "$") {
       var toState = edges[i].to.split(", ");
       for (var j = 0; j < toState.length; j++) {
         if (state.indexOf(toState[j]) == -1) {
@@ -185,8 +148,8 @@ NFA_to_DFA.prototype.closure = function(state, index) {
     }
   }
 
-  index++;
-  return this.closure(state, index);
+  index1++;
+  return this.closure(state, index1);
 };
 
 //Get all the inputs on the nfa

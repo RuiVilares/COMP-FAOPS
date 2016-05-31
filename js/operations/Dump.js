@@ -1,45 +1,22 @@
-var Dump = function Dump() {
-//  var nodes = this.dfa.data.nodes;
-//  var edges = this.dfa.data.edges;
-  var content;
-  //teste
-  var DOTstring = 'dinetwork {' +
-      'A -> B [label="a"];' +
-      'A -> A [label="b"];' +
-      'B -> B [label="b"];' +
-      'B -> A [label="a"];' +
-      'A[ color=red, shape=triangle]' +
-      'B[ color=blue, shape=circle]' +
-      '}';
-  this.left = this.parseDFA(DOTstring);
-
-  for(var i=0; i < nodes.length; i++){
-    content= nodes.id +"[nodes="+nodes.color +", shape="+nodes.shape+ "]\\n";
-  }
-
-  for(var i=0; i< edges.length; i++){
-    content=edges.from + "->"+ edges.to + "[label="+edges.label+"];\\n"
-  }
-  return content;
+var Dump = function Dump(DFA) {
+  this.dfa = DFA;
 }//var content= dump(DFA);
 
-//parse a string to dfa
-Dump.prototype.parseDFA = function (str) {
-    var parsedData = vis.network.convertDot(str);
+Dump.prototype.compute = function(){
+  var content='dinetwork{\n';
+  var nodes = this.dfa.data.nodes;
+  var edges = this.dfa.data.edges;
 
-    var data = {
-        nodes: parsedData.nodes,
-        edges: parsedData.edges
-    }
+  for(var i=0; i< edges.length; i++){
+    content+='  "'+edges[i].from + "\"->\""+ edges[i].to + "\"[label=\""+ edges[i].label+"\"];\n"
+  }
 
-    var options = parsedData.options;
+  for(var i=0; i < nodes.length; i++){
+    content+= '  "'+nodes[i].id +"\"[color="+ nodes[i].color.background +", shape="+nodes[i].shape+ "]\n";
+  }
 
-    options.nodes = {
-        color: 'red'
-    }
+  content+='}';
+  console.log(content);
+  return content;
 
-    var dfa_test = new DFA(options);
-    dfa_test.setData(data);
-
-    return dfa_test;
 };

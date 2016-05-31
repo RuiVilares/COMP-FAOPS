@@ -3,8 +3,9 @@ var Syntactic = function(sequence) {
 	this.tree = null;
 	this.opIndex = 0;
 
+	this.variables = [];
+
 	this.syntacticAnalysis();
-	console.log(this.tree);
 };
 
 Syntactic.prototype.syntacticAnalysis = function() {
@@ -57,7 +58,11 @@ Syntactic.prototype.declaration = function(parent) {
 	var equalsId = null;
 
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
+		if (this.variables[this.sequence.peek().img] != null) {
+			warningMsg("Variable '" + this.sequence.peek().img + "' is already defined.");
+		}
 		identifier = this.sequence.peek();
+		this.variables[this.sequence.peek().img] = true;
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.EQUAL) {
 			equalsId = this.sequence.peek().img + parent;
@@ -93,6 +98,10 @@ Syntactic.prototype.newExpression = function(parent) {
 		if(this.sequence.peek().id == TOKENS.QUOTE) {
 			this.sequence.nextToken();
 			if(this.sequence.peek().id == TOKENS.FILENAME) {
+				if (!this.fileExists(this.sequence.peek().img)) {
+					errorMsg("File '" + this.sequence.peek().img +"' does not exist.");
+					return null;
+				}
 				this.tree.add(this.sequence.peek().img, parent, this.tree.traverseDF, this.sequence.peek());
 				this.sequence.nextToken();
 				if(this.sequence.peek().id == TOKENS.QUOTE) {
@@ -108,8 +117,21 @@ Syntactic.prototype.newExpression = function(parent) {
 	return false;
 };
 
+Syntactic.prototype.fileExists = function(filename) {
+	for (var i = 1; i < automata.length; i++) {
+		if (automata[i].name == filename)
+			return true;
+	}
+
+	return false;
+};
+
 Syntactic.prototype.dump = function(parent) {
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
+		if (this.variables[this.sequence.peek().img] == null) {
+			errorMsg("Variable '" + this.sequence.peek().img + "' is used but not defined.");
+			return false;
+		}
 		var filename = this.sequence.peek();
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.CONCATENATE) {
@@ -178,6 +200,11 @@ Syntactic.prototype.operation = function(parent, tree_) {
 		}
 
 	} else if (this.sequence.peek().id == TOKENS.IDENTIFIER) {
+
+		if (this.variables[this.sequence.peek().img] == null) {
+			errorMsg("Variable '" + this.sequence.peek().img + "' is used but not defined.");
+			return false;
+		}
 
 		var ident = this.sequence.peek();
 		this.sequence.nextToken();

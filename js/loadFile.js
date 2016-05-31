@@ -1,77 +1,3 @@
-/*<div class="col-md-12">
-  <div id="dropzone">Drop file here (txt)</div>
-  <output id="list"></output>
-</div>
-
-var imported = document.createElement('script');
-document.head.appendChild(imported);
-
-var data = [];
-
-var currentInput = 0;
-
-var inputs = [];
-
-var breakpoints = [];
-
-function handleFileSelect(evt) {
-
-    evt.stopPropagation();
-    evt.preventDefault();
-
-    var files = evt.dataTransfer.files; // FileList object.
-
-    // files is a FileList of File objects. List some properties.
-    var file = files[0];
-    var textType = /text.*///;
-/*
-    if (file.type.match(textType)) {
-        var reader = new FileReader();
-
-        // FAZER AQUI A VERIFICAÇÃO DO FICHEIRO -----------------------------------------------------------------------------------------------------
-        reader.onload = function (e) {
-            readerResult = reader.result;
-
-            //read file line by line
-            var lines = readerResult.trim().split("\r\n");
-
-            $('#editor').val(readerResult);
-
-            /*
-
-            //FAZER AQUI AS VERIFICAÇÕES TAGS
-
-            var i = 0;
-            while (i < lines.length) {
-                // Condições linha a linha
-                i++;
-            }
-
-            */
-        /*};
-
-
-        reader.readAsText(file);
-        var dropZone = document.getElementById('dropzone');
-        dropZone.innerHTML = "File upload successfully!";
-    } else {
-        window.alert("File not supported!");
-    }
-}
-
-function handleDragOver(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-}
-
-// Setup the dnd listeners.
-var dropZone = document.getElementById('dropzone');
-dropZone.addEventListener('dragover', handleDragOver, false);
-dropZone.addEventListener('drop', handleFileSelect, false);
-
-*/
-
 var automata = new Array();
 var index = 1;
 
@@ -98,10 +24,12 @@ function handleFiles() {
       $("#navtabs").append(navTabToAdd);
       $("#contentTabs").append(tabToAdd);
       $('#navtabs a:last').tab('show');
-      read(readerResult, "mynetwork" + index);
+      var fa = read(readerResult, "mynetwork" + index);
 
-      var nfa = new NFA_to_DFA(readerResult);
-      TreeProcess.hashmapFiles[file.name] = nfa.convert();
+      if (fa != null) {
+        var nfa = new NFA_to_DFA(fa);
+        TreeProcess.hashmapFiles[file.name] = nfa.convert();
+      }
 
       index++;
       fileListener();
@@ -142,6 +70,8 @@ function read(DOTstring, mynetwork){
 
   var options = parsedData.options;
 
+  options.height = '400px';
+
   // you can extend the options like a normal JSON variable:
   options.nodes = {
     color: 'blue'
@@ -150,14 +80,20 @@ function read(DOTstring, mynetwork){
   // create a network
   var network = new vis.Network(container, data, options);
 
-  checkNodes(data.nodes);
+  if (!checkNodes(data.nodes)) {
+    return null;
+  }
+
+  var fa = new DFA(options);
+  fa.setData(data);
+
+  return fa;
 };
 
 //ve se tem estado inicial e final
 function checkNodes(nodes){
   if (!checkValidFA(nodes)) {
-    //TODO change error message
-    window.alert('The finite automata is required to have a initial state and at least one final.\n' +
+    errorMsg('The finite automata is required to have a initial state and at least one final.\n' +
                   'Epsilon states require the label $ (dollar sign). Each transition can have multiple inputs. ' +
                   'Therefore, multiple inputs can be represented by being separated by a comma.\n' +
                   'Valid NFA (Non-Deterministic Finite Automata) example:\n' +
@@ -169,20 +105,24 @@ function checkNodes(nodes){
                   'B[ color=blue, shape=circle] '+
                   'C[ color=red, shape=circle] '+
                   '}');
+    return false;
   }
 	if(!checkInitial(nodes)){
-		//TODO change error message
-		window.alert('Initial state is not correctly defined. Its shape is a triangle.');
+		errorMsg('Initial state is not correctly defined. Its shape is a triangle.');
+    return false;
 	}
   if (!checkFinal(nodes)) {
-    //TODO change error message
-		window.alert('Final state is not correctly defined. Its color is red.');
+		errorMsg('Final state is not correctly defined. Its color is red.');
+    return false;
   }
+
+  return true;
 };
 
 function checkValidFA(nodes) {
   for (var i = 0; i < nodes.length; i++) {
-    if (!(validShape(nodes[i]) && validTransition(nodes[i]) && validColor(nodes[i]))) {
+    //&& validTransition(nodes[i])
+    if (!(validShape(nodes[i]) && validColor(nodes[i]))) {
       return false;
     }
   }
@@ -203,7 +143,7 @@ function validColor(node) {
 };
 
 function checkColor(node, color) {
-  return node.background == color && node.border == color;
+  return node.color.background == color && node.color.border == color;
 };
 
 function checkInitial(nodes) {

@@ -21,7 +21,7 @@ CrossProduct.prototype.crossStates = function() {
 		for (var j = 0; j < R.length; j++) {
 			if (L[i].shape == 'triangle' && R[j].shape == 'triangle')
 				this.newDFA.insertNode('triangle', L[i].id + R[j].id, L[i].label + R[j].label, 'blue');
-			else 
+			else
 				this.newDFA.insertNode('circle', L[i].id + R[j].id, L[i].label + R[j].label, 'blue');
 		}
 	}

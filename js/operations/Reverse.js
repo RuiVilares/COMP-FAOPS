@@ -1,18 +1,6 @@
 //Constructor (only one dfa are parsed)
 var Reverse = function reverse(DFA) {
-  var DOTstring = 'dinetwork {' +
-      'A -> B [label="a"];' +
-      'A -> C [label="b"];' +
-      'B -> B [label="a"];' +
-      'B -> B [label="b"];' +
-      'C -> C [label="a"];' +
-      'C -> C [label="b"];' +
-      'A[ color=blue, shape=triangle]' +
-      'B[ color=red, shape=circle]' +
-      'C[ color=red, shape=circle]' +
-      '}';
-  this.dfa = this.parseDFA(DOTstring);
-  console.log(this.dfa);
+  this.dfa = DFA;
 };
 
 Reverse.prototype.compute = function() {
