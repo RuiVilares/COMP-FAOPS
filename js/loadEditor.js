@@ -29,19 +29,28 @@ function loadEditor() {
 
         // FAZER A ANALISE LEXICAL ---------------------------------------------------
 
-        //Start the lexical and syntatic analysis
-        start(lines);
+        //Start the lexical analysis
+        var sequence = start(lines);
 
-        //TODO compute the tree
+        //Start the syntatic and semantic
+        var syntax = new Syntactic(sequence);
+
+        if (syntax == null) {
+          return;
+        }
+
+        //compute the tree
+        var tree = new TreeProcess(syntax.tree);
+        tree.compute();
 
         //Start
 
-        $('#output').html("");
+        /*$('#output').html("");
 
         $('#visualization').html("");
 
         variableName = '';
-        data = [];
+        data = [];*/
         //var lines = document.getElementById("editor").value.split(/(?:\\[rn]|[\r\n]+)+/g);
 
 

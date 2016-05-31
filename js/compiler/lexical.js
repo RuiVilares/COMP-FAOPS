@@ -23,15 +23,5 @@ function start(code) {
     errorMsg(err);
   }
 
-  var syntax = new Syntactic(sequence);
-
-  //compute
-  var processTree = new TreeProcess(syntax.tree);
-  //processTree.compute();
-  //var nfa = new NFA_to_DFA("");
-  //console.log(nfa.convert());
-
-  // var dfa = new Reverse("");
-  // var newdfa = dfa.compute();
-  // console.log(newdfa.data);
+  return sequence;
 };

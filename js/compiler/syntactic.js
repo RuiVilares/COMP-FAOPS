@@ -98,6 +98,10 @@ Syntactic.prototype.newExpression = function(parent) {
 		if(this.sequence.peek().id == TOKENS.QUOTE) {
 			this.sequence.nextToken();
 			if(this.sequence.peek().id == TOKENS.FILENAME) {
+				if (!this.fileExists(this.sequence.peek().img)) {
+					errorMsg("File '" + this.sequence.peek().img +"' does not exist.");
+					return null;
+				}
 				this.tree.add(this.sequence.peek().img, parent, this.tree.traverseDF, this.sequence.peek());
 				this.sequence.nextToken();
 				if(this.sequence.peek().id == TOKENS.QUOTE) {
@@ -113,13 +117,22 @@ Syntactic.prototype.newExpression = function(parent) {
 	return false;
 };
 
+Syntactic.prototype.fileExists = function(filename) {
+	for (var i = 1; i < automata.length; i++) {
+		if (automata[i].name == filename)
+			return true;
+	}
+
+	return false;
+};
+
 Syntactic.prototype.dump = function(parent) {
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
-		var filename = this.sequence.peek();
 		if (this.variables[this.sequence.peek().img] == null) {
 			errorMsg("Variable '" + this.sequence.peek().img + "' is used but not defined.");
 			return false;
 		}
+		var filename = this.sequence.peek();
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.CONCATENATE) {
 			this.sequence.nextToken();
@@ -133,10 +146,6 @@ Syntactic.prototype.dump = function(parent) {
 					if(this.sequence.peek().id == TOKENS.QUOTE) {
 						this.sequence.nextToken();
 						if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
-						if (this.variables[this.sequence.peek().img] == null) {
-							errorMsg("Variable '" + this.sequence.peek().img + "' is used but not defined.");
-							return false;
-						}
 							this.tree.add(this.sequence.peek().img, dump, this.tree.traverseDF, this.sequence.peek());
 							this.sequence.nextToken();
 							if(this.sequence.peek().id == TOKENS.QUOTE) {

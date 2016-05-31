@@ -1,26 +1,7 @@
-var Union = function union(node) {
-    var DOTstring = 'dinetwork {' +
-        'A -> B [label="a"];' +
-        'A -> A [label="b"];' +
-        'B -> B [label="b"];' +
-        'B -> A [label="a"];' +
-        'A[ color=red, shape=triangle]' +
-        'B[ color=blue, shape=circle]' +
-        '}';
-    this.left = this.parseDFA(DOTstring);
-
-
-    DOTstring = 'dinetwork {' +
-        'C -> D [label="b"];' +
-        'C -> C [label="a"];' +
-        'D -> D [label="a"];' +
-        'D -> C [label="b"];' +
-        'C[ color=blue, shape=triangle]' +
-        'D[ color=red, shape=circle]' +
-        '}';
-    this.right = this.parseDFA(DOTstring);
-
-    var crossOperation = new CrossProduct(this.left, this.right);
+var Union = function Union(left, right) {
+    this.left = left;
+    this.right = right;
+    var crossOperation = new CrossProduct(left, right);
     this.crossResult = crossOperation.execute();
 };
 
@@ -53,7 +34,7 @@ Union.prototype.compute = function () {
             }
         }
     }
-    
+
     return this.crossResult;
 };
 
