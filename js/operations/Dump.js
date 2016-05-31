@@ -1,7 +1,8 @@
-var Dump = function Dump(dfa) {
+var Dump = function Dump(dfa, name) {
+	this.name = name + ".dot";
 	this.dfa = new DFA(dfa.options);
 	this.dfa.clone(dfa);
-}//var content= dump(DFA);
+};//var content= dump(DFA);
 
 Dump.prototype.compute = function(){
   var content='dinetwork{\n';

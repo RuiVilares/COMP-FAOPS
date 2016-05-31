@@ -31,7 +31,7 @@ function handleFiles() {
         TreeProcess.hashmapFiles[file.name] = nfa.convert();
       }
 
-      newAutomataResult(automata[index], "File" + index + ".dot");
+      //newAutomataResult(automata[index], "File" + index + ".dot");
 
       index++;
       fileListener();
