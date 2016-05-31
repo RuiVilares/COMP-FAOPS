@@ -1,14 +1,5 @@
 var Dump = function Dump(DFA) {
-  //teste
-  var DOTstring = 'dinetwork {' +
-      'A -> B [label="a"];' +
-      'A -> A [label="b"];' +
-      'B -> B [label="b"];' +
-      'B -> A [label="a"];' +
-      'A[ color=red, shape=triangle]' +
-      'B[ color=blue, shape=circle]' +
-      '}';
-  this.dfa = this.parseDFA(DOTstring);
+  this.dfa = this.parseDFA(DFA);
   console.log(this.dfa);
 }//var content= dump(DFA);
 
@@ -25,7 +16,6 @@ Dump.prototype.compute = function(){
     content+='  '+edges[i].from + "->"+ edges[i].to + "[label="+ edges[i].label+"];\n"
   }
   content+='}';
-  console.log(content);
   return content;
 
 }

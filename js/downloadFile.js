@@ -1,5 +1,5 @@
 function downloadFile(filename) {
-  var dfa = new Dump("");
+  var dfa = new Dump(automata[0]);
   var newdfa = dfa.compute();
 
   var element = document.createElement('a');

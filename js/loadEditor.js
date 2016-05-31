@@ -8,11 +8,11 @@ document.head.appendChild(imported);
 
 function loadEditor() {
 
-    if (automata[1] == null) {
+    if (automata == null || automata.length <= 0) {
       errorMsg("So the code can work, it's necessary to upload at least one file.");
       return;
     }
-    read(automata[1].dot,"mynetworkResult");
+    read(automataResult.dot,"mynetworkResult");
 
     $(function () {
         //lines = [];
