@@ -1,6 +1,7 @@
 //Constructor (only one dfa are parsed)
-var Reverse = function reverse(DFA) {
-  this.dfa = DFA;
+var Reverse = function reverse(dfa) {
+	this.dfa = new DFA(dfa.options);
+	this.dfa.clone(dfa);
 };
 
 Reverse.prototype.compute = function() {

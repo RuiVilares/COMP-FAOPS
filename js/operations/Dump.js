@@ -1,5 +1,6 @@
-var Dump = function Dump(DFA) {
-  this.dfa = DFA;
+var Dump = function Dump(dfa) {
+	this.dfa = new DFA(dfa.options);
+	this.dfa.clone(dfa);
 }//var content= dump(DFA);
 
 Dump.prototype.compute = function(){

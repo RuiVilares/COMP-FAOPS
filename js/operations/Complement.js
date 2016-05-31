@@ -1,6 +1,7 @@
 //Constructor (only one dfa are parsed)
-var Complement = function Complement(DFA) {
-  this.DFA = DFA;
+var Complement = function Complement(dfa) {
+	this.dfa = new DFA(dfa.options);
+	this.dfa.clone(dfa);
 };
 
 Complement.prototype.compute = function() {

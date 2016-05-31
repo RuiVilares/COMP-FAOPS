@@ -1,6 +1,8 @@
 var CrossProduct = function(leftDFA, rightDFA) {
-	this.left = leftDFA;
-	this.right = rightDFA;
+	this.left = new DFA(left.options);
+	this.left.clone(left);
+	this.right = new DFA(right.options);
+	this.right.clone(right);
 	this.newDFA = new DFA();
 };
 

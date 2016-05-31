@@ -1,8 +1,10 @@
 var Union = function Union(left, right) {
-    this.left = left;
-    this.right = right;
-    var crossOperation = new CrossProduct(left, right);
-    this.crossResult = crossOperation.execute();
+	this.left = new DFA(left.options);
+	this.left.clone(left);
+	this.right = new DFA(right.options);
+	this.right.clone(right);
+  var crossOperation = new CrossProduct(this.left, this.right);
+  this.crossResult = crossOperation.execute();
 };
 
 Union.prototype.compute = function () {
