@@ -8,6 +8,8 @@ document.head.appendChild(imported);
 
 function loadEditor() {
 
+  deleteAutomataResult();
+
     if (automata == null || automata.length <= 0) {
       errorMsg("So the code can work, it's necessary to upload at least one file.");
       return;
