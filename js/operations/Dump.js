@@ -1,4 +1,4 @@
-var Dump = function dump() {
+var Dump = function Dump() {
 //  var nodes = this.dfa.data.nodes;
 //  var edges = this.dfa.data.edges;
   var content;
