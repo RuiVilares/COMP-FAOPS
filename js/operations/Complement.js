@@ -1,9 +1,18 @@
-//Constructor (only one dfa are parsed)
+/**
+ * Complement - constructor of the complement operation
+ *
+ * @param  {DFA} dfa dfa to be complemented
+ */
 var Complement = function Complement(dfa) {
 	this.dfa = new DFA(dfa.options);
 	this.dfa.clone(dfa);
 };
 
+/**
+ * Complement.prototype.compute - performs the complement operation
+ *
+ * @return {DFA}  return of the DFA
+ */
 Complement.prototype.compute = function() {
   var nodes = this.DFA.data.nodes;
   for (var i = 0; i < nodes.length; i++) {
@@ -21,25 +30,4 @@ Complement.prototype.compute = function() {
     }
   }
   return this.DFA;
-}
-
-//parse a string to dfa
-Complement.prototype.parseDFA = function(str) {
-	var parsedData = vis.network.convertDot(str);
-
-  var data = {
-    nodes: parsedData.nodes,
-    edges: parsedData.edges
-  }
-
-  var options = parsedData.options;
-
-  options.nodes = {
-    color: 'red'
-  }
-
-  var dfa_test = new DFA(options);
-  dfa_test.setData(data);
-
-  return dfa_test;
 };

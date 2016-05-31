@@ -9,5 +9,5 @@ function downloadFile(indexRes) {
 
   element.click();
   document.body.removeChild(element);
-  
+
 }

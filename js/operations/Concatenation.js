@@ -1,4 +1,9 @@
-//Constructor (both arguments are dfa parsed)
+/**
+ * Concatenation - constructor of the concatenation operation
+ *
+ * @param  {DFA} left  dfa on the left of the operation
+ * @param  {DFA} right dfa on the right of the operation
+ */
 var Concatenation = function Concatenation(left, right) {
 	this.left = new DFA(left.options);
 	this.left.clone(left);
@@ -6,8 +11,11 @@ var Concatenation = function Concatenation(left, right) {
 	this.right.clone(right);
 };
 
-//Performs the concatenation between the two dfas
-//http://math.stackexchange.com/questions/657868/combining-two-dfas-into-an-nfa-to-recognize-concatenation
+/**
+ * Concatenation.prototype.compute - Performs the concatenation between the two dfas
+ * http://math.stackexchange.com/questions/657868/combining-two-dfas-into-an-nfa-to-recognize-concatenation
+ * @return {DFA}  dfa concatenated
+ */
 Concatenation.prototype.compute = function() {
 	var startR = this.getInitialR();
 
@@ -27,7 +35,9 @@ Concatenation.prototype.compute = function() {
 	return this.left;
 };
 
-//Copy the dfa from the right to the dfa from the left
+/**
+ * Concatenation.prototype.compressToL - copy the dfa from the right to the dfa from the left
+ */
 Concatenation.prototype.compressToL = function() {
 
 	//copy nodes
@@ -55,7 +65,11 @@ Concatenation.prototype.compressToL = function() {
 
 };
 
-//get initial state from the dfa of the right
+/**
+ * Concatenation.prototype.getInitialR - get initial state from the dfa of the right
+ *
+ * @return {type}  description
+ */
 Concatenation.prototype.getInitialR = function() {
 	var nodes = this.right.data.nodes;
 
@@ -65,25 +79,4 @@ Concatenation.prototype.getInitialR = function() {
 			return nodes[i].label;
 		}
 	}
-};
-
-//parse a string to dfa
-Concatenation.prototype.parseDFA = function(str) {
-	var parsedData = vis.network.convertDot(str);
-
-  var data = {
-    nodes: parsedData.nodes,
-    edges: parsedData.edges
-  }
-
-  var options = parsedData.options;
-
-  options.nodes = {
-    color: 'red'
-  }
-
-  var dfa_test = new DFA(options);
-  dfa_test.setData(data);
-
-  return dfa_test;
 };
