@@ -5,15 +5,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Project of Compilers Course Unit">
+    <meta name="author" content="COMP 15/16 - T05G02">
     <title>FEUP/EIC0028 Compilers  2015/2016 - FAOPS - T05G02</title>
+    <link rel="icon" href="https://paginas.fe.up.pt/demetwww/images/u_feup.png">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
+
 
   <!-- Modal -->
   <div class="modal fade" id="modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -27,6 +29,8 @@
   </div>
   <!-- /.modal -->
 
+
+
 <!-- Begin page content -->
 <div class="container">
   <div class="page-header col-md-12">
@@ -36,7 +40,7 @@
   </div>
   <div class="col-md-12">
     <span class="btn btn-info btn-file col-md-3">
-      Upload dot file<input type="file" id="input">
+      Upload DOT file<input type="file" id="input">
     </span>
     <!-- Modal -->
     <a data-toggle="modal" class ="btn-circle" href="upload.html" data-target="#modal">
@@ -45,10 +49,11 @@
   </div>
   <div class="col-md-6">
     <h3>Code Editor
-          <!-- Modal -->
-    <a class="btn-circle" data-toggle="modal" href="editor.html"
-                                                        data-target="#modal"><i
-                  class="glyphicon glyphicon-question-sign"></i></a></h3>
+    <!-- Modal -->
+    <a class="btn-circle" data-toggle="modal" href="editor.html" data-target="#modal">
+      <i class="glyphicon glyphicon-question-sign"></i>
+    </a>
+    </h3>
     <div id="openEditor" class="centered">
       <button id="ch" type="button" class="btn btn-success col-md-12" onclick="openEditor()">Open</button>
     </div>
@@ -68,10 +73,12 @@
   </div>
 
   <div class="col-md-12 dynamicTabs">
-  <!-- Modal -->
-    <h3>Graph display<a class="btn-circle" data-toggle="modal" href="upload.html"
-                                                        data-target="#modal"><i
-                  class="glyphicon glyphicon-question-sign"></i></a></h3>
+    <h3>Graph display
+    <!-- Modal -->
+    <a class="btn-circle" data-toggle="modal" href="upload.html" data-target="#modal">
+      <i class="glyphicon glyphicon-question-sign"></i>
+    </a>
+    </h3>
     <ul id="navtabs" class="nav nav-tabs">
 
     </ul>
@@ -83,16 +90,54 @@
 
   <div class="col-md-12 result">
     <h3>Graph result</h3>
-    <div id="mynetworkResult"></div>
+    <ul id="navtabsResult" class="nav nav-tabs">
 
-    <button class="btn btn-info footer col-md-3" onclick="downloadFile('test.dot')">Download dot file</button>
+    </ul>
+
+    <div id="contentTabsResult" class="tab-content">
+
+    </div>
   </div>
 </div>
+
+<script type="text/javascript">
+
+  var errorMsg = function(msg) {
+    swal("Error!", msg, "error");
+  };
+
+  var warningMsg = function(msg) {
+    swal("Warning!", msg, "warning");
+  };
+
+  var successMsg = function(msg) {
+    swal("Success!", msg, "success");
+  };
+
+  function openEditor() {
+    $('#editorW').slideToggle("fast");
+  }
+
+  $(document).on('hidden.bs.modal', function (e) {
+    $(e.target).removeData('bs.modal');
+  });
+
+  $('#ch').click(function () {
+    if ($(this).html() == "Open") {
+      $(this).html("Close");
+      $(this).removeClass("btn-success").addClass("btn-danger");
+    } else {
+      $(this).html("Open");
+      $(this).removeClass("btn-danger").addClass("btn-success");
+    }
+  });
+</script>
 
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/loadFile.js"></script>
 <script src="js/loadEditor.js"></script>
+<script src="js/resultFiles.js"></script>
 
 <script src="js/downloadFile.js"></script>
 <script src="js/sweetalert.min.js"></script>
@@ -122,23 +167,8 @@
 
 <script type="text/javascript">
     function openEditor() {
-
         $('#editorW').slideToggle("fast");
     }
-
-    $(document).on('hidden.bs.modal', function (e) {
-        $(e.target).removeData('bs.modal');
-    });
-    $('#ch').click(function () {
-        if ($(this).html() == "Open") {
-            $(this).html("Close");
-            $(this).removeClass("btn-success").addClass("btn-danger");
-        }
-        else {
-            $(this).html("Open");
-            $(this).removeClass("btn-danger").addClass("btn-success");
-        }
-    });
 </script>
 
 </body>
