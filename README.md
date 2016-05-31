@@ -28,4 +28,4 @@ FA C = not(A int B);
 C.dump(“dot”);
 
 
-[dotFile]: https://github.com/RuiVilares/COMP-FAOPS/blob/Guilherme/extra/readmeResouces/dotFile.png?raw=true
+[dotFile]: https://github.com/RuiVilares/COMP-FAOPS/blob/Guilherme/extra/readmeResources/dotFile.PNG
