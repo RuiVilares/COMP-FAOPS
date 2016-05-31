@@ -11,43 +11,33 @@ NAME4: Rui Vilares, NR4: 201207046, GRADE4: 20.0, CONTRIBUTION4: 25%
 ```
 ###SUMMARY
 
-The developed project consists in a single webpage application with the intention to provide to the user the result from a operation between multiple finite automatas.
+The developed project consists in a single webpage application with the intention to provide to the user the result from an operation between multiple finite automatas. It includes the definition of a **DSL** ( _Domain-Specific Language_ ) to analyze, interpret and calculate the expressions relative to the operations over finite automatas. The supported operations are: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union).
 
-The final product must be able to upload multiple DOT files, each one containing a finite automata, and process an operation given by the user. The program should alert the user with a success message or an error alert, if any mistake on the input data was detected.
+The final product must be able to upload multiple DOT files, each one containing a finite automata, and process an operation given by the user. The program should alert the user with a success message or an error alert, if any mistake on the input data was detected. It should be also possible to dump the resultant FA to a dot file, downloadable by the user.
 
 The development of a web application is ideal for this project, improving the interaction with the user and offering the best visual output, using the [GraphViz](http://www.graphviz.org/), an open source graph visualization framework, with the features we required.
 
+###DEALING WITH SYNTACTIC ERRORS
 
+The project covers two syntactic analysis: the DOT file data and the operation expression, written by the user.
 
+The analysis of the DOT file is processed by the GraphViz framework, so, if the syntax is not correct, the tool detects it and a warning is shown to the user. Relatively to the expression's analysis, and **AST** ( _Abstract Syntax Tree_ ) is created, in order to boost the processing of the query.
 
+The parser interprets the message and builds a detailled Tree including: 
+..* The definiton of a finite automata with the prefix 'FA', followed by a Identifier and an equals sign ("="), which can be used to assign a FA previously uploaded or the result of an operation expression;
+..* The definition of the operations: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union);
+..* The definition of the precedence, implementing the priority induced by the parentheses;
+..* The definition of a DUMP instruction, that outputs the result of and operation and creates a DOT file to be downloaded by the user.
 
-Este projeto inclui a definição de uma **DSL** ( _Domain-Specific Language_ ) para análise, interpretação e cálculo de expressões relativas a operações entre autómatos finitos (FA's).
-
-A aplicação consiste numa única página web, de design e utilização simples.
-
-//inserir print de pagina web
-
-Os Autómatos Finitos usados nas expressões devem ser inseridos com recurso ao _upload_ de ficheiros DOT, segundo o formato especificado na imagem que se segue:
-
-![Example of DOT file] [dotFile]
-
-Recorrendo à framework [GraphViz](http://www.graphviz.org/), necessitamos de definir um padrão de modo a distinguir estados iniciais e estados finais dos restantes estados intermédios. Para tal, estabelecemos que estados finais serão distinguidos com '**shape=**triangle' e estados finais com '**color=**red'
-
-
-
-
-
-
-FAOPS: Operations with Finite Automata (an alternative can be to consider an embedded DSL for Java)
-This project includes the definition of a DSL to specify expressions consisting of operations over finite automata (FAs).
-The FAs used in the expressions shall be input using dot files. The framework shall perform the operations in the expression.
-The DSL shall include a way to specify the dumping of the resultant FA as a dot file. 
-The operations to be considered are: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union).
-
+```
 FA A = new(“A.dot”);
 FA B = new(“B.dot”);
 FA C = not(A int B);
 C.dump(“dot”);
+```
+
+
+![Example of DOT file] [dotFile]
 
 
 [dotFile]: https://github.com/RuiVilares/COMP-FAOPS/blob/Guilherme/extra/readmeResources/dotFile.PNG
