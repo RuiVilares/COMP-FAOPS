@@ -12,7 +12,7 @@ function loadEditor() {
       errorMsg("So the code can work, it's necessary to upload at least one file.");
       return;
     }
-    read(automataResult.dot,"mynetworkResult");
+    //read(automataResult.dot,"mynetworkResult");
 
     $(function () {
         //lines = [];
