@@ -1,4 +1,4 @@
-# PROJECT TITLE: Operações com Autómatos Finitos
+# PROJECT TITLE: Finite Automata Operations
 ## GROUP: 2FAOPS
 ```
 NAME1: António Ramadas, NR1: 201303568, GRADE1: 20.0, CONTRIBUTION1: 25%
@@ -9,9 +9,17 @@ NAME3: José Pedro Teles, NR3: 201305101, GRADE3: 20.0, CONTRIBUTION3: 25%
 
 NAME4: Rui Vilares, NR4: 201207046, GRADE4: 20.0, CONTRIBUTION4: 25%
 ```
+###SUMMARY
+
+The developed project consists in a single webpage application with the intention to provide to the user the result from a operation between multiple finite automatas.
+
+The final product must be able to upload multiple DOT files, each one containing a finite automata, and process an operation given by the user. The program should alert the user with a success message or an error alert, if any mistake on the input data was detected.
+
+The development of a web application is ideal for this project, improving the interaction with the user and offering the best visual output, using the [GraphViz](http://www.graphviz.org/), an open source graph visualization framework, with the features we required.
 
 
-Foi desenvolvida, no âmbito da unidade curricular de Compiladores, uma aplicação web com o objetivo de disponibilizar, ao utilizador, o resultado do processamento de operações entre autómatos finitos.
+
+
 
 Este projeto inclui a definição de uma **DSL** ( _Domain-Specific Language_ ) para análise, interpretação e cálculo de expressões relativas a operações entre autómatos finitos (FA's).
 
