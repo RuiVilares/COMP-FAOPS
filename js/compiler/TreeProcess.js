@@ -1,13 +1,13 @@
 var TreeProcess = function(tree) {
   this.tree = tree;
-
-  //they are maps of DFAs
-  //map of the variables used
-  this.hashmapVar = new Map();
-
-  //map of the files uploaded
-  this.hashmapFiles = new Map();
 };
+
+//they are maps of DFAs
+//map of the variables used
+TreeProcess.hashmapVar = new Map();
+
+//map of the files uploaded
+TreeProcess.hashmapFiles = new Map();
 
 TreeProcess.prototype.compute = function() {
   for (var i = 0; i < this.tree._root.children.length; i++) {
@@ -17,9 +17,9 @@ TreeProcess.prototype.compute = function() {
 
 TreeProcess.prototype.decideLeaf = function(node) {
   if (node.token.id == TOKENS.FILENAME) {
-    return this.hashmapFiles[node.token.img];
+    return TreeProcess.hashmapFiles[node.token.img];
   } else {
-    return this.hashmapVar[node.token.img];
+    return TreeProcess.hashmapVar[node.token.img];
   }
 };
 
@@ -55,7 +55,7 @@ TreeProcess.prototype.decide2Arg = function(op, left, right) {
         window.alert("File is probably missing...");
         return null;
       }
-      this.hashmapVar.set(left, right);
+      TreeProcess.hashmapVar.set(left, right);
       return null;
     case TOKENS.DUMP:
       return dump(left, right);
