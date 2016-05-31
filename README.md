@@ -1,5 +1,12 @@
-# FAOPS
-## Operações com Autómatos Finitos
+# PROJECT TITLE: Operações com Autómatos Finitos
+## GROUP: 2FAOPS
+### NAME1: António Ramadas, NR1: 201303568, GRADE1: 20.0, CONTRIBUTION1: 25%
+### NAME2: Guilherme Pinto, NR2: 201305803, GRADE2: 20.0, CONTRIBUTION2: 25%
+### NAME3: José Pedro Teles, NR3: 201305101, GRADE3: 20.0, CONTRIBUTION3: 25%
+### NAME4: Rui Vilares, NR4: 201207046, GRADE4: 20.0, CONTRIBUTION4: 25%
+
+
+
 
 Foi desenvolvida, no âmbito da unidade curricular de Compiladores, uma aplicação web com o objetivo de disponibilizar, ao utilizador, o resultado do processamento de operações entre autómatos finitos.
 
