@@ -1,7 +1,4 @@
-var Dump = function Dump() {
-//  var nodes = this.dfa.data.nodes;
-//  var edges = this.dfa.data.edges;
-  var content;
+var Dump = function Dump(DFA) {
   //teste
   var DOTstring = 'dinetwork {' +
       'A -> B [label="a"];' +
@@ -11,17 +8,27 @@ var Dump = function Dump() {
       'A[ color=red, shape=triangle]' +
       'B[ color=blue, shape=circle]' +
       '}';
-  this.left = this.parseDFA(DOTstring);
+  this.dfa = this.parseDFA(DOTstring);
+  console.log(this.dfa);
+}//var content= dump(DFA);
+
+Dump.prototype.compute = function(){
+  var content='dinetwork{\n';
+  var nodes = this.dfa.data.nodes;
+  var edges = this.dfa.data.edges;
 
   for(var i=0; i < nodes.length; i++){
-    content= nodes.id +"[nodes="+nodes.color +", shape="+nodes.shape+ "]\\n";
+    content+= '  '+nodes[i].id +"[color="+ nodes[i].color.background +", shape="+nodes[i].shape+ "]\n";
   }
 
   for(var i=0; i< edges.length; i++){
-    content=edges.from + "->"+ edges.to + "[label="+edges.label+"];\\n"
+    content+='  '+edges[i].from + "->"+ edges[i].to + "[label="+ edges[i].label+"];\n"
   }
+  content+='}';
+  console.log(content);
   return content;
-}//var content= dump(DFA);
+
+}
 
 //parse a string to dfa
 Dump.prototype.parseDFA = function (str) {
