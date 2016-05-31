@@ -11,7 +11,7 @@ A aplicação consiste numa única página web, de design e utilização simples
 
 Os Autómatos Finitos usados nas expressões devem ser inseridos com recurso a ficheiros DOT, segundo o formato especificado na imagem que se segue:
 
-![Example of DOT file] [dotfile]
+![Example of DOT file] [dotFile]
 
 
 
@@ -28,4 +28,4 @@ FA C = not(A int B);
 C.dump(“dot”);
 
 
-[dotfile]: https://github.com/RuiVilares/COMP-FAOPS/extra/readmeResources/dotfile.png
+[dotFile]: https://github.com/RuiVilares/COMP-FAOPS/extra/readmeResources/dotFile.png
