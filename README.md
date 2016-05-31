@@ -21,15 +21,15 @@ The development of a web application is ideal for this project, improving the in
 
 The project covers two syntactic analysis: the DOT file data and the operation expression, written by the user.
 
-The analysis of the DOT file is processed by the GraphViz framework, so, if the syntax is not correct, the tool detects it and a warning is shown to the user. Relatively to the expression's analysis, an **AST** ( _Abstract Syntax Tree_ ) is created, in order to boost the processing of the query.
+The analysis of the DOT file is processed by the GraphViz framework, so, if the syntax is not correct, the tool detects it and a warning is shown to the user. Relatively to the expression's analysis, an **AST** ( _Abstract Syntax Tree_ ) is created, in order to boost the processing of the query. The parser interprets the message and builds a detailled Tree including: 
 
-The parser interprets the message and builds a detailled Tree including: 
-
-* The definiton of a finite automata with the prefix 'FA', followed by a Identifier and an equals sign ("="), which can be used to assign a FA previously uploaded or the result of an operation expression;
+* The definiton of a finite automata with the prefix 'FA', followed by a Identifier and an equals sign ("="), which can be used to assign a finite automata previously uploaded or the result of an operation expression;
 * The definition of the operations: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union);
 * The definition of the precedence, implementing the priority induced by the parentheses;
 * The definition of a DUMP instruction, that outputs the result of and operation and creates a DOT file to be downloaded by the user.
 
+
+Example:
 ```
 FA A = new("A.dot");
 FA B = new("B.dot");
