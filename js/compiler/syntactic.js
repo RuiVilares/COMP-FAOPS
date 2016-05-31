@@ -165,7 +165,6 @@ Syntactic.prototype.dump = function(parent) {
 	return false;
 };
 
-
 //retorna arvore modificada ou null em caso de erro
 Syntactic.prototype.operation = function(parent, tree_) {
 	if (this.sequence.peek().id == TOKENS.COMPLEMENT) {
@@ -234,6 +233,7 @@ Syntactic.prototype.operation = function(parent, tree_) {
 		}
 	}
 
+	errorMsg("Operation not recognized.");
 	return null;
 };
 
@@ -251,8 +251,8 @@ Syntactic.prototype.checkReverse = function() {
 				return newTree_;
 			}
 		}
-
 	}
+	errorMsg("Reverse operation is badly defined.");
 	return null;
 };
 
@@ -270,8 +270,8 @@ Syntactic.prototype.checkComplement = function() {
 				return newTree_;
 			}
 		}
-
 	}
+	errorMsg("Complement operation is badly defined.");
 	return null;
 };
 
@@ -287,6 +287,7 @@ Syntactic.prototype.checkParenteses = function() {
 		}
 	}
 
+	errorMsg("Parenteses operation is badly defined.");
 	return null;
 };
 
@@ -303,6 +304,7 @@ Syntactic.prototype.operationR = function(parent) {
 		return data;
 	}
 
+	errorMsg("Multiplication, Concatenation, Intersection and Union operations have two operands");
 	return null;
 };
 
@@ -314,5 +316,6 @@ Syntactic.prototype.checkOPC = function() {
 			return this.sequence.peek();
 		}
 
+		errorMsg("Only multiplication, concatenation, intersection and union operations have two operands.");
 		return null;
 };

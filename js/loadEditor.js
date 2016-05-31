@@ -37,7 +37,7 @@ function loadEditor() {
         //Start the syntatic and semantic
         var syntax = new Syntactic(sequence);
 
-        if (syntax == null) {
+        if (syntax == null || syntax.tree == null) {
           return;
         }
 
