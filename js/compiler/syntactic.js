@@ -304,7 +304,6 @@ Syntactic.prototype.operationR = function(parent) {
 		return data;
 	}
 
-	errorMsg("Multiplication, Concatenation, Intersection and Union operations have two operands");
 	return null;
 };
 
@@ -316,6 +315,5 @@ Syntactic.prototype.checkOPC = function() {
 			return this.sequence.peek();
 		}
 
-		errorMsg("Only multiplication, concatenation, intersection and union operations have two operands.");
 		return null;
 };

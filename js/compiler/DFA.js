@@ -40,6 +40,6 @@ DFA.prototype.clone = function(dfa) {
 
   for (var i = 0; i < dfa.data.edges.length; i++) {
     var edge = dfa.data.edges[i];
-    this.insertNode(edge.from, edge.to, edge.label);
+    this.insertEdge(edge.from, edge.to, edge.label);
   }
 };

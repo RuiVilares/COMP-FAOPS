@@ -20,5 +20,4 @@ Dump.prototype.compute = function(){
   content+='}';
 
 	newAutomataResult(content, this.name);
-
 };

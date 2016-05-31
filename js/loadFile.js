@@ -80,7 +80,7 @@ function read(DOTstring, mynetwork){
   // create a network
   var network = new vis.Network(container, data, options);
 
-  if (!checkNodes(data.nodes)) {
+  if (!(checkNodes(data.nodes) && checkEdges(data.edges))) {
     return null;
   }
 
@@ -121,8 +121,17 @@ function checkNodes(nodes){
 
 function checkValidFA(nodes) {
   for (var i = 0; i < nodes.length; i++) {
-    //&& validTransition(nodes[i])
     if (!(validShape(nodes[i]) && validColor(nodes[i]))) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+function checkEdges(edges) {
+  for (var i = 0; i < edges.length; i++) {
+    if (!validTransition(edges[i])) {
       return false;
     }
   }
@@ -134,8 +143,8 @@ function validShape(node) {
   return node.shape == "triangle" || node.shape == "circle";
 };
 
-function validTransition(node) {
-  return node.to != null && node.from != null;
+function validTransition(edge) {
+  return edge.to != null && edge.from != null;
 };
 
 function validColor(node) {
