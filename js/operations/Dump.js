@@ -18,7 +18,7 @@ Dump.prototype.compute = function(){
   }
 
   content+='}';
-  console.log(content);
-  return content;
+
+	newAutomataResult(content, this.name);
 
 };

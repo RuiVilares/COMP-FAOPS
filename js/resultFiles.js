@@ -2,9 +2,8 @@ var automataResult = new Array();
 var indexResult = 1;
 
 function newAutomataResult(newResult, nameResult){
-  automataResult[indexResult] = newResult;
-  automataResult[indexResult].name = nameResult;
-
+  automataResult[indexResult] = {dot:newResult, name:nameResult};
+  
   var navTabToAdd = "<li><a data-toggle='tab' href='#fileResult" + indexResult + "'>" + automataResult[indexResult].name + "</a></li>";
   var tabToAdd =  "<div id='fileResult" + indexResult + "' class='tab-pane fade in'>\n"+
                     "<div id='mynetworkResult" + indexResult + "'></div>\n"+
