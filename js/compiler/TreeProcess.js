@@ -53,8 +53,7 @@ TreeProcess.prototype.decide2Arg = function(op, left, right) {
       return intersection(left, right);
     case TOKENS.EQUAL:
       if (right == null) {
-        //TODO different error message
-        window.alert("File is probably missing...");
+        errorMsg("File is probably missing...");
         return null;
       }
       TreeProcess.hashmapVar.set(left, right);
@@ -82,8 +81,7 @@ TreeProcess.prototype.traverseDF = function(tree) {//, callback) {
       case 2:
       return TreeProcess.prototype.decide2Arg(currentNode, recurse(currentNode.children[0]), recurse(currentNode.children[1]));
       default:
-      //TODO remove this message. Only useful for debug
-      window.alert("Too many childrens of the node: "+currentNode);
+      errorMsg("Too many childrens of the node: "+currentNode);
       return null;
     }
 

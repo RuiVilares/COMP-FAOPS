@@ -55,7 +55,7 @@ function handleFileSelect(evt) {
         var dropZone = document.getElementById('dropzone');
         dropZone.innerHTML = "File upload successfully!";
     } else {
-        window.alert("File not supported!");
+        errorMsg("File not supported!");
     }
 }
 
@@ -165,8 +165,7 @@ function read(DOTstring, mynetwork){
 //ve se tem estado inicial e final
 function checkNodes(nodes){
   if (!checkValidFA(nodes)) {
-    //TODO change error message
-    window.alert('The finite automata is required to have a initial state and at least one final.\n' +
+    errorMsg('The finite automata is required to have a initial state and at least one final.\n' +
                   'Epsilon states require the label $ (dollar sign). Each transition can have multiple inputs. ' +
                   'Therefore, multiple inputs can be represented by being separated by a comma.\n' +
                   'Valid NFA (Non-Deterministic Finite Automata) example:\n' +
@@ -181,13 +180,11 @@ function checkNodes(nodes){
     return false;
   }
 	if(!checkInitial(nodes)){
-		//TODO change error message
-		window.alert('Initial state is not correctly defined. Its shape is a triangle.');
+		errorMsg('Initial state is not correctly defined. Its shape is a triangle.');
     return false;
 	}
   if (!checkFinal(nodes)) {
-    //TODO change error message
-		window.alert('Final state is not correctly defined. Its color is red.');
+		errorMsg('Final state is not correctly defined. Its color is red.');
     return false;
   }
 

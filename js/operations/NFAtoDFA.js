@@ -1,42 +1,5 @@
 //Constructor (dfa already parsed)
 var NFA_to_DFA = function nfa_to_dfa(dfa) {
-  // provide data in the DOT language
-  /*var DOTstring =  'dinetwork {'+
-  'A -> B [label="0"];' +
-  'A -> A [label="2"]; ' +
-  'B -> A [label="1"];'+
-  'A[ color=red, shape=triangle]'+
-  'B[ color=blue, shape=circle]'+
-  '}';*/
-  /*var DOTstring =  'dinetwork {'+
-  'A -> B [label="$"];' +
-  'A -> C [label="0"]; ' +
-  'B -> C [label="1"];'+
-  'A[ color=blue, shape=triangle]'+
-  'B[ color=blue, shape=circle]'+
-  'C[ color=red, shape=circle]'+
-  '}';
-  var parsedData = vis.network.convertDot(DOTstring);
-
-  var data = {
-    nodes: parsedData.nodes,
-    edges: parsedData.edges
-  }
-
-  var options = parsedData.options;
-
-  // you can extend the options like a normal JSON variable:
-  options.nodes = {
-    color: 'red'
-  }
-
-  var dfa_test = new DFA(options);
-  dfa_test.setData(data);*/
-
-  //console.log(dfa_test);
-
-  //TODO every above this comment should be deleted
-  //TODO replace the word dfa_test by dfa
   this.dfa = dfa;
   this.getAllInputs();
 };

@@ -1,6 +1,3 @@
-//TODO VER A MULTIPLICACAO
-
-
 var Multiplication = function multiplication(node) {
     var DOTstring = 'dinetwork {' +
         'A -> B [label="a"];' +

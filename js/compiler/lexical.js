@@ -20,8 +20,7 @@ function start(code) {
       }
     }
   } catch (err) {
-    //TODO: display message should be changed
-    window.alert(err);
+    errorMsg(err);
   }
 
   var syntax = new Syntactic(sequence);

@@ -9,8 +9,7 @@ document.head.appendChild(imported);
 function loadEditor() {
 
     if (automata[1] == null) {
-      //TODO improve error message
-      window.alert("So the code can work, it's necessary to upload at least one file.");
+      errorMsg("So the code can work, it's necessary to upload at least one file.");
       return;
     }
     read(automata[1].dot,"mynetworkResult");
