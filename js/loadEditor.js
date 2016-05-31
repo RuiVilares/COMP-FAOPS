@@ -9,7 +9,7 @@ document.head.appendChild(imported);
 
 function loadEditor() {
 
-    read(automata[1].dot,"mynetworkResult")
+    //read(automata[1].dot,"mynetworkResult")
 
     $(function () {
         lines = [];

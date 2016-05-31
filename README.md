@@ -1,4 +1,11 @@
-# COMP-FAOPS
+# FAOPS
+## Operações com Autómatos Finitos
+
+Foi desenvolvida, no âmbito da unidade curricular de Compiladores, uma aplicação web com o objetivo de disponibilizar ao utilizador o resultado do processamento de operações entre autómatos finitos.
+
+Este projeto inclui a definição de uma **DSL** (_Domain-Specific Language_) 
+
+
 
 FAOPS: Operations with Finite Automata (an alternative can be to consider an embedded DSL for Java)
 This project includes the definition of a DSL to specify expressions consisting of operations over finite automata (FAs).
