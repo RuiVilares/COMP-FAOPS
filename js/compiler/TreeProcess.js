@@ -1,5 +1,6 @@
 var TreeProcess = function(tree) {
   TreeProcess.tree = tree;
+  TreeProcess.hashmapVar = new Map();
 };
 
 TreeProcess.tree = [];
@@ -57,8 +58,6 @@ TreeProcess.prototype.decide2Arg = function(op, left, right) {
       dfa = new Concatenation(left, right);
       return dfa.compute();
     case TOKENS.INTERSECTION:
-      console.log(left);
-      console.log(right);
       dfa = new Intersection(left, right);
       return dfa.compute();
     case TOKENS.UNION:

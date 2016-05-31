@@ -1,6 +1,7 @@
 //Constructor (dfa already parsed)
 var NFA_to_DFA = function nfa_to_dfa(dfa) {
-  this.dfa = dfa;
+	this.dfa = new DFA(dfa.options);
+	this.dfa.clone(dfa);
   this.getAllInputs();
 };
 

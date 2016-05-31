@@ -1,9 +1,11 @@
 var Intersection = function Intersection(left, right) {
-    this.left = left;
-    this.right = right;
+	this.left = new DFA(left.options);
+	this.left.clone(left);
+	this.right = new DFA(right.options);
+	this.right.clone(right);
 
-    var crossOperation = new CrossProduct(this.left, this.right);
-    this.crossResult = crossOperation.execute();
+  var crossOperation = new CrossProduct(this.left, this.right);
+  this.crossResult = crossOperation.execute();
 };
 
 Intersection.prototype.compute = function () {

@@ -1,7 +1,9 @@
 //Constructor (both arguments are dfa parsed)
 var Concatenation = function Concatenation(left, right) {
-	this.left = left;
-	this.right = right;
+	this.left = new DFA(left.options);
+	this.left.clone(left);
+	this.right = new DFA(right.options);
+	this.right.clone(right);
 };
 
 //Performs the concatenation between the two dfas
