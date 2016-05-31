@@ -98,10 +98,12 @@ function handleFiles() {
       $("#navtabs").append(navTabToAdd);
       $("#contentTabs").append(tabToAdd);
       $('#navtabs a:last').tab('show');
-      read(readerResult, "mynetwork" + index);
+      var fa = read(readerResult, "mynetwork" + index);
 
-      var nfa = new NFA_to_DFA(readerResult);
-      TreeProcess.hashmapFiles[file.name] = nfa.convert();
+      if (fa != null) {
+        var nfa = new NFA_to_DFA(fa);
+        TreeProcess.hashmapFiles[file.name] = nfa.convert();
+      }
 
       index++;
       fileListener();
@@ -150,7 +152,14 @@ function read(DOTstring, mynetwork){
   // create a network
   var network = new vis.Network(container, data, options);
 
-  checkNodes(data.nodes);
+  if (!checkNodes(data.nodes)) {
+    return null;
+  }
+
+  var fa = new DFA(options);
+  fa.setData(data);
+
+  return fa;
 };
 
 //ve se tem estado inicial e final
@@ -169,20 +178,26 @@ function checkNodes(nodes){
                   'B[ color=blue, shape=circle] '+
                   'C[ color=red, shape=circle] '+
                   '}');
+    return false;
   }
 	if(!checkInitial(nodes)){
 		//TODO change error message
 		window.alert('Initial state is not correctly defined. Its shape is a triangle.');
+    return false;
 	}
   if (!checkFinal(nodes)) {
     //TODO change error message
 		window.alert('Final state is not correctly defined. Its color is red.');
+    return false;
   }
+
+  return true;
 };
 
 function checkValidFA(nodes) {
   for (var i = 0; i < nodes.length; i++) {
-    if (!(validShape(nodes[i]) && validTransition(nodes[i]) && validColor(nodes[i]))) {
+    //&& validTransition(nodes[i])
+    if (!(validShape(nodes[i]) && validColor(nodes[i]))) {
       return false;
     }
   }
@@ -203,7 +218,7 @@ function validColor(node) {
 };
 
 function checkColor(node, color) {
-  return node.background == color && node.border == color;
+  return node.color.background == color && node.color.border == color;
 };
 
 function checkInitial(nodes) {
