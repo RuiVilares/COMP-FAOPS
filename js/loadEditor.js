@@ -24,7 +24,7 @@ function loadEditor() {
         $('#intable').empty();
         $('#rowToClone tr:not(:first)').not(function () {
             if ($(this).has('th').length) {
-                return true
+                return true;
             }
         }).remove();
 
