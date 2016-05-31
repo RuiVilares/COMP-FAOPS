@@ -1,14 +1,6 @@
 //Constructor (only one dfa are parsed)
-var Complement = function complement(DFA) {
-  var DOTstring = 'dinetwork {' +
-      'A -> B [label="a"];' +
-      'A -> A [label="b"];' +
-      'B -> B [label="b"];' +
-      'B -> A [label="a"];' +
-      'A[ color=red, shape=triangle]' +
-      'B[ color=blue, shape=circle]' +
-      '}';
-  this.DFA = this.parseDFA(DOTstring);
+var Complement = function Complement(DFA) {
+  this.DFA = DFA;
 };
 
 Complement.prototype.compute = function() {

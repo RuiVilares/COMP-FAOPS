@@ -1,20 +1,7 @@
 //Constructor (both arguments are dfa parsed)
-var Concatenation = function concatenation(left, right) {
-
-  var DOTstring =  'dinetwork {'+
-  'A -> B [label="0"];' +
-  'A[ color=blue, shape=triangle]'+
-  'B[ color=red, shape=circle]'+
-  '}';
-	this.left = this.parseDFA(DOTstring);
-
-
-  DOTstring =  'dinetwork {'+
-  'C -> D [label="1"];' +
-  'C[ color=blue, shape=triangle]'+
-  'D[ color=red, shape=circle]'+
-  '}';
-	this.right = this.parseDFA(DOTstring);
+var Concatenation = function Concatenation(left, right) {
+	this.left = left;
+	this.right = right;
 };
 
 //Performs the concatenation between the two dfas

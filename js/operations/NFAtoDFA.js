@@ -128,9 +128,9 @@ NFA_to_DFA.prototype.goto = function(edgeLabel, stateSA) {
 
 //Performs the closure of a given state
 //index should be 0
-NFA_to_DFA.prototype.closure = function(state, index) {
+NFA_to_DFA.prototype.closure = function(state, index1) {
 
-  if (index >= state.length) {
+  if (index1 >= state.length) {
     state.sort();
     return state.join(", ");
   }
@@ -138,7 +138,7 @@ NFA_to_DFA.prototype.closure = function(state, index) {
   var edges = this.dfa.data.edges;
 
   for (var i = 0; i < edges.length; i++) {
-    if (edges[i].from == state[index] && edges[i].label == "$") {
+    if (edges[i].from == state[index1] && edges[i].label == "$") {
       var toState = edges[i].to.split(", ");
       for (var j = 0; j < toState.length; j++) {
         if (state.indexOf(toState[j]) == -1) {
@@ -148,8 +148,8 @@ NFA_to_DFA.prototype.closure = function(state, index) {
     }
   }
 
-  index++;
-  return this.closure(state, index);
+  index1++;
+  return this.closure(state, index1);
 };
 
 //Get all the inputs on the nfa

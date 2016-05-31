@@ -1,9 +1,9 @@
 var Dump = function Dump(DFA) {
-  this.dfa = this.parseDFA(DFA);
-  console.log(this.dfa);
+  this.dfa = DFA;
 }//var content= dump(DFA);
 
 Dump.prototype.compute = function(){
+  return null;
   var content='dinetwork{\n';
   var nodes = this.dfa.data.nodes;
   var edges = this.dfa.data.edges;

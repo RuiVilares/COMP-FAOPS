@@ -13,6 +13,7 @@ TreeProcess.hashmapFiles = new Map();
 
 TreeProcess.prototype.compute = function() {
   for (var i = 0; i < TreeProcess.tree._root.children.length; i++) {
+    console.log(TreeProcess.tree._root.children[i].children[0]);
     this.traverseDF(TreeProcess.tree._root.children[i].children[0]);
   }
 };
@@ -33,24 +34,33 @@ TreeProcess.prototype.decide1Arg = function(op, node) {
 
   switch (op.token.id) {
     case TOKENS.COMPLEMENT:
-      return complement(node);
+      var dfa = new Complement(node);
+      return dfa.compute();
     case TOKENS.REVERSE:
-      return reverse(node);
+      var dfa = new Reverse(node);
+      return dfa.compute();
     default:
       return node;
   }
 };
 
 TreeProcess.prototype.decide2Arg = function(op, left, right) {
-
+  var dfa = null;
   switch (op.token.id) {
     case TOKENS.MULTIPLY:
-      return multiply(left, right);
+      dfa = new Multiplication(left, right);
+      return dfa.compute();
     case TOKENS.CONCATENATE:
-      var dfa = new Concatenation(left, right);
+      dfa = new Concatenation(left, right);
       return dfa.compute();
     case TOKENS.INTERSECTION:
-      return intersection(left, right);
+      console.log(left);
+      console.log(right);
+      dfa = new Intersection(left, right);
+      return dfa.compute();
+    case TOKENS.UNION:
+      dfa = new Union(left, right);
+      return dfa.compute();
     case TOKENS.EQUAL:
       if (right == null) {
         errorMsg("File is probably missing...");
@@ -59,7 +69,8 @@ TreeProcess.prototype.decide2Arg = function(op, left, right) {
       TreeProcess.hashmapVar.set(left, right);
       return null;
     case TOKENS.DUMP:
-      return dump(left, right);
+      dfa = new Dump(left, right);
+      return dfa.compute();
     default:
       return null;
   }
