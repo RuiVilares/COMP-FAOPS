@@ -3,17 +3,21 @@ function openEditor() {
     $('#openEditor').slideToggle("fast");
 }
 
-
 var imported = document.createElement('script');
 document.head.appendChild(imported);
 
 function loadEditor() {
 
-    read(automata[1].dot,"mynetworkResult")
+    if (automata[1] == null) {
+      //TODO improve error message
+      window.alert("So the code can work, it's necessary to upload at least one file.");
+      return;
+    }
+    read(automata[1].dot,"mynetworkResult");
 
     $(function () {
-        lines = [];
-        lines = document.getElementById("editor").value.split(/(?:\\[rn]|[\r\n]+)+/g);
+        //lines = [];
+        lines = document.getElementById("editor").value;//.split(/(?:\\[rn]|[\r\n]+)+/g);
 
         $(':input:not(#editor)').val('');
         $('#in').val('');
@@ -25,21 +29,15 @@ function loadEditor() {
         }).remove();
 
         // FAZER A ANALISE LEXICAL ---------------------------------------------------
-        //for debug for now
-        var code = "FA A = new(\"ola.dot\");\n"
-                  +"FA B = (O + P) + rev(K+C) + L;\n"
-                  +"B.dump(\"dot\");";
 
         //Start the lexical analysis
-        //start(lines);
-        start(code);
+        start(lines);
 
         $('#output').html("");
 
         $('#visualization').html("");
 
         variableName = '';
-        data = [];
         data = [];
         //var lines = document.getElementById("editor").value.split(/(?:\\[rn]|[\r\n]+)+/g);
 

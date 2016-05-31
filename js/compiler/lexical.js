@@ -5,7 +5,7 @@ function start(code) {
 
   try {
     while (initial < code.length) {
-      if (code[initial] == ' ' || code[initial] == '\n') {
+      if (code[initial] == ' ' || code[initial] == '\n' || code[initial] == '\r') {
         initial++;
         continue;
       }
