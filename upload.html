@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title"><i>Upload dot file instructions</i></h4>
+</div>
+<div class="modal-body">
+    <div class="te">
+
+        <p>You need to submit a dot file with the follow structure:</p>
+        <pre>
+dinetwork {
+     A[ color=blue, shape=triangle]
+     B[ color=red, shape=circle]
+     C[ color=red, shape=circle]
+     A -> B [label="a"];
+     A -> C [label="b"];
+     B -> B [label="a"];
+     B -> B [label="b"];
+     C -> C [label="a"];
+     C -> C [label="b"];
+}</pre>
+      <footer>According to vis library</footer>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+</div>
