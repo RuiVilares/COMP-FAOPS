@@ -22,7 +22,10 @@ TreeProcess.prototype.decideLeaf = function(node) {
   if (node.token.id == TOKENS.FILENAME) {
     return TreeProcess.hashmapFiles[node.token.img];
   } else {
-    return TreeProcess.hashmapVar[node.token.img];
+    if (TreeProcess.hashmapVar[node.token.img] != null) {
+      return TreeProcess.hashmapVar[node.token.img];
+    }
+    return node.token.img;
   }
 };
 
@@ -66,7 +69,7 @@ TreeProcess.prototype.decide2Arg = function(op, left, right) {
         errorMsg("File is probably missing...");
         return null;
       }
-      TreeProcess.hashmapVar.set(left, right);
+      TreeProcess.hashmapVar[left] = right;
       return null;
     case TOKENS.DUMP:
       dfa = new Dump(left, right);
