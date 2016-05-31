@@ -30,8 +30,12 @@ function loadEditor() {
 
         // FAZER A ANALISE LEXICAL ---------------------------------------------------
 
-        //Start the lexical analysis
+        //Start the lexical and syntatic analysis
         start(lines);
+
+        //TODO compute the tree
+
+        //Start
 
         $('#output').html("");
 

@@ -32,7 +32,7 @@ function start(code) {
   //var nfa = new NFA_to_DFA("");
   //console.log(nfa.convert());
 
-  var dfa = new Reverse("");
-  var newdfa = dfa.compute();
-  console.log(newdfa.data);
+  // var dfa = new Reverse("");
+  // var newdfa = dfa.compute();
+  // console.log(newdfa.data);
 };

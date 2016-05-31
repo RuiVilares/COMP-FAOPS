@@ -1,6 +1,8 @@
 var TreeProcess = function(tree) {
-  this.tree = tree;
+  TreeProcess.tree = tree;
 };
+
+TreeProcess.tree = [];
 
 //they are maps of DFAs
 //map of the variables used
@@ -10,8 +12,8 @@ TreeProcess.hashmapVar = new Map();
 TreeProcess.hashmapFiles = new Map();
 
 TreeProcess.prototype.compute = function() {
-  for (var i = 0; i < this.tree._root.children.length; i++) {
-    this.traverseDF(this.tree._root.children[i].children[0]);
+  for (var i = 0; i < TreeProcess.tree._root.children.length; i++) {
+    this.traverseDF(TreeProcess.tree._root.children[i].children[0]);
   }
 };
 
