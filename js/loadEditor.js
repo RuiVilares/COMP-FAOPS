@@ -8,7 +8,9 @@ document.head.appendChild(imported);
 
 function loadEditor() {
 
-    if (automata == null || automata.length <= 0) {
+  deleteAutomataResult();
+
+    /*if (automata == null || automata.length <= 0) {
       errorMsg("So the code can work, it's necessary to upload at least one file.");
       return;
     }
@@ -48,5 +50,5 @@ function loadEditor() {
         //FAZER AQUI AS VERIFICAÇÕES TAGS
 
         // FAZER AQUI A VERIFICAÇÃO DO FICHEIRO ----------------------------------------------------------------------------------------------------- (tal como no ficheiro loadFile.js)
-    });
+    });*/
 }

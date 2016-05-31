@@ -5,9 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Project of Compilers Course Unit">
+    <meta name="author" content="COMP 15/16 - T05G02">
     <title>FEUP/EIC0028 Compilers  2015/2016 - FAOPS - T05G02</title>
+    <link rel="icon" href="https://paginas.fe.up.pt/demetwww/images/u_feup.png">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
     <link href="css/style.css" rel="stylesheet">
@@ -60,9 +61,13 @@
 
   <div class="col-md-12 result">
     <h3>Graph result</h3>
-    <div id="mynetworkResult"></div>
+    <ul id="navtabsResult" class="nav nav-tabs">
 
-    <button class="btn btn-info footer col-md-3" onclick="downloadFile('test.dot')">Download DOT file</button>
+    </ul>
+
+    <div id="contentTabsResult" class="tab-content">
+      
+    </div>
   </div>
 </div>
 
@@ -79,6 +84,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/loadFile.js"></script>
 <script src="js/loadEditor.js"></script>
+<script src="js/resultFiles.js"></script>
 
 <script src="js/downloadFile.js"></script>
 <script src="js/sweetalert.min.js"></script>
@@ -108,7 +114,6 @@
 
 <script type="text/javascript">
     function openEditor() {
-
         $('#editorW').slideToggle("fast");
     }
 </script>
