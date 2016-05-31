@@ -142,6 +142,10 @@ function read(DOTstring, mynetwork){
 
   var options = parsedData.options;
 
+  //change canvas size
+  options.height = '400px';
+  options.interaction = {hover: true};
+
   // you can extend the options like a normal JSON variable:
   options.nodes = {
     color: 'blue'
