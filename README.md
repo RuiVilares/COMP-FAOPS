@@ -11,29 +11,30 @@ NAME4: Rui Vilares, NR4: 201207046, GRADE4: 20.0, CONTRIBUTION4: 25%
 ```
 ###SUMMARY
 
-The developed project consists in a single webpage application with the intention to provide to the user the result from an operation between multiple finite automatas. It includes the definition of a **DSL** ( _Domain-Specific Language_ ) to analyze, interpret and calculate the expressions relative to the operations over finite automatas. The supported operations are: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union).
+The developed project consists in a single webpage application with the intention to provide the result from an operation between multiple finite automatas. It includes the definition of a **DSL** ( _Domain-Specific Language_ ) to analyze, interpret and calculate the expressions relative to the operations over finite automatas. The supported operations are: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union).
 
-The final product must be able to upload multiple DOT files, each one containing a finite automata, and process an operation given by the user. The program should alert the user with a success message or an error alert, if any mistake on the input data was detected. It should be also possible to dump the resultant FA to a dot file, downloadable by the user.
+The final product must be able to upload multiple DOT files, each one containing a finite automata, and process an operation given by the user. The program should alert the user with a success message or an error alert, if any mistake on the input data was detected. It should also be possible to dump the resultant FA into a DOT file, downloadable by the user.
 
-The development of a web application is ideal for this project, improving the interaction with the user and offering the best visual output, using the [GraphViz](http://www.graphviz.org/), an open source graph visualization framework, with the features we required.
+The development of a web application is ideal for this project, improving the interaction with the user and offering the best visual output, using [GraphViz](http://www.graphviz.org/), an open source graph visualization framework, with the features we required.
 
 ###DEALING WITH SYNTACTIC ERRORS
 
 The project covers two syntactic analysis: the DOT file data and the operation expression, written by the user.
 
-The analysis of the DOT file is processed by the GraphViz framework, so, if the syntax is not correct, the tool detects it and a warning is shown to the user. Relatively to the expression's analysis, and **AST** ( _Abstract Syntax Tree_ ) is created, in order to boost the processing of the query.
+The analysis of the DOT file is processed by the GraphViz framework, so, if the syntax is not correct, the tool detects it and a warning is shown to the user. Relatively to the expression's analysis, an **AST** ( _Abstract Syntax Tree_ ) is created, in order to boost the processing of the query.
 
 The parser interprets the message and builds a detailled Tree including: 
-..* The definiton of a finite automata with the prefix 'FA', followed by a Identifier and an equals sign ("="), which can be used to assign a FA previously uploaded or the result of an operation expression;
-..* The definition of the operations: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union);
-..* The definition of the precedence, implementing the priority induced by the parentheses;
-..* The definition of a DUMP instruction, that outputs the result of and operation and creates a DOT file to be downloaded by the user.
+
+* The definiton of a finite automata with the prefix 'FA', followed by a Identifier and an equals sign ("="), which can be used to assign a FA previously uploaded or the result of an operation expression;
+* The definition of the operations: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union);
+* The definition of the precedence, implementing the priority induced by the parentheses;
+* The definition of a DUMP instruction, that outputs the result of and operation and creates a DOT file to be downloaded by the user.
 
 ```
-FA A = new(“A.dot”);
-FA B = new(“B.dot”);
+FA A = new("A.dot");
+FA B = new("B.dot");
 FA C = not(A int B);
-C.dump(“dot”);
+C.dump("dot");
 ```
 
 
