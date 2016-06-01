@@ -14,7 +14,6 @@ TreeProcess.hashmapFiles = new Map();
 
 TreeProcess.prototype.compute = function() {
   for (var i = 0; i < TreeProcess.tree._root.children.length; i++) {
-    console.log(TreeProcess.tree._root.children[i].children[0]);
     this.traverseDF(TreeProcess.tree._root.children[i].children[0]);
   }
 };

@@ -13,9 +13,9 @@ Syntactic.prototype.syntacticAnalysis = function() {
 		return;
 
 	if(this.S())
-		console.log("Correct Syntactic construction of the statement.");
+		successMsg("Correct Syntactic construction of the statement.");
 	else
-		console.log("Error on statement's construction.");
+		errorMsg("Error on statement's construction.");
 };
 
 /**

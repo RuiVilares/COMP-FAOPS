@@ -118,19 +118,6 @@
     $('#editorW').slideToggle("fast");
   }
 
-  $(document).on('hidden.bs.modal', function (e) {
-    $(e.target).removeData('bs.modal');
-  });
-
-  $('#ch').click(function () {
-    if ($(this).html() == "Open") {
-      $(this).html("Close");
-      $(this).removeClass("btn-success").addClass("btn-danger");
-    } else {
-      $(this).html("Open");
-      $(this).removeClass("btn-danger").addClass("btn-success");
-    }
-  });
 </script>
 
 <script src="js/jquery.js"></script>
