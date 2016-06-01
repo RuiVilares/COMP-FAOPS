@@ -14,7 +14,11 @@ dinetwork {
 filename
 B.dot
 dinetwork {
-  C  -> D [label="1"];
+  H -> I [label="a"];
+  I -> J [label="b"];
+  H -> H [label="b"];
+  I -> I [label="a"];
+  J -> J [label="a,b"];
   H[ color=red, shape=triangle]
   I[ color=red, shape=blue]
   J[ color=blue, shape=circle]
