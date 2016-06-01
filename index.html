@@ -69,16 +69,16 @@
       </div>
   </div>
   <div class="col-md-12">
-    <span class="btn btn-info btn-file col-md-3">
-      Upload DOT file<input type="file" id="input">
-    </span>
-    <!-- Modal -->
-    <a data-toggle="modal" class ="btn-circle" data-target="#uploadModal">
-      <i class="glyphicon glyphicon-question-sign"></i>
-    </a>
+    <div class="col-md-6">
+      <span class="btn btn-info btn-file col-md-3">
+        Upload DOT file<input type="file" id="input">
+      </span>
+      <!-- Modal -->
+      <a data-toggle="modal" class ="btn-circle" data-target="#uploadModal">
+        <i class="glyphicon glyphicon-question-sign"></i>
+      </a>
     <div class="modal fade" id="uploadModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
@@ -86,8 +86,8 @@
             <h4 class="modal-title">Upload dot file instructions</h4>
           </div>
           <div class="modal-body">
-                <p>You need to submit a dot file with the follow structure:</p>
-                <pre>
+            <p>You need to submit a dot file with the follow structure:</p>
+<pre>
 dinetwork {
    A[ color=blue, shape=triangle]
    B[ color=red, shape=circle]
@@ -100,15 +100,25 @@ dinetwork {
    C -> C [label="b"];
 }</pre>
               <footer>According to vis library</footer>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="col-md-6">
+      <button type="button" class="btn btn-default" onclick="loadExample(1)">Example 1</button>
+      <button type="button" class="btn btn-default" onclick="loadExample(2)">Example 2</button>
+      <button type="button" class="btn btn-default" onclick="loadExample(3)">Example 3</button>
+      <button type="button" class="btn btn-default" onclick="loadExample(4)">Example 4</button>
+      <button type="button" class="btn btn-default" onclick="loadExample(5)">Example 5</button>
+    </div>
   </div>
 
+  <div class="col-md-12">
   <div class="col-md-6">
     <h3>Code Editor
     <!-- Modal -->
@@ -163,6 +173,7 @@ C.dump(“dot”);
     <h3>Dot files</h3>
     <ul class="listFiles">
     </ul>
+  </div>
   </div>
 
   <div class="col-md-12 dynamicTabs">
@@ -244,6 +255,7 @@ C.dump(“dot”);
 <script src="js/loadFile.js"></script>
 <script src="js/loadEditor.js"></script>
 <script src="js/resultFiles.js"></script>
+<script src="js/loadExample.js"></script>
 
 <script src="js/downloadFile.js"></script>
 <script src="js/sweetalert.min.js"></script>
