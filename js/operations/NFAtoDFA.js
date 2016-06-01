@@ -47,7 +47,7 @@ NFA_to_DFA.prototype.paint = function(retDFA) {
 //Performs the conversion
 NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
   if (statesToVisit.length == 0) {
-    return retDFA;
+    return this.clean(retDFA);
   }
 
   /*
@@ -210,4 +210,23 @@ NFA_to_DFA.prototype.createDFA = function(data, options) {
   retDFA.insertEdge("DS", "DS", this.allEdges.join(", "));
 
   return retDFA;
+};
+
+NFA_to_DFA.prototype.clean = function(retDFA) {
+	for (var i = 0; i < retDFA.data.edges.length; i++) {
+		if ((retDFA.data.edges[i].from == "DS" && retDFA.data.edges[i].to != "DS")
+				|| (retDFA.data.edges[i].from != "DS" && retDFA.data.edges[i].to == "DS")) {
+			return retDFA;
+		}
+	}
+
+	for (var i = 0; i < retDFA.data.edges.length; i++) {
+		if (retDFA.data.edges[i].from == "DS" && retDFA.data.edges[i].to == "DS") {
+			retDFA.data.edges.splice(i,1);
+			i--;
+		}
+	}
+
+	retDFA.data.nodes.splice(0,1);
+	return retDFA;
 };

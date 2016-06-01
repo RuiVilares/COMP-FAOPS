@@ -14,7 +14,7 @@ var Complement = function Complement(dfa) {
  * @return {DFA}  return of the DFA
  */
 Complement.prototype.compute = function() {
-  var nodes = this.DFA.data.nodes;
+  var nodes = this.dfa.data.nodes;
   for (var i = 0; i < nodes.length; i++) {
     if (nodes[i].color.background == "red") {
       nodes[i].color = {
@@ -29,5 +29,5 @@ Complement.prototype.compute = function() {
       }
     }
   }
-  return this.DFA;
+  return this.dfa;
 };
