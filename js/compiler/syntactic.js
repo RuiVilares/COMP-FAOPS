@@ -132,14 +132,14 @@ Syntactic.prototype.dump = function(parent) {
 			errorMsg("Variable '" + this.sequence.peek().img + "' is used but not defined.");
 			return false;
 		}
-		var filename = this.sequence.peek();
+		var dfa = this.sequence.peek();
 		this.sequence.nextToken();
 		if(this.sequence.peek().id == TOKENS.CONCATENATE) {
 			this.sequence.nextToken();
 			if(this.sequence.peek().id == TOKENS.DUMP) {
 				var dump = this.sequence.peek().img + parent;
 				this.tree.add(dump, parent, this.tree.traverseDF, this.sequence.peek());
-				this.tree.add(filename.img, dump, this.tree.traverseDF, filename);
+				this.tree.add(dfa.img, dump, this.tree.traverseDF, dfa);
 				this.sequence.nextToken();
 				if(this.sequence.peek().id == TOKENS.OPEN) {
 					this.sequence.nextToken();

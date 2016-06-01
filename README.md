@@ -28,7 +28,6 @@ The analysis of the DOT file is processed by the GraphViz framework, so, if the 
 * The definition of the precedence, implementing the priority induced by the parentheses;
 * The definition of a DUMP instruction, that outputs the result of and operation and creates a DOT file to be downloaded by the user.
 
-
 Example:
 ```
 FA A = new("A.dot");
@@ -37,8 +36,42 @@ FA C = not(A int B);
 C.dump("dot");
 ```
 
+If any error occurs during the build of the **AST**, the process is stopped and an error message is displayed.
 
-![Example of DOT file] [dotFile]
+
+###SEMANTIC ANALYSIS
+
+The semantic analysis is executed like the sintactic analysis: the DOT file is automatically processed by the GraphViz tool and the expression sentence is validated by code that is included during the syntactic analysis, in order to detect semantic faults. 
+
+In this case, the main and single aspect to be semantically interpreted is the declaration of finite automatas during the user's input and the validation of filename's used, which should match to the ones previously uploaded to the page.
 
 
-[dotFile]: https://github.com/RuiVilares/COMP-FAOPS/blob/Guilherme/extra/readmeResources/dotFile.PNG
+###CODE GENERATION
+
+The generated code, in this project, only consists in parsing the resultant finite automata of the expression executed and originate its corresponding DOT file representation.
+
+
+###OVERVIEW
+
+Since the start, the proposed challenge was to devellop a product that could be helpful to others and, consequently, have some utility. Given the idea, we had the plan to create a simple web application with all the required functionallities proposed on the project's description, but also easy and fast to use, displaying the information as clear as possible. With GraphViz, and using web technologies, we had all the material needed to create the desired product.
+
+For the operations to be possible, it was necessary to detect wether the given DOT file was carrying a NFA and, if so, convert it to the equivalent DFA. The lexical, syntactic and semantic analysis were all implemented using _Javascript_, creating **TOKENS** to register the key-info that would be used in the **AST** and global variables to memorize the names of the uploaded files in order to check if the operation sentence is valid.
+
+###TASK DISTRIBUTION
+
+**Antonio Ramadas** - Lexical Analysis, Semantical Analysis, Concatenation, NFAtoDFA Conversion, Overall Project Revision
+**Guilherme Pinto** - Syntactic Analysis and construction of the respective AST, Union, Intersection, Cross-Product
+**José Pedro Teles** - DOT file integration, Dump operation, Multiplication, Use Case Creation, Website support.
+**Rui Vilares** - Overall website devellopment, Reverse, Complement, 
+
+###PROS
+
+* Simple interface and easy to use;
+* Good quality of the output;
+* Efficient proccessing and analysis of the specified language;
+* Can be used as a tool to support academic courses.
+
+
+###CONS
+
+* Missing DFA minimization;
