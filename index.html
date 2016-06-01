@@ -206,6 +206,46 @@ C.dump(“dot”);
   <div class="col-md-12 dynamicTabs">
     <h3>Graph display
       <!-- Modal -->
+      <a data-toggle="modal" class ="btn-circle" data-target="#graphModal">
+       <i class="glyphicon glyphicon-question-sign"></i>
+      </a>
+     </h3>
+     <!-- Modal -->
+     <div class="modal fade" id="graphModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+       <!-- Modal content-->
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Upload dot file instructions</h4>
+           </div>
+           <div class="modal-body">
+             <div class="te">
+               <p>Labels</p>
+                 <ul class="list-group">
+                  <p class="list-group-item">Final states are represented by red circle </p>
+                  <p class="list-group-item">Initial state is represented by a blue triangle</p>
+                  <p class="list-group-item">Transitions are labeled according to dot file or operation result</p>
+                 </ul>
+                 <footer>According to our specification </footer>
+             </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+       </div>
+     </div>
+   </div>
+    <ul id="navtabs" class="nav nav-tabs">
+    </ul>
+    <div id="contentTabs" class="tab-content">
+
+    </div>
+  </div>
+
+  <div class="col-md-12 result">
+    <h3>Graph result
+      <!-- Modal -->
       <a data-toggle="modal" class ="btn-circle" data-target="#resultModal">
         <i class="glyphicon glyphicon-question-sign"></i>
       </a>
@@ -230,48 +270,6 @@ C.dump(“dot”);
           </div>
         </div>
       </div>
-    <ul id="navtabs" class="nav nav-tabs">
-
-    </ul>
-
-    <div id="contentTabs" class="tab-content">
-
-    </div>
-  </div>
-
-  <div class="col-md-12 result">
-    <h3>Graph result
-     <!-- Modal -->
-     <a data-toggle="modal" class ="btn-circle" data-target="#graphModal">
-      <i class="glyphicon glyphicon-question-sign"></i>
-     </a>
-    </h3>
-    <!-- Modal -->
-    <div class="modal fade" id="graphModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-      <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Upload dot file instructions</h4>
-          </div>
-          <div class="modal-body">
-            <div class="te">
-              <p>Labels</p>
-                <ul class="list-group">
-                 <p class="list-group-item">Final states are represented by red circle </p>
-                 <p class="list-group-item">Initial state is represented by a blue triangle</p>
-                 <p class="list-group-item">Transitions are labeled according to dot file or operation result</p>
-                </ul>
-                <footer>According to our specification </footer>
-            </div>
-         </div>
-         <div class="modal-footer">
-           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-         </div>
-      </div>
-    </div>
-  </div>
     <ul id="navtabsResult" class="nav nav-tabs">
 
     </ul>
