@@ -2,7 +2,6 @@
 //from the user "tutsplus"
 //https://github.com/tutsplus/data-structures
 //http://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393
-
 function Node(data, token) {
     this.data = data;
     this.token = token;

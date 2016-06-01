@@ -1,3 +1,8 @@
+/**
+ * var - constructor of the TreeProcess
+ *
+ * @param  {tree} tree syntax tree
+ */
 var TreeProcess = function(tree) {
   TreeProcess.tree = tree;
   TreeProcess.hashmapVar = new Map();
@@ -12,12 +17,20 @@ TreeProcess.hashmapVar = new Map();
 //map of the files uploaded
 TreeProcess.hashmapFiles = new Map();
 
+/**
+ * TreeProcess.prototype.compute - Process the tree
+ */
 TreeProcess.prototype.compute = function() {
   for (var i = 0; i < TreeProcess.tree._root.children.length; i++) {
     this.traverseDF(TreeProcess.tree._root.children[i].children[0]);
   }
 };
 
+/**
+ * TreeProcess.prototype.decideLeaf - return the leaf dfa or its name
+ *
+ * @param  {leaf} node node of the tree
+ */
 TreeProcess.prototype.decideLeaf = function(node) {
   if (node.token.id == TOKENS.FILENAME) {
     return TreeProcess.hashmapFiles[node.token.img];
@@ -29,6 +42,13 @@ TreeProcess.prototype.decideLeaf = function(node) {
   }
 };
 
+/**
+ * TreeProcess.prototype.decide1Arg - Choose the operation of the tree when it's called with one argument
+ *
+ * @param  {Token} op   operation
+ * @param  {Node} node dfa
+ * @return {DFA}      dfa or node after its operation
+ */
 TreeProcess.prototype.decide1Arg = function(op, node) {
 
   if (op.token == null) {
@@ -47,6 +67,14 @@ TreeProcess.prototype.decide1Arg = function(op, node) {
   }
 };
 
+/**
+ * TreeProcess.prototype.decide2Arg - Choose the operation of the tree when it's called with two arguments
+ *
+ * @param  {type} op    operation
+ * @param  {type} left  dfa of the left
+ * @param  {type} right dfa of the right
+ * @return {type}       dfa after its operation
+ */
 TreeProcess.prototype.decide2Arg = function(op, left, right) {
   var dfa = null;
   switch (op.token.id) {
@@ -77,13 +105,14 @@ TreeProcess.prototype.decide2Arg = function(op, left, right) {
   }
 };
 
-TreeProcess.prototype.traverseDF = function(tree) {//, callback) {
-
-  // this is a recurse and immediately-invoking function
+/**
+ * TreeProcess.prototype.traverseDF - Traverse the tree depth first and calls the responsables for the operations
+ *
+ * @param  {syntax tree} tree tree
+ * @return {dfa}      dfa after its operations
+ */
+TreeProcess.prototype.traverseDF = function(tree) {
   (function recurse(currentNode) {
-
-    // step 4
-    //callback(currentNode);
 
     switch (currentNode.children.length) {
       case 0:
@@ -97,16 +126,5 @@ TreeProcess.prototype.traverseDF = function(tree) {//, callback) {
       return null;
     }
 
-    // step 2
-    /*for (var i = 0, length = currentNode.children.length; i < length; i++) {
-    // step 3
-    recurse(currentNode.children[i]);
-  }*/
-
-  // step 4
-  //callback(currentNode);
-
-  // step 1
-})(tree);
-
+  })(tree);
 };

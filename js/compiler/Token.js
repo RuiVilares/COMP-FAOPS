@@ -17,11 +17,23 @@ this.TOKENS = {
   FILENAME : {img: /^[a-zA-Z][a-zA-Z0-9_\- \.]*\.dot/g}
 };
 
+/**
+ * var - constructor of the token
+ *
+ * @param  {String} id  token's id
+ * @param  {String} img token's image
+ */
 var Token = function(id, img) {
   this.id = id;
   this.img = img;
 };
 
+/**
+ * Token.prototype.create - parse the code creating the tokens
+ *
+ * @param  {String} code lines of the code
+ * @return {integer}      longest match
+ */
 Token.prototype.create = function(code) {
   var biggestMatch = 0;
 

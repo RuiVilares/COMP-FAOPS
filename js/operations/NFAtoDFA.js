@@ -1,11 +1,19 @@
-//Constructor (dfa already parsed)
+/**
+ * nfa_to_dfa - constructor of the converter from NFA to DFA
+ *
+ * @param  {DFA} dfa nfa to be converted to dfa
+ */
 var NFA_to_DFA = function nfa_to_dfa(dfa) {
 	this.dfa = new DFA(dfa.options);
 	this.dfa.clone(dfa);
   this.getAllInputs();
 };
 
-//Convert the nfa to dfa
+/**
+ * NFA_to_DFA.prototype.convert - Convert the nfa to dfa
+ *
+ * @return {DFA}
+ */
 NFA_to_DFA.prototype.convert = function() {
   var retDFA = this.createDFA(this.dfa.data, this.dfa.options);
   var initial = this.getInitialState(this.dfa.data.nodes);
@@ -17,7 +25,12 @@ NFA_to_DFA.prototype.convert = function() {
   return this.paint(retDFA);
 };
 
-//Paint the final states as red
+/**
+ * NFA_to_DFA.prototype.paint - Paint the final states as red
+ *
+ * @param  {DFA} retDFA dfa to be painted
+ * @return {DFA}        nfa converted
+ */
 NFA_to_DFA.prototype.paint = function(retDFA) {
   var nodes = this.dfa.data.nodes;
   var nodesRet = retDFA.data.nodes;
@@ -44,7 +57,13 @@ NFA_to_DFA.prototype.paint = function(retDFA) {
   return retDFA;
 };
 
-//Performs the conversion
+/**
+ * NFA_to_DFA.prototype.compute - Performs the conversion
+ *
+ * @param  {DFA} retDFA        nfa to be converted
+ * @param  {Nodes} statesToVisit list of the next states to be visited
+ * @return {DFA}               nfa converted
+ */
 NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
   if (statesToVisit.length == 0) {
     return this.clean(retDFA);
@@ -97,7 +116,13 @@ NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
   return this.compute(retDFA, statesToVisit);
 };
 
-//Performs the operation GOTO for a given state and input
+/**
+ * NFA_to_DFA.prototype.goto - Performs the operation GOTO for a given state and input
+ *
+ * @param  {Edges} edgeLabel transition edge label
+ * @param  {Nodes} stateSA   current state
+ * @return {Nodes}           list of nodes the current state goes to
+ */
 NFA_to_DFA.prototype.goto = function(edgeLabel, stateSA) {
 
   var state = stateSA.split(", ");
@@ -127,8 +152,13 @@ NFA_to_DFA.prototype.goto = function(edgeLabel, stateSA) {
   return stateToGo.join(", ");
 };
 
-//Performs the closure of a given state
-//index should be 0
+/**
+ * NFA_to_DFA.prototype.closure - Performs the closure of a given state (index should be 0)
+ *
+ * @param  {Node} state  current state
+ * @param  {int} index1 index of the states
+ * @return {Nodes}        closure of the current state
+ */
 NFA_to_DFA.prototype.closure = function(state, index1) {
 
   if (index1 >= state.length) {
@@ -153,7 +183,9 @@ NFA_to_DFA.prototype.closure = function(state, index1) {
   return this.closure(state, index1);
 };
 
-//Get all the inputs on the nfa
+/**
+ * NFA_to_DFA.prototype.getAllInputs - Get all the inputs on the nfa
+ */
 NFA_to_DFA.prototype.getAllInputs = function() {
 
   var edges = this.dfa.data.edges;
@@ -171,7 +203,12 @@ NFA_to_DFA.prototype.getAllInputs = function() {
   this.allEdges.sort();
 };
 
-//Get the initial state from the nfa
+/**
+ * NFA_to_DFA.prototype.getInitialState - Get the initial state from the nfa
+ *
+ * @param  {Nodes} states list of states
+ * @return {Node}        closure of the initial state
+ */
 NFA_to_DFA.prototype.getInitialState = function(states) {
   for (var i = 0; i < states.length; i++) {
     if (states[i].shape != null && states[i].shape == "triangle") {
@@ -182,7 +219,15 @@ NFA_to_DFA.prototype.getInitialState = function(states) {
   }
 };
 
-//Create (or update) one edge from a state to another
+/**
+ * NFA_to_DFA.prototype.to - Create (or update) one edge from a state to another
+ *
+ * @param  {DFA} dfa   dfa
+ * @param  {Node} state node where it starts
+ * @param  {Nodes} to    node where it ends
+ * @param  {String} input transition
+ * @return {DFA}       dfa
+ */
 NFA_to_DFA.prototype.to = function(dfa, state, to, input) {
 
   var edges = dfa.data.edges;
@@ -201,7 +246,13 @@ NFA_to_DFA.prototype.to = function(dfa, state, to, input) {
   return dfa;
 };
 
-//Create an empty dfa with a dead state (DS) and an edge pointing to itself
+/**
+ * NFA_to_DFA.prototype.createDFA - Create an empty dfa with a dead state (DS) and an edge pointing to itself
+ *
+ * @param  {data} data    nodes and edges
+ * @param  {options} options options of the DFA (checkout vis.js for the options explanation)
+ * @return {DFA}         dfa created with the dead state
+ */
 NFA_to_DFA.prototype.createDFA = function(data, options) {
   var retDFA = new DFA(options);
 
@@ -212,6 +263,12 @@ NFA_to_DFA.prototype.createDFA = function(data, options) {
   return retDFA;
 };
 
+/**
+ * NFA_to_DFA.prototype.clean - delete the dead state if it is not used
+ *
+ * @param  {DFA} retDFA dfa to be checked
+ * @return {DFA}        dfa cleaned
+ */
 NFA_to_DFA.prototype.clean = function(retDFA) {
 	for (var i = 0; i < retDFA.data.edges.length; i++) {
 		if ((retDFA.data.edges[i].from == "DS" && retDFA.data.edges[i].to != "DS")

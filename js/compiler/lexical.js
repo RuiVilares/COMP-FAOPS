@@ -1,4 +1,11 @@
+/**
+ * start - start the lexical analysis
+ *
+ * @param  {String} code lines of code
+ * @return {Seq}      sequence of tokens
+ */
 function start(code) {
+
   var sequence = new Seq();
 
   var initial = 0;
