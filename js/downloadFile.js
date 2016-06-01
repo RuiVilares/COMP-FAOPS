@@ -1,3 +1,8 @@
+/**
+ * Creates a downloadable file with the result of the operations
+ *
+ * @param  {indexRes} index of the file to download
+ */
 function downloadFile(indexRes) {
 
   var element = document.createElement('a');

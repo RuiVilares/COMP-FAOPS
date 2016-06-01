@@ -47,3 +47,7 @@
     cursor: inherit;
     display: block;
 }
+
+.glyphicon-question-sign {
+  margin-left: 5px;
+}

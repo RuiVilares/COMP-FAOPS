@@ -1,9 +1,18 @@
+/**
+ * Complement - constructor of the complement operation
+ *
+ * @param  {DFA} dfa to be dumped
+ * @param {name} filename name
+ */
 var Dump = function Dump(dfa, name) {
 	this.name = name + ".dot";
 	this.dfa = new DFA(dfa.options);
 	this.dfa.clone(dfa);
 };
 
+/**
+ * Dump.prototype.compute - performs the dump operation
+ */
 Dump.prototype.compute = function(){
   var content='dinetwork{\n';
   var nodes = this.dfa.data.nodes;
