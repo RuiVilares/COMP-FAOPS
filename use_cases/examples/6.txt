@@ -1,15 +1,5 @@
 // Dot Files
 filename
-A.dot
-dinetwork {
-  A -> B [label="a"];
-  B -> A [label="a"];
-  A -> A [label="b"];
-  B -> B [label="b"];
-  A[ color=blue, shape=triangle]
-  B[ color=red, shape=circle]
-}
-filename
 B.dot
 dinetwork {
 C -> D [label="b"];
@@ -21,8 +11,7 @@ D[ color=red, shape=triangle]
 }
 // Text Box
 textarea.start
-FA A = new("A.dot");
 FA B = new("B.dot");
-FA C = A . B;
+FA C =  rev B;
 C.dump("dot");
 textarea.stop

@@ -2,21 +2,27 @@
 filename
 A.dot
 dinetwork {
-  A -> B [label="0"];
-  A[ color=blue, shape=triangle]
-  B[ color=red, shape=circle]
+  E -> F [label="b"];
+  F -> G [label="a"];
+  E -> E [label="a"];
+  F -> F [label="b"];
+  G -> G [label="a,b"];
+  E[ color=red, shape=triangle]
+  F[ color=red, shape=circle]
+  G[ color=blue, shape=circle]
 }
 filename
 B.dot
 dinetwork {
   C  -> D [label="1"];
-  C[ color=blue, shape=triangle]
-  D[ color=red, shape=circle]
+  H[ color=red, shape=triangle]
+  I[ color=red, shape=blue]
+  J[ color=blue, shape=circle]
 }
 // Text Box
 textarea.start
 FA A = new("A.dot");
 FA B = new("B.dot");
-FA C = A . B;
+FA C = A int B;
 C.dump("dot");
 textarea.stop

@@ -6,17 +6,9 @@ dinetwork {
   A[ color=blue, shape=triangle]
   B[ color=red, shape=circle]
 }
-filename
-B.dot
-dinetwork {
-  C  -> D [label="1"];
-  C[ color=blue, shape=triangle]
-  D[ color=red, shape=circle]
-}
 // Text Box
 textarea.start
 FA A = new("A.dot");
-FA B = new("B.dot");
-FA C = A . B;
+FA C =  not A;
 C.dump("dot");
 textarea.stop
