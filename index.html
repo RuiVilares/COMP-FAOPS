@@ -43,17 +43,76 @@
       Upload DOT file<input type="file" id="input">
     </span>
     <!-- Modal -->
-    <a data-toggle="modal" class ="btn-circle" href="upload.html" data-target="#modal">
+    <a data-toggle="modal" class ="btn-circle" data-target="#uploadModal">
       <i class="glyphicon glyphicon-question-sign"></i>
     </a>
+    <div class="modal fade" id="uploadModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Upload dot file instructions</h4>
+          </div>
+          <div class="modal-body">
+                <p>You need to submit a dot file with the follow structure:</p>
+                <pre>
+dinetwork {
+   A[ color=blue, shape=triangle]
+   B[ color=red, shape=circle]
+   C[ color=red, shape=circle]
+   A -> B [label="a"];
+   A -> C [label="b"];
+   B -> B [label="a"];
+   B -> B [label="b"];
+   C -> C [label="a"];
+   C -> C [label="b"];
+}</pre>
+              <footer>According to vis library</footer>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
   <div class="col-md-6">
     <h3>Code Editor
     <!-- Modal -->
-    <a class="btn-circle" data-toggle="modal" href="editor.html" data-target="#modal">
+    <a data-toggle="modal" class ="btn-circle" data-target="#editorModal">
       <i class="glyphicon glyphicon-question-sign"></i>
-    </a>
-    </h3>
+    </a></h3>
+    <div class="modal fade" id="editorModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Upload dot file instructions</h4>
+          </div>
+          <div class="modal-body">
+            <div class="te">
+                <p>Your code need to follow the following :</p>
+                <pre>
+FA A = new(“A.dot”);
+FA B = new(“B.dot”);
+FA C = not(A int B)
+C.dump(“dot”);
+</pre>
+              <footer>According to project specification </footer>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="openEditor" class="centered">
       <button id="ch" type="button" class="btn btn-success col-md-12" onclick="openEditor()">Open</button>
     </div>
@@ -74,11 +133,37 @@
 
   <div class="col-md-12 dynamicTabs">
     <h3>Graph display
-    <!-- Modal -->
-    <a class="btn-circle" data-toggle="modal" href="upload.html" data-target="#modal">
-      <i class="glyphicon glyphicon-question-sign"></i>
-    </a>
+      <!-- Modal -->
+      <a data-toggle="modal" class ="btn-circle" data-target="#graphModal">
+        <i class="glyphicon glyphicon-question-sign"></i>
+      </a>
     </h3>
+      <!-- Modal -->
+      <div class="modal fade" id="graphModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Upload dot file instructions</h4>
+            </div>
+            <div class="modal-body">
+                <div class="te">
+                    <p>Labels</p>
+                    <ul class="list-group">
+                      <p class="list-group-item">Final states are represented by red circle </p>
+                      <p class="list-group-item">Initial state is represented by a blue triangle</p>
+                      <p class="list-group-item">Transitions are labeled according to dot file or operation result</p>
+                  </ul>
+                  <footer>According to our specification </footer>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <ul id="navtabs" class="nav nav-tabs">
 
     </ul>
