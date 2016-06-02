@@ -27,7 +27,7 @@ function loadExample(arg){
             }
             content += lines[i];
             // CHAMAR ADICIONAR FICHEIRO
-            addFile(name, content)
+            addFile(name, content);
           }
           if (lines[i] == "textarea.start"){
             var textbox = "";

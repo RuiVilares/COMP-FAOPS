@@ -1,0 +1,5 @@
+dinetwork {
+  C  -> D [label="1"];
+  C[ color=blue, shape=triangle]
+  D[ color=red, shape=circle]
+  }

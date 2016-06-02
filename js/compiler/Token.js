@@ -1,7 +1,7 @@
 this.TOKENS = {
   OPEN : {img: /^\(/g},
   CLOSE : {img: /^\)/g},
-  MULTIPLY : {img: /^\*/g},
+  MULTIPLY : {img: /^\x/g},
   CONCATENATE : {img: /^\./g},
   COMPLEMENT : {img: /^not/g},
   REVERSE : {img: /^rev/g},

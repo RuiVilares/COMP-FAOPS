@@ -1,0 +1,11 @@
+dinetwork {
+    A -> B [label="a"];
+    A -> C [label="b"];
+    B -> B [label="a"];
+    B -> B [label="b"];
+    C -> C [label="a"];
+    C -> C [label="b"];
+    A[ color=blue, shape=triangle]
+    B[ color=red, shape=circle]
+    C[ color=red, shape=circle]
+}

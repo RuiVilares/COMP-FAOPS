@@ -90,7 +90,8 @@ NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
     for (var j = 0; j < input.length; j++) {
       var stateTo = this.goto(input[j], epsilonClosure);
       if (stateTo == null) {
-        retDFA = this.to(retDFA, epsilonClosure, "DS", input[j]);
+		  	var ds = "DS" + nfaDSGlobal;
+        retDFA = this.to(retDFA, epsilonClosure, ds, input[j]);
 
       } else {
         var temp_epsilonClosure = this.closure(stateTo.split(", "), 0);
@@ -131,7 +132,7 @@ NFA_to_DFA.prototype.goto = function(edgeLabel, stateSA) {
 
   for (var i = 0; i < state.length; i++) {
     for (var j = 0; j < edges.length; j++) {
-      if (edges[j].from != state[i]) {
+      if (edges[j].from != state[i] || (edges[j].to.substring(0, 2) == "DS" && edges[j].to.substring(2).match(/^[0-9]+$/) != null)) {
         continue;
       }
 
@@ -256,9 +257,12 @@ NFA_to_DFA.prototype.to = function(dfa, state, to, input) {
 NFA_to_DFA.prototype.createDFA = function(data, options) {
   var retDFA = new DFA(options);
 
-  retDFA.insertNode("circle", "DS", "DS", "blue");
+  nfaDSGlobal++;
+  var ds = "DS" + nfaDSGlobal;
 
-  retDFA.insertEdge("DS", "DS", this.allEdges.join(", "));
+  retDFA.insertNode("circle", ds, ds, "blue");
+
+  retDFA.insertEdge(ds, ds, this.allEdges.join(", "));
 
   return retDFA;
 };

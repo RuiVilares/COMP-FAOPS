@@ -1,8 +1,11 @@
 var Intersection = function Intersection(left, right) {
-	this.left = new DFA(left.options);
-	this.left.clone(left);
-	this.right = new DFA(right.options);
-	this.right.clone(right);
+    console.log(left);
+    console.log(right);
+    console.log("");
+    this.left = new DFA(left.options);
+    this.left.clone(left);
+    this.right = new DFA(right.options);
+    this.right.clone(right);
 
   var crossOperation = new CrossProduct(this.left, this.right);
   this.crossResult = crossOperation.execute();
@@ -41,10 +44,9 @@ Intersection.prototype.intersectFinalStates = function (leftFinalStates, rightFi
 
         //comparing id's with the original final states from the left dfa
         for (var l = 0; l < leftFinalStates.length; l++) {
-            pattern = new RegExp(leftFinalStates[l].id);
+            pattern = new RegExp(String(leftFinalStates[l].id));
             if (pattern.test(nodes[i].id)) {
                 this.crossResult.data.nodes[i].color.background = "red";
-                this.crossResult.data.nodes[i].color.border = "red";
                 setToFinal = true;
                 break;
             }
@@ -58,33 +60,11 @@ Intersection.prototype.intersectFinalStates = function (leftFinalStates, rightFi
 
         //comparing id's with the original final states from the right dfa
         for (var r = 0; r < rightFinalStates.length; r++) {
-            pattern = new RegExp(rightFinalStates[r].id);
+            pattern = new RegExp(String(rightFinalStates[r].id));
             if (!pattern.test(nodes[i].id)) {
                  this.crossResult.data.nodes[i].color.background = "blue";
-                 this.crossResult.data.nodes[i].color.border = "blue";
             }
             else break;
         }
     }
-};
-
-//parse a string to dfa
-Intersection.prototype.parseDFA = function (str) {
-    var parsedData = vis.network.convertDot(str);
-
-    var data = {
-        nodes: parsedData.nodes,
-        edges: parsedData.edges
-    }
-
-    var options = parsedData.options;
-
-    options.nodes = {
-        color: 'red'
-    }
-
-    var dfa_test = new DFA(options);
-    dfa_test.setData(data);
-
-    return dfa_test;
 };

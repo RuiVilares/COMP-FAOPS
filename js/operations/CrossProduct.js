@@ -7,71 +7,106 @@ var CrossProduct = function(left, right) {
 };
 
 CrossProduct.prototype.execute = function() {
-	var newSetOfStates = this.crossStates();
+	this.crossStates();
 	var alphabet = this.getAlphabet();
-	this.processEdges(newSetOfStates, alphabet);
+	this.processEdges(alphabet);
 
 	return this.newDFA;
 };
 
-CrossProduct.prototype.crossStates = function() {
-	var result = [];
-	var L = this.left.data.nodes;
-	var R = this.right.data.nodes;
+/**
+ * [crossStates Creates de resultant states by processing the data of both received dfa's]
+ */
+ CrossProduct.prototype.crossStates = function() {
+ 	var L = this.left.data.nodes;
+ 	var R = this.right.data.nodes;
 
-	for (var i = 0; i < L.length; i++) {
-		for (var j = 0; j < R.length; j++) {
-			if (L[i].shape == 'triangle' && R[j].shape == 'triangle')
-				this.newDFA.insertNode('triangle', L[i].id + R[j].id, L[i].label + R[j].label, 'blue');
-			else
-				this.newDFA.insertNode('circle', L[i].id + R[j].id, L[i].label + R[j].label, 'blue');
-		}
-	}
-	return result;
-};
+ 	for (var i = 0; i < L.length; i++) {
+ 		for (var j = 0; j < R.length; j++) {
+ 			if (L[i].shape == 'triangle' && R[j].shape == 'triangle')
+ 				this.newDFA.insertNode('triangle', L[i].id + ', ' + R[j].id, L[i].label + ', ' + R[j].label, 'blue');
+ 			else
+ 				this.newDFA.insertNode('circle', L[i].id + ', ' + R[j].id, L[i].label + ', ' + R[j].label, 'blue');
+ 		}
+ 	}
+ };
 
-CrossProduct.prototype.getAlphabet = function() {
-	var result = [];
-	var L = this.left.data.edges;
+/**
+ * [getAlphabet determines the alphabet to be used by processing the data of both received dfa's]
+ * @return {[type]} [the array with the resultant alphabet]
+ */
+ CrossProduct.prototype.getAlphabet = function() {
+ 	var result = [];
+ 	var L = this.left.data.edges;
+ 	var R = this.right.data.edges;
 
-	for (var i = 0; i < L.length; i++) {
-		if (L[i].label.length > 1)
-		{
-			var subResult = null;
+ 	for (var i = 0; i < L.length; i++) {
+ 		if (L[i].label.length > 1)
+ 		{
+ 			var subResult = null;
 
-			var pattern = new RegExp(', ')
-			if(pattern.test(L[i].label))
-				subResult = L[i].label.split(', ');
-			else
-				subResult = L[i].label.split(',');
+ 			var pattern = new RegExp(', ');
+ 			if(pattern.test(L[i].label))
+ 				subResult = L[i].label.split(', ');
+ 			else
+ 				subResult = L[i].label.split(',');
 
-			for(var j = 0; j < subResult.length; j++)
-				result[subResult[j]] = subResult[j];
-		}
-		else result[L[i].label] = L[i].label;
-	}
-	return result;
-};
+ 			for(var j = 0; j < subResult.length; j++)
+ 				result[subResult[j]] = subResult[j];
+ 		}
+ 		else result[L[i].label] = L[i].label;
+ 	}
+ 	for (var i = 0; i < R.length; i++) {
+ 		if (R[i].label.length > 1) 
+ 		{
+ 			var subResult = null;
+ 			var pattern = new RegExp(', ');
+ 			if (pattern.test(R[i].label))
+ 				subResutl = R[i].label.split(', ');
+ 			else
+ 				subResult = R[i].label.split(',');
 
-CrossProduct.prototype.processEdges = function(dfa, alphabet) {
-	var L = this.left.data.nodes;
-	var R = this.right.data.nodes;
+ 			if(subResult != null) {
+ 				for (var j = 0; j < subResult.length; j++)
+ 					result[subResult[j]] = subResult[j];
+ 			}
+ 		}
+ 		else result[R[i].label] = R[i].label;
+ 	}
+ 	return result;
+ };
 
-	for(var i = 0; i < L.length; i++) {
-		for(var j = 0; j < R.length; j++) {
-			var fromObj = L[i].id + R[j].id;
+/**
+ * [processEdges ~Creation of the edges based on the algorithm for transition between crossed states]
+ * @param  {[array]} alphabet [values od the possible transitions]
+ */
+CrossProduct.prototype.processEdges = function(alphabet) {
+ 	var L = this.left.data.nodes;
+ 	var R = this.right.data.nodes;
 
-			for (param in alphabet) {
-				var destinationL = this.searchEdge(this.left, L[i].id, param);
-				var destinationR = this.searchEdge(this.right, R[j].id, param);
-				var toObj = destinationL + destinationR;
-				this.newDFA.insertEdge(fromObj, toObj, param);
-			}
-		}
-	}
-};
+ 	for(var i = 0; i < L.length; i++) {
+ 		for(var j = 0; j < R.length; j++) {
+ 			var fromObj = L[i].id + ', ' + R[j].id;
 
+ 			for (param in alphabet) {
+ 				var destinationL = this.searchEdge(this.left, L[i].id, param);
+ 				var destinationR = this.searchEdge(this.right, R[j].id, param);
+ 				var toObj = destinationL + ', ' + destinationR;
+ 				if(destinationR != null && destinationL != null)
+ 					this.newDFA.insertEdge(fromObj, toObj, param);
+ 				else {
+ 					errorMsg("The Finite Automatas aren't complete and Cross Product can't be processed");
+ 					this.newDFA = null;
+ 				}
+ 			}
+ 		}
+ 	}
+ };
 
+/**
+ * [searchEdge Verifies if a original dfa contains a certain transition initiated on a given node]
+ * @return {[type]}       [description]
+ */
 CrossProduct.prototype.searchEdge = function(dfa, id, param) {
 	var edges = dfa.data.edges;
 	var pattern = new RegExp(param);
@@ -81,5 +116,5 @@ CrossProduct.prototype.searchEdge = function(dfa, id, param) {
 			return edges[i].to;
 	}
 
-	return "";
+	return null;
 };

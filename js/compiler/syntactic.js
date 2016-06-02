@@ -53,6 +53,9 @@ Syntactic.prototype.expressionHandler = function(parent) {
 	return this.dump(parent);
 };
 
+/**
+ * [declaration parses the identification of a new variable]
+ */
 Syntactic.prototype.declaration = function(parent) {
 	var identifier = null;
 	var equalsId = null;
@@ -74,6 +77,9 @@ Syntactic.prototype.declaration = function(parent) {
 	return false;
 };
 
+/**
+ * [declarationHandler Handles the declaration of a variable either if it is a new dfa or a statemento operation]
+ */
 Syntactic.prototype.declarationHandler = function(parent) {
 	this.sequence.nextToken();
 	if(this.sequence.peek().id == TOKENS.NEW) {
@@ -91,6 +97,11 @@ Syntactic.prototype.declarationHandler = function(parent) {
 	return false;
 };
 
+/**
+ * [newExpression parsing of a NEW statement]
+ * @param  {[type]} parent [description]
+ * @return {[type]}        [description]
+ */
 Syntactic.prototype.newExpression = function(parent) {
 	this.sequence.nextToken();
 	if(this.sequence.peek().id == TOKENS.OPEN) {
@@ -117,6 +128,9 @@ Syntactic.prototype.newExpression = function(parent) {
 	return false;
 };
 
+/**
+ * [fileExists Semantic verification of the requires file]
+ */
 Syntactic.prototype.fileExists = function(filename) {
 	for (var i = 1; i < automata.length; i++) {
 		if (automata[i].name == filename)
@@ -126,6 +140,9 @@ Syntactic.prototype.fileExists = function(filename) {
 	return false;
 };
 
+/**
+ * [dump parsing of a DUMP statement]
+ */
 Syntactic.prototype.dump = function(parent) {
 	if(this.sequence.peek().id == TOKENS.IDENTIFIER) {
 		if (this.variables[this.sequence.peek().img] == null) {
@@ -165,7 +182,9 @@ Syntactic.prototype.dump = function(parent) {
 	return false;
 };
 
-//retorna arvore modificada ou null em caso de erro
+/**
+ * [operation Parsing of an operation statement]
+ */
 Syntactic.prototype.operation = function(parent, tree_) {
 	if (this.sequence.peek().id == TOKENS.COMPLEMENT) {
 
@@ -237,7 +256,10 @@ Syntactic.prototype.operation = function(parent, tree_) {
 	return null;
 };
 
-
+/**
+ * [checkReverse Parsing of a reverse operation]
+ * @return {[type]} [description]
+ */
 Syntactic.prototype.checkReverse = function() {
 	var reverseId = this.sequence.peek().img + this.opIndex++;
 	var newTree = new Tree(reverseId, this.sequence.peek());
@@ -256,7 +278,10 @@ Syntactic.prototype.checkReverse = function() {
 	return null;
 };
 
-
+/**
+ * [checkReverse Parsing of a comlement operation]
+ * @return {[type]} [description]
+ */
 Syntactic.prototype.checkComplement = function() {
 	var complementId = this.sequence.peek().img + this.opIndex++;
 	var newTree = new Tree(complementId, this.sequence.peek());
@@ -275,7 +300,10 @@ Syntactic.prototype.checkComplement = function() {
 	return null;
 };
 
-
+/**
+ * [checkReverse Parsing of a precedence with parentheses]
+ * @return {[type]} [description]
+ */
 Syntactic.prototype.checkParenteses = function() {
 	var	parent = "precedence" + this.opIndex++;
 	var tree_ = new Tree(parent);
@@ -292,7 +320,9 @@ Syntactic.prototype.checkParenteses = function() {
 };
 
 
-// retorna o novo parentNode respetivo à OPC detetada. se nao houver qualquer OPC, retorna null
+/**
+ * [checkReverse Generates new subtree with a new OPCoperation]
+ */
 Syntactic.prototype.operationR = function(parent) {
 	var tokenOP = this.checkOPC();
 
@@ -307,6 +337,10 @@ Syntactic.prototype.operationR = function(parent) {
 	return null;
 };
 
+/**
+ * [checkReverse Parsing of an operation like multiply, concatenate, intersection and union]
+ * @return {[type]} [description]
+ */
 Syntactic.prototype.checkOPC = function() {
 	if (this.sequence.peek().id == TOKENS.MULTIPLY
 		|| this.sequence.peek().id == TOKENS.CONCATENATE
@@ -315,5 +349,5 @@ Syntactic.prototype.checkOPC = function() {
 			return this.sequence.peek();
 		}
 
-		return null;
+	return null;
 };

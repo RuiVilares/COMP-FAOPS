@@ -24,8 +24,8 @@ C.dot
 dinetwork {
 E -> F [label="a"];
 F -> E [label="b"];
-E -> E [label="a"];
-F -> F [label="b"];
+E -> E [label="b"];
+F -> F [label="a"];
 E[ color=blue, shape=circle]
 F[ color=red, shape=triangle]
 }
@@ -34,8 +34,8 @@ textarea.start
 FA A = new("A.dot");
 FA B = new("B.dot");
 FA C = new("C.dot");
-FA D = not(A) * B + C;
-FA E =  not(A) * (B + C);
+FA D = not(A) x B + C;
+FA E = not(A) x (B + C);
 D.dump("without_precedence");
 E.dump("with_precedence");
 textarea.stop
