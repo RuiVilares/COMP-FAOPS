@@ -71,7 +71,7 @@ We consider to have accomplished a considerably good project, capable of reachin
 
 **José Pedro Teles** - DOT file integration, Dump operation, Multiplication, Use Case Creation, Website support.
 
-**Rui Vilares** - Overall website devellopment and maintainance, Reverse, Complement.
+**Rui Vilares** - Overall website devellopment and maintenance, Reverse, Complement.
 
 ###PROS
 
