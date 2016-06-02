@@ -1,0 +1,14 @@
+dinetwork{
+  "AD"->"BD"[label="a"];
+  "AD"->"AC"[label="b"];
+  "AC"->"BC"[label="a"];
+  "AC"->"AD"[label="b"];
+  "BD"->"AD"[label="a"];
+  "BD"->"BC"[label="b"];
+  "BC"->"AC"[label="a"];
+  "BC"->"BD"[label="b"];
+  "AD"[color=red, shape=triangle]
+  "AC"[color=red, shape=circle]
+  "BD"[color=blue, shape=circle]
+  "BC"[color=red, shape=circle]
+}

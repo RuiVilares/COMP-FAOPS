@@ -1,0 +1,20 @@
+dinetwork{
+  "DB, Start"->"DA"[label="a"];
+  "DB, Start"->"CB"[label="b"];
+  "DA"->"DB"[label="a"];
+  "DA"->"CA"[label="b"];
+  "DB"->"DA"[label="a"];
+  "DB"->"CB"[label="b"];
+  "CB, Start"->"CA"[label="a"];
+  "CB, Start"->"DB"[label="b"];
+  "CA"->"CB"[label="a"];
+  "CA"->"DA"[label="b"];
+  "CB"->"CA"[label="a"];
+  "CB"->"DB"[label="b"];
+  "DB, Start"[color=red, shape=triangle]
+  "DA"[color=red, shape=circle]
+  "DB"[color=red, shape=circle]
+  "CB, Start"[color=blue, shape=circle]
+  "CA"[color=red, shape=circle]
+  "CB"[color=blue, shape=circle]
+}

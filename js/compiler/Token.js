@@ -14,7 +14,7 @@ this.TOKENS = {
   DUMP : {img: /^dump/g},
   DECLARATION : {img: /^FA/g},
   IDENTIFIER : {img: /^[a-zA-Z][a-zA-Z0-9\-_]*/g},
-  FILENAME : {img: /^[a-zA-Z][a-zA-Z0-9_\- \.]*\.dot/g}
+  FILENAME : {img: /^[a-zA-Z0-9][a-zA-Z0-9_\- \.]*\.dot/g}
 };
 
 /**

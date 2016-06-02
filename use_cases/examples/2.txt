@@ -2,31 +2,27 @@
 filename
 A.dot
 dinetwork {
-  E -> F [label="b"];
-  F -> G [label="a"];
-  E -> E [label="a"];
-  F -> F [label="b"];
-  G -> G [label="a,b"];
-  E[ color=red, shape=triangle]
-  F[ color=red, shape=circle]
-  G[ color=blue, shape=circle]
+  A -> B [label="a"];
+  B -> A [label="a"];
+  A -> A [label="b"];
+  B -> B [label="b"];
+  A[ color=blue, shape=triangle]
+  B[ color=red, shape=circle]
 }
 filename
 B.dot
 dinetwork {
-  H -> I [label="a"];
-  I -> J [label="b"];
-  H -> H [label="b"];
-  I -> I [label="a"];
-  J -> J [label="a,b"];
-  H[ color=red, shape=triangle]
-  I[ color=red, shape=blue]
-  J[ color=blue, shape=circle]
+C -> D [label="b"];
+D -> C [label="b"];
+C -> C [label="a"];
+D -> D [label="a"];
+C[ color=blue, shape=circle]
+D[ color=red, shape=triangle]
 }
 // Text Box
 textarea.start
 FA A = new("A.dot");
 FA B = new("B.dot");
-FA C = A int B;
-C.dump("dot");
+FA C = not(A int B);
+C.dump("two_operations");
 textarea.stop

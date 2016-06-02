@@ -1,0 +1,38 @@
+dinetwork{
+  "ADDS"->"BDDS"[label="a"];
+  "ADDS"->"ACDS"[label="b"];
+  "ADF"->"BDDS"[label="a"];
+  "ADF"->"ACE, F"[label="b"];
+  "ADE, F"->"BDE, F"[label="a"];
+  "ADE, F"->"ACE, F"[label="b"];
+  "ACDS"->"BCDS"[label="a"];
+  "ACDS"->"ADDS"[label="b"];
+  "ACF"->"BCDS"[label="a"];
+  "ACF"->"ADE, F"[label="b"];
+  "ACE, F"->"BCE, F"[label="a"];
+  "ACE, F"->"ADE, F"[label="b"];
+  "BDDS"->"ADDS"[label="a"];
+  "BDDS"->"BCDS"[label="b"];
+  "BDF"->"ADDS"[label="a"];
+  "BDF"->"BCE, F"[label="b"];
+  "BDE, F"->"ADE, F"[label="a"];
+  "BDE, F"->"BCE, F"[label="b"];
+  "BCDS"->"ACDS"[label="a"];
+  "BCDS"->"BDDS"[label="b"];
+  "BCF"->"ACDS"[label="a"];
+  "BCF"->"BDE, F"[label="b"];
+  "BCE, F"->"ACE, F"[label="a"];
+  "BCE, F"->"BDE, F"[label="b"];
+  "ADDS"[color=blue, shape=circle]
+  "ADF"[color=blue, shape=triangle]
+  "ADE, F"[color=blue, shape=circle]
+  "ACDS"[color=blue, shape=circle]
+  "ACF"[color=blue, shape=circle]
+  "ACE, F"[color=blue, shape=circle]
+  "BDDS"[color=blue, shape=circle]
+  "BDF"[color=blue, shape=circle]
+  "BDE, F"[color=blue, shape=circle]
+  "BCDS"[color=blue, shape=circle]
+  "BCF"[color=blue, shape=circle]
+  "BCE, F"[color=blue, shape=circle]
+}

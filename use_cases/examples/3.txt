@@ -2,12 +2,12 @@
 filename
 A.dot
 dinetwork {
-A -> B [label="a"];
-B -> A [label="a"];
-A -> A [label="b"];
-B -> B [label="b"];
-A[ color=blue, shape=triangle]
-B[ color=red, shape=circle]
+  A -> B [label="a"];
+  B -> A [label="a"];
+  A -> A [label="b"];
+  B -> B [label="b"];
+  A[ color=blue, shape=triangle]
+  B[ color=red, shape=circle]
 }
 filename
 B.dot
@@ -23,6 +23,8 @@ D[ color=red, shape=triangle]
 textarea.start
 FA A = new("A.dot");
 FA B = new("B.dot");
-FA C = A + B;
-C.dump("dot");
+FA C = rev(A);
+FA D = B + C;
+C.dump("reverse");
+D.dump("union");
 textarea.stop

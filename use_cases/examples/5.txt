@@ -22,7 +22,6 @@ D[ color=red, shape=triangle]
 // Text Box
 textarea.start
 FA A = new("A.dot");
-FA B = new("B.dot");
-FA C = A * B;
-C.dump("dot");
+FA B = not(rev(A));
+B.dump("one_fa");
 textarea.stop
