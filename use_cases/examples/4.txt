@@ -9,6 +9,6 @@ dinetwork {
 // Text Box
 textarea.start
 FA A = new("A.dot");
-FA C =  not A;
+FA C =  not(A);
 C.dump("dot");
 textarea.stop

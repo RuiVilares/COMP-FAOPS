@@ -12,6 +12,6 @@ D[ color=red, shape=triangle]
 // Text Box
 textarea.start
 FA B = new("B.dot");
-FA C =  rev B;
+FA C =  rev(B);
 C.dump("dot");
 textarea.stop

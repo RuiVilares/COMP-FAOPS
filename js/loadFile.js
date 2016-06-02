@@ -1,9 +1,21 @@
+/**
+ * Array with automatas
+ */
 var automata = new Array();
+/**
+ * Index of automata
+ */
 var index = 1;
 
+/**
+ * Upload file listener 
+ */
 var inputElement = document.getElementById("input");
 inputElement.addEventListener("change", handleFiles, false);
 
+/**
+ * Upload DOTfile
+ */
 function handleFiles() {
   var files = this.files;
   var file = files[0];
@@ -42,6 +54,9 @@ function handleFiles() {
   }
 }
 
+/**
+ * Active file listeners
+ */
 function fileListener(){
   id = $(this).attr("data-id");
   $( ".listFiles li" ).click(function() {
@@ -60,6 +75,12 @@ function fileListener(){
   });
 }
 
+/**
+ * Convert DOTstring to a graph
+ *
+ * @param  {DOTstring} DOTstring to represent on graph
+ * @param  {mynetwork} Graph when DOTstring will be represented
+ */
 function read(DOTstring, mynetwork){
   var parsedData = vis.network.convertDot(DOTstring);
   var container = document.getElementById(mynetwork);
@@ -90,7 +111,11 @@ function read(DOTstring, mynetwork){
   return fa;
 };
 
-//ve se tem estado inicial e final
+/**
+ * Check nodes validity
+ *
+ * @param  {nodes} Graph nodes
+ */
 function checkNodes(nodes){
   if (!checkValidFA(nodes)) {
     errorMsg('The finite automata is required to have a initial state and at least one final.\n' +
@@ -119,6 +144,11 @@ function checkNodes(nodes){
   return true;
 };
 
+/**
+ * Check Finite Automata
+ *
+ * @param  {nodes} Graph nodes
+ */
 function checkValidFA(nodes) {
   for (var i = 0; i < nodes.length; i++) {
     if (!(validShape(nodes[i]) && validColor(nodes[i]))) {
@@ -129,6 +159,11 @@ function checkValidFA(nodes) {
   return true;
 };
 
+/**
+ * Check edges validity
+ *
+ * @param  {edges} Graph edges
+ */
 function checkEdges(edges) {
   for (var i = 0; i < edges.length; i++) {
     if (!validTransition(edges[i])) {
@@ -139,22 +174,48 @@ function checkEdges(edges) {
   return true;
 };
 
+/**
+ * Check shape validity
+ *
+ * @param  {node} Graph node
+ */
 function validShape(node) {
   return node.shape == "triangle" || node.shape == "circle";
 };
 
+/**
+ * Check transition validity
+ *
+ * @param  {edge} Graph edge
+ */
 function validTransition(edge) {
   return edge.to != null && edge.from != null;
 };
 
+/**
+ * Check color validity
+ *
+ * @param  {node} Graph node
+ */
 function validColor(node) {
   return node.color != null && (checkColor(node, "red") || checkColor(node, "blue"));
 };
 
+/**
+ * Check node color
+ *
+ * @param  {node} Graph node
+ * @param  {color} Node color
+ */
 function checkColor(node, color) {
   return node.color.background == color && node.color.border == color;
 };
 
+/**
+ * Check initial state existance
+ *
+ * @param  {node} Graph node
+ */
 function checkInitial(nodes) {
   var cnt = 0;
 
@@ -166,6 +227,11 @@ function checkInitial(nodes) {
   return cnt == 1;
 };
 
+/**
+ * Check final state existance
+ *
+ * @param  {nodes} Graph nodes
+ */
 function checkFinal(nodes) {
   var cnt = 0;
 

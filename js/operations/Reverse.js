@@ -1,9 +1,18 @@
-//Constructor (only one dfa are parsed)
+/**
+ * Reverse - constructor of the reverse operation
+ *
+ * @param  {DFA} dfa dfa to be complemented
+ */
 var Reverse = function reverse(dfa) {
 	this.dfa = new DFA(dfa.options);
 	this.dfa.clone(dfa);
 };
 
+/**
+ * Reverse.prototype.compute - performs the reverse operation
+ *
+ * @return {DFA}  return of the DFA
+ */
 Reverse.prototype.compute = function() {
   var nodes = this.dfa.data.nodes;
   var edges = this.dfa.data.edges;
@@ -45,24 +54,3 @@ Reverse.prototype.compute = function() {
   this.dfa = nfa.convert();
   return this.dfa;
 }
-
-//parse a string to dfa
-Reverse.prototype.parseDFA = function(str) {
-	var parsedData = vis.network.convertDot(str);
-
-  var data = {
-    nodes: parsedData.nodes,
-    edges: parsedData.edges
-  }
-
-  var options = parsedData.options;
-
-  options.nodes = {
-    color: 'red'
-  }
-
-  var dfa_test = new DFA(options);
-  dfa_test.setData(data);
-
-  return dfa_test;
-};

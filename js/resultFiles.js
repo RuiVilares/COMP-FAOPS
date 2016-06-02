@@ -1,6 +1,18 @@
+/**
+ * Array with automata results
+ */
 var automataResult = new Array();
+/**
+ * Index of automata result 
+ */
 var indexResult = 1;
 
+/**
+ * Convert result DOTstring to a graph
+ *
+ * @param  {newResult} DOTstring result to represent on graph
+ * @param  {nameResult} Graph when DOTstring will be represented
+ */
 function newAutomataResult(newResult, nameResult){
   automataResult[indexResult] = {dot:newResult, name:nameResult};
 
@@ -17,6 +29,9 @@ function newAutomataResult(newResult, nameResult){
   indexResult++;
 }
 
+/**
+ * Delete automata results
+ */
 function deleteAutomataResult(){
   automataResult = new Array();
   indexResult = 1;
@@ -25,6 +40,12 @@ function deleteAutomataResult(){
   $("#contentTabsResult").empty();
 }
 
+/**
+ * Convert result DOTstring to a graph
+ *
+ * @param  {DOTstring} DOTstring to represent on graph
+ * @param  {mynetwork} Graph when DOTstring will be represented
+ */
 function readResult(DOTstring, mynetwork){
   var parsedData = vis.network.convertDot(DOTstring);
   var container = document.getElementById(mynetwork);

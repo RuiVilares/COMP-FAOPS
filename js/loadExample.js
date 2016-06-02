@@ -1,3 +1,8 @@
+/**
+ * loadExample - Load example file
+ *
+ * @param  {arg} example number
+ */
 function loadExample(arg){
   clearAll();
   var url = 'use_cases/examples/' + arg + '.txt'
@@ -22,21 +27,20 @@ function loadExample(arg){
             }
             content += lines[i];
             // CHAMAR ADICIONAR FICHEIRO
-            //console.log(name);
-            //console.log(content);
             addFile(name, content)
           }
           if (lines[i] == "textarea.start"){
             var textbox = "";
             i++;
 
-            while (lines[i] != "textarea.stop" && lines[i] != "textarea.end") {//TODO verificar se é .end ou .stop
+            while (lines[i] != "textarea.stop") {
               textbox += lines[i] + "\n";
               i++;
             }
             // Guardar textbox na TEXT BOX
             $('#editor').val(textbox);
             loadEditor();
+            $('#editorW').show();
           }
         }
         i++;
@@ -45,6 +49,12 @@ function loadExample(arg){
   });
 }
 
+/**
+ * addFile - Add file to specific site position
+ *
+ * @param  {fileName} filename
+ * @param  {content} filename content
+ */
 function addFile(fileName, content){
   automata[index] = {id:"file"+index, name:fileName, dot:content};
   document.getElementById("input").value = "";
@@ -67,6 +77,9 @@ function addFile(fileName, content){
   fileListener();
 }
 
+/**
+ * clearAll - clear all site information
+ */
 function clearAll(){
   automata = new Array();
   index = 1;

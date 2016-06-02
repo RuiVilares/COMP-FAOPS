@@ -110,11 +110,15 @@ dinetwork {
     </div>
 
     <div class="col-md-6">
-      <button type="button" class="btn btn-default" onclick="loadExample(1)">Example 1</button>
-      <button type="button" class="btn btn-default" onclick="loadExample(2)">Example 2</button>
-      <button type="button" class="btn btn-default" onclick="loadExample(3)">Example 3</button>
-      <button type="button" class="btn btn-default" onclick="loadExample(4)">Example 4</button>
-      <button type="button" class="btn btn-default" onclick="loadExample(5)">Example 5</button>
+      <h3>Predefined examples</h3>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default" onclick="loadExample(1)">Concatenate</button>
+        <button type="button" class="btn btn-default" onclick="loadExample(2)">Intersection</button>
+        <button type="button" class="btn btn-default" onclick="loadExample(3)">Union</button>
+        <button type="button" class="btn btn-default" onclick="loadExample(4)">Complement</button>
+        <button type="button" class="btn btn-default" onclick="loadExample(5)">Multiply</button>
+        <button type="button" class="btn btn-default" onclick="loadExample(6)">Reverse</button>
+      </div>
     </div>
   </div>
 
@@ -302,6 +306,7 @@ C.dump(“dot”);
 
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
 <script src="js/loadFile.js"></script>
 <script src="js/loadEditor.js"></script>
 <script src="js/resultFiles.js"></script>
