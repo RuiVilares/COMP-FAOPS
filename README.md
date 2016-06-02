@@ -26,7 +26,9 @@ The analysis of the DOT file is processed by the GraphViz framework, so, if the 
 * The definiton of a finite automata with the prefix 'FA', followed by a Identifier and an equals sign ("="), which can be used to assign a finite automata previously uploaded or the result of an operation expression;
 * The definition of the operations: x (multiply), . (concatenate), not (complement), rev (reverse), int (intersection), and + (union);
 * The definition of the precedence, implementing the priority induced by the parentheses;
-* The definition of a DUMP instruction, that outputs the result of and operation and creates a DOT file to be downloaded by the user.
+* The definition of a DUMP instruction, that outputs the result of and operation and creates a DOT file to be downloaded by the user;
+* The **AST** doesn't assume any kind of precendence between operations, so the expression is calculated from left to right;
+* Although any operation as higher priority than any other the parentheses implementation makes it possible to associate a precedential sub-calculation, in order to achieve certain desired results.
 
 Example:
 ```
@@ -57,24 +59,29 @@ Since the start, the proposed challenge was to devellop a product that could be 
 
 For the operations to be possible, it was necessary to detect wether the given DOT file was carrying a NFA and, if so, convert it to the equivalent DFA. The lexical, syntactic and semantic analysis were all implemented using _Javascript_, creating **TOKENS** to register the key-info that would be used in the **AST** and global variables to memorize the names of the uploaded files in order to check if the operation sentence is valid.
 
+The generated result usually ends up with some redundant data, like extra _Dead States_ which we manage to merge and represent in a single _Dead State_. We are also proud to implement the precedence in the user's expression, which allows him/her a better interaction with the program in order to retrieve the desired calculation.
+
+We consider to have accomplished a considerably good project, capable of reaching the the ceilling of the grade assigned to it.
+
 ###TASK DISTRIBUTION
 
-**Antonio Ramadas** - Lexical Analysis, Semantical Analysis, Concatenation, NFAtoDFA Conversion, Overall Project Revision.
+**Antonio Ramadas** - Lexical Analysis, Semantical Analysis, Concatenation, NFAtoDFA Conversion,, Tree Processing, Code Revision.
 
-**Guilherme Pinto** - Syntactic Analysis and construction of the respective AST, Union, Intersection, Cross-Product.
+**Guilherme Pinto** - Syntactic Analysis and construction of the respective AST, Union, Intersection, Cross-Product, Code Revision.
 
 **José Pedro Teles** - DOT file integration, Dump operation, Multiplication, Use Case Creation, Website support.
 
-**Rui Vilares** - Overall website devellopment, Reverse, Complement.
+**Rui Vilares** - Overall website devellopment and maintainance, Reverse, Complement.
 
 ###PROS
 
 * Simple interface and easy to use;
 * Good quality of the output;
 * Efficient proccessing and analysis of the specified language;
-* Can be used as a tool to support academic courses.
+* Can be used as a tool to support academic courses;
+* Implemmented precedence between operations using parentheses.
 
 
 ###CONS
 
-* Missing DFA minimization;
+* Missing DFA minimization.
