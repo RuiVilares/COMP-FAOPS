@@ -69,9 +69,9 @@ We consider to have accomplished a considerably good project, capable of reachin
 
 **Guilherme Pinto** - Syntactic Analysis and construction of the respective AST, Union, Intersection, Cross-Product, Code Revision.
 
-**José Pedro Teles** - DOT file integration, Dump operation, Multiplication, Use Case Creation, Website support.
+**José Pedro Teles** - DOT file integration, Dump operation, Multiplication, Use Case Creation, Website support, GraphViz addaptation.
 
-**Rui Vilares** - Overall website devellopment and maintenance, Reverse, Complement.
+**Rui Vilares** - Overall website devellopment and maintenance, Reverse, Complement, Use Case Creation, GraphViz addaptation.
 
 ###PROS
 
