@@ -3,7 +3,7 @@
  */
 var automataResult = new Array();
 /**
- * Index of automata result 
+ * Index of automata result
  */
 var indexResult = 1;
 
@@ -56,12 +56,26 @@ function readResult(DOTstring, mynetwork){
 
   var options = parsedData.options;
 
-  options.height = '400px';
-
-  // you can extend the options like a normal JSON variable:
-  options.nodes = {
-    color: 'blue'
+options.height = '400px';
+// you can extend the options like a normal JSON variable:
+var options = {
+  nodes:{
+    color: {
+      border: 'green',
+      background: 'blue',
+      highlight: {
+        border: 'green',
+        background: false
+      },
+  },
+  font: {
+  color: 'orange',
+  size: 14, // px
+  face: 'arial',
+  background: 'none',
+  },
   }
+}
 
   // create a network
   var network = new vis.Network(container, data, options);

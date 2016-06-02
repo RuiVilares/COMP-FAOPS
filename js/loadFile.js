@@ -8,7 +8,7 @@ var automata = new Array();
 var index = 1;
 
 /**
- * Upload file listener 
+ * Upload file listener
  */
 var inputElement = document.getElementById("input");
 inputElement.addEventListener("change", handleFiles, false);
