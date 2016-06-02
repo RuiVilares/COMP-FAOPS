@@ -62,7 +62,7 @@ For the operations to be possible, it was necessary to detect wether the given D
 **Antonio Ramadas** - Lexical Analysis, Semantical Analysis, Concatenation, NFAtoDFA Conversion, Overall Project Revision
 **Guilherme Pinto** - Syntactic Analysis and construction of the respective AST, Union, Intersection, Cross-Product
 **José Pedro Teles** - DOT file integration, Dump operation, Multiplication, Use Case Creation, Website support.
-**Rui Vilares** - Overall website devellopment, Reverse, Complement, 
+**Rui Vilares** - Overall website devellopment, Reverse, Complement.
 
 ###PROS
 
