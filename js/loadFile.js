@@ -82,6 +82,7 @@ function fileListener(){
  * @param  {mynetwork} Graph when DOTstring will be represented
  */
 function read(DOTstring, mynetwork){
+  draw(DOTstring, mynetwork);
   var parsedData = vis.network.convertDot(DOTstring);
   var container = document.getElementById(mynetwork);
   var data = {
@@ -98,8 +99,12 @@ function read(DOTstring, mynetwork){
     color: 'blue'
   }
 
+  /*for (var i = 0; i < data.nodes.length; i++) {
+    data.nodes[i].color = data.nodes[i].color.background;
+  }*/
+
   // create a network
-  var network = new vis.Network(container, data, options);
+  //var network = new vis.Network(container, data, options);
 
   if (!(checkNodes(data.nodes) && checkEdges(data.edges))) {
     return null;
@@ -109,6 +114,37 @@ function read(DOTstring, mynetwork){
   fa.setData(data);
 
   return fa;
+};
+
+/**
+ * Convert DOTstring to a graph
+ *
+ * @param  {DOTstring} DOTstring to represent on graph
+ * @param  {mynetwork} Graph when DOTstring will be represented
+ */
+function draw(DOTstring, mynetwork){
+  var parsedData = vis.network.convertDot(DOTstring);
+  var container = document.getElementById(mynetwork);
+  var data = {
+    nodes: parsedData.nodes,
+    edges: parsedData.edges
+  }
+
+  var options = parsedData.options;
+
+  options.height = '400px';
+
+  // you can extend the options like a normal JSON variable:
+  options.nodes = {
+    color: 'blue'
+  }
+
+  for (var i = 0; i < data.nodes.length; i++) {
+    data.nodes[i].color = data.nodes[i].color.background;
+  }
+
+  // create a network
+  var network = new vis.Network(container, data, options);
 };
 
 /**

@@ -47,6 +47,7 @@ function deleteAutomataResult(){
  * @param  {mynetwork} Graph when DOTstring will be represented
  */
 function readResult(DOTstring, mynetwork){
+  draw(DOTstring, mynetwork);
   var parsedData = vis.network.convertDot(DOTstring);
   var container = document.getElementById(mynetwork);
   var data = {
@@ -56,27 +57,8 @@ function readResult(DOTstring, mynetwork){
 
   var options = parsedData.options;
 
-options.height = '400px';
-// you can extend the options like a normal JSON variable:
-var options = {
-  nodes:{
-    color: {
-      border: 'green',
-      background: 'blue',
-      highlight: {
-        border: 'green',
-        background: false
-      },
-  },
-  font: {
-  color: 'orange',
-  size: 14, // px
-  face: 'arial',
-  background: 'none',
-  },
-  }
-}
+  options.height = '400px';
 
   // create a network
-  var network = new vis.Network(container, data, options);
+  //var network = new vis.Network(container, data, options);
 };
