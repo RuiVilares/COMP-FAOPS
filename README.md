@@ -17,6 +17,8 @@ The final product must be able to upload multiple DOT files, each one containing
 
 The development of a web application is ideal for this project, improving the interaction with the user and offering the best visual output, using [GraphViz](http://www.graphviz.org/), an open source graph visualization framework, with the features we required.
 
+This project can be executed by opening index.html, but to run the examples it is necessary to host the project on a server (or simulate one with tools like [Mongoose](https://backend.cesanta.com/products.shtml) or [Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb).
+
 ###DEALING WITH SYNTACTIC ERRORS
 
 The project covers two syntactic analysis: the DOT file data and the operation expression, written by the user.
@@ -65,7 +67,7 @@ We consider to have accomplished a considerably good project, capable of reachin
 
 ###TASK DISTRIBUTION
 
-**Antonio Ramadas** - Lexical Analysis, Semantical Analysis, Concatenation, NFAtoDFA Conversion,, Tree Processing, Code Revision.
+**Antonio Ramadas** - Lexical Analysis, Semantical Analysis, Concatenation, NFA to DFA Conversion,, Tree Processing, Code Revision.
 
 **Guilherme Pinto** - Syntactic Analysis and construction of the respective AST, Union, Intersection, Cross-Product, Code Revision.
 
