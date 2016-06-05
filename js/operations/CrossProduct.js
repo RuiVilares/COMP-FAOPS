@@ -10,7 +10,7 @@ CrossProduct.prototype.execute = function() {
 	this.crossStates();
 	var alphabet = this.getAlphabet();
 	this.processEdges(alphabet);
-
+	console.log(this.newDFA.data);
 	return this.newDFA;
 };
 
@@ -23,10 +23,18 @@ CrossProduct.prototype.execute = function() {
 
  	for (var i = 0; i < L.length; i++) {
  		for (var j = 0; j < R.length; j++) {
+			var stateId = [L[i].id, R[j].id];
+			stateId.sort();
+			var newStateId = stateId.join(', ');
+			
+			var stateLabel = [L[i].label, R[j].label];
+			stateLabel.sort();
+			var newStateLabel = stateLabel.join(', ');
+			
  			if (L[i].shape == 'triangle' && R[j].shape == 'triangle')
- 				this.newDFA.insertNode('triangle', L[i].id + ', ' + R[j].id, L[i].label + ', ' + R[j].label, 'blue');
+ 				this.newDFA.insertNode('triangle', newStateId, newStateLabel, 'blue');
  			else
- 				this.newDFA.insertNode('circle', L[i].id + ', ' + R[j].id, L[i].label + ', ' + R[j].label, 'blue');
+ 				this.newDFA.insertNode('circle', newStateId, newStateLabel, 'blue');
  		}
  	}
  };
@@ -86,14 +94,19 @@ CrossProduct.prototype.processEdges = function(alphabet) {
 
  	for(var i = 0; i < L.length; i++) {
  		for(var j = 0; j < R.length; j++) {
- 			var fromObj = L[i].id + ', ' + R[j].id;
+			var originArray = [L[i].id, R[j].id];
+			originArray.sort();
+ 			var fromObj = originArray.join(', ');
 
  			for (param in alphabet) {
  				var destinationL = this.searchEdge(this.left, L[i].id, param);
  				var destinationR = this.searchEdge(this.right, R[j].id, param);
- 				var toObj = destinationL + ', ' + destinationR;
- 				if(destinationR != null && destinationL != null)
+ 				if(destinationR != null && destinationL != null){
+					var destinationArray = [destinationL, destinationR];
+					destinationArray.sort();
+					var toObj = destinationArray.join(', ');
  					this.newDFA.insertEdge(fromObj, toObj, param);
+				 }
  				else {
  					errorMsg("The Finite Automatas aren't complete and Cross Product can't be processed");
  					this.newDFA = null;

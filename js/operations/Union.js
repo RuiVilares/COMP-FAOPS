@@ -9,6 +9,9 @@ var Union = function Union(left, right) {
 
 //This method automatically determines if a state is final. a state is final if it contains a reference to an id of a node that was a final state on the previous FA
 Union.prototype.compute = function () {
+    if(this.crossResult == null)
+        return null;
+        
     var L = this.left.data.nodes;
     var R = this.right.data.nodes;
 

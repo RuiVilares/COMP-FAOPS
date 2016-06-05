@@ -118,9 +118,16 @@ TreeProcess.prototype.traverseDF = function(tree) {
       case 0:
       return TreeProcess.prototype.decideLeaf(currentNode);
       case 1:
-      return TreeProcess.prototype.decide1Arg(currentNode, recurse(currentNode.children[0]));
+      var result = recurse(currentNode.children[0]);
+      if(result != null)
+         return TreeProcess.prototype.decide1Arg(currentNode, result);
+      else return;
       case 2:
-      return TreeProcess.prototype.decide2Arg(currentNode, recurse(currentNode.children[0]), recurse(currentNode.children[1]));
+      var result1 = recurse(currentNode.children[0]);
+      var result2 = recurse(currentNode.children[1]);
+      if(result1 != null && result2 != null)
+        return TreeProcess.prototype.decide2Arg(currentNode, result1, result2);
+      else return;
       default:
       errorMsg("Too many childrens of the node: "+currentNode);
       return null;

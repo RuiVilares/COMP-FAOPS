@@ -6,6 +6,7 @@
  */
 var Dump = function Dump(dfa, name) {
 	this.name = name + ".dot";
+  if(dfa.data == null) return;
 	this.dfa = new DFA(dfa.options);
 	this.dfa.clone(dfa);
 };
@@ -14,6 +15,8 @@ var Dump = function Dump(dfa, name) {
  * Dump.prototype.compute - performs the dump operation
  */
 Dump.prototype.compute = function(){
+  if(this.dfa.data == null) return;
+  
   var content='dinetwork{\n';
   var nodes = this.dfa.data.nodes;
   var edges = this.dfa.data.edges;

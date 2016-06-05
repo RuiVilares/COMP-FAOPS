@@ -12,6 +12,9 @@ var Intersection = function Intersection(left, right) {
 };
 
 Intersection.prototype.compute = function () {
+    if(this.crossResult == null)
+        return null;
+    
     var rightFinalStates = [];
     var leftFinalStates = [];
 
