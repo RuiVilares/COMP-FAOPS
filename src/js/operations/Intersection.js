@@ -14,20 +14,20 @@ var Intersection = function Intersection(left, right) {
 Intersection.prototype.compute = function () {
     if(this.crossResult == null)
         return null;
-    
+
     var rightFinalStates = [];
     var leftFinalStates = [];
 
     var nodes = this.left.data.nodes;
     for (var i = 0; i < nodes.length; i++) {
-        if (nodes[i].color != null && nodes[i].color.background == "red") {
+        if (nodes[i].color != null && nodes[i].color.background == finalStateColorGlobal) {
             leftFinalStates.push(nodes[i]);
         }
     }
 
     nodes = this.right.data.nodes;
     for (var i = 0; i < nodes.length; i++) {
-        if (nodes[i].color != null && nodes[i].color.background == "red") {
+        if (nodes[i].color != null && nodes[i].color.background == finalStateColorGlobal) {
             rightFinalStates.push(nodes[i]);
         }
     }
@@ -49,7 +49,7 @@ Intersection.prototype.intersectFinalStates = function (leftFinalStates, rightFi
         for (var l = 0; l < leftFinalStates.length; l++) {
             pattern = new RegExp(String(leftFinalStates[l].id));
             if (pattern.test(nodes[i].id)) {
-                this.crossResult.data.nodes[i].color.background = "red";
+                this.crossResult.data.nodes[i].color.background = finalStateColorGlobal;
                 setToFinal = true;
                 break;
             }
@@ -65,7 +65,7 @@ Intersection.prototype.intersectFinalStates = function (leftFinalStates, rightFi
         for (var r = 0; r < rightFinalStates.length; r++) {
             pattern = new RegExp(String(rightFinalStates[r].id));
             if (!pattern.test(nodes[i].id)) {
-                 this.crossResult.data.nodes[i].color.background = "blue";
+                 this.crossResult.data.nodes[i].color.background = normalStateColorGlobal;
             }
             else break;
         }

@@ -234,7 +234,7 @@ function validTransition(edge) {
  * @param  {node} Graph node
  */
 function validColor(node) {
-  return node.color != null && (checkColor(node, "red") || checkColor(node, "blue"));
+  return node.color != null && (checkColor(node, finalStateColorGlobal) || checkColor(node, normalStateColorGlobal));
 };
 
 /**
@@ -272,7 +272,7 @@ function checkFinal(nodes) {
   var cnt = 0;
 
   for (var i = 0; i < nodes.length; i++) {
-    if (nodes[i].color != null && nodes[i].color.background == "red" && nodes[i].color.border == "red")
+    if (nodes[i].color != null && nodes[i].color.background == finalStateColorGlobal && nodes[i].color.border == finalStateColorGlobal)
       cnt++;
   }
 

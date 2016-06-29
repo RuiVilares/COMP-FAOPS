@@ -18,7 +18,7 @@ NFA_to_DFA.prototype.convert = function() {
   var retDFA = this.createDFA(this.dfa.data, this.dfa.options);
   var initial = this.getInitialState(this.dfa.data.nodes);
 
-  retDFA.insertNode("triangle", initial, initial, "blue");
+  retDFA.insertNode("triangle", initial, initial, normalStateColorGlobal);
 
   retDFA = this.compute(retDFA, [initial]);
 
@@ -36,7 +36,7 @@ NFA_to_DFA.prototype.paint = function(retDFA) {
   var nodesRet = retDFA.data.nodes;
   //dfa antigo
   for (var i = 0; i < nodes.length; i++) {
-    if (nodes[i].color.background != "red") {
+    if (nodes[i].color.background != finalStateColorGlobal) {
       continue;
     }
     var state = nodes[i].label.split(", ");
@@ -47,8 +47,8 @@ NFA_to_DFA.prototype.paint = function(retDFA) {
       for (var w = 0; w < nodesRet.length; w++) {
         var stateRet = nodesRet[w].label.split(", ");
         if (stateRet.indexOf(state[j]) != -1) {
-          retDFA.data.nodes[w].color.background = "red";
-          retDFA.data.nodes[w].color.border = "red";
+          retDFA.data.nodes[w].color.background = finalStateColorGlobal;
+          retDFA.data.nodes[w].color.border = finalStateColorGlobal;
         }
       }
     }
@@ -106,7 +106,7 @@ NFA_to_DFA.prototype.compute = function(retDFA, statesToVisit) {
         retDFA = this.to(retDFA, epsilonClosure, temp_epsilonClosure, input[j]);
 
         if (!found) {
-          retDFA.insertNode("circle", temp_epsilonClosure, temp_epsilonClosure, "blue");
+          retDFA.insertNode("circle", temp_epsilonClosure, temp_epsilonClosure, normalStateColorGlobal);
           statesToVisit.push(temp_epsilonClosure);
         }
       }
@@ -260,7 +260,7 @@ NFA_to_DFA.prototype.createDFA = function(data, options) {
   nfaDSGlobal++;
   var ds = "DS" + nfaDSGlobal;
 
-  retDFA.insertNode("circle", ds, ds, "blue");
+  retDFA.insertNode("circle", ds, ds, normalStateColorGlobal);
 
   retDFA.insertEdge(ds, ds, this.allEdges.join(", "));
 

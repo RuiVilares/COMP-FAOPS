@@ -21,15 +21,15 @@ Reverse.prototype.compute = function() {
     if (nodes[i].shape == "triangle") {
       nodes[i].shape = "circle";
       nodes[i].color = {
-        background: "red",
-        border: "red"
+        background: finalStateColorGlobal,
+        border: finalStateColorGlobal
       }
     }
-    else if (nodes[i].color.background == "red") {
+    else if (nodes[i].color.background == finalStateColorGlobal) {
       nodes[i].shape = "triangle";
       nodes[i].color = {
-        background: "blue",
-        border: "blue"
+        background: normalStateColorGlobal,
+        border: normalStateColorGlobal
       }
     }
   }
@@ -41,7 +41,7 @@ Reverse.prototype.compute = function() {
     edges[i].to = temp;
   }
 
-  this.dfa.insertNode("triangle", "Start", "Start", "blue");
+  this.dfa.insertNode("triangle", "Start", "Start", normalStateColorGlobal);
 
   for (var i = 0; i < nodes.length; i++) {
     if (nodes[i].shape == "triangle" && nodes[i].id != "Start") {

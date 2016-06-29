@@ -11,31 +11,31 @@ var Union = function Union(left, right) {
 Union.prototype.compute = function () {
     if(this.crossResult == null)
         return null;
-        
+
     var L = this.left.data.nodes;
     var R = this.right.data.nodes;
 
     for (var i = 0; i < L.length; i++) {
-        if (L[i].color.background == "red") {
+        if (L[i].color.background == finalStateColorGlobal) {
             console.log("pattern: " + L[i].id);
             var pattern = new RegExp(String(L[i].id));
             for (var j = 0; j < this.crossResult.data.nodes.length; j++) {
                 console.log(this.crossResult.data.nodes[j].id);
                 if(pattern.test(String(this.crossResult.data.nodes[j].id)))
                 {
-                    this.crossResult.data.nodes[j].color.background = "red";
+                    this.crossResult.data.nodes[j].color.background = finalStateColorGlobal;
                 }
             }
         }
     }
 
     for (var i = 0; i < R.length; i++) {
-        if (R[i].color.background == "red") {
+        if (R[i].color.background == finalStateColorGlobal) {
             var pattern = new RegExp(String(R[i].id));
             for (var j = 0; j < this.crossResult.data.nodes.length; j++) {
                 if(pattern.test(this.crossResult.data.nodes[j].id))
                 {
-                    this.crossResult.data.nodes[j].color.background = "red";
+                    this.crossResult.data.nodes[j].color.background = finalStateColorGlobal;
                 }
             }
         }

@@ -21,8 +21,8 @@ Concatenation.prototype.compute = function() {
 
 	var nodes = this.left.data.nodes;
 	for (var i = 0; i < nodes.length; i++) {
-		if (nodes[i].color != null && nodes[i].color.background == "red") {
-			this.left.data.nodes[i].color.background = "blue";
+		if (nodes[i].color != null && nodes[i].color.background == finalStateColorGlobal) {
+			this.left.data.nodes[i].color.background = normalStateColorGlobal;
 			this.left.insertEdge(this.left.data.nodes[i].label, startR, "$");
 		}
 	}
@@ -46,7 +46,7 @@ Concatenation.prototype.compressToL = function() {
 	for (var i = 0; i < nodes.length; i++) {
 		var info = nodes[i];
 
-		var color = "blue";
+		var color = normalStateColorGlobal;
 		if (info.color != null && info.color.background != null) {
 			color = info.color.background;
 		}

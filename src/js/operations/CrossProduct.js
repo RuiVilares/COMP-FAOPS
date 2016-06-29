@@ -26,15 +26,15 @@ CrossProduct.prototype.execute = function() {
 			var stateId = [L[i].id, R[j].id];
 			stateId.sort();
 			var newStateId = stateId.join(', ');
-			
+
 			var stateLabel = [L[i].label, R[j].label];
 			stateLabel.sort();
 			var newStateLabel = stateLabel.join(', ');
-			
+
  			if (L[i].shape == 'triangle' && R[j].shape == 'triangle')
- 				this.newDFA.insertNode('triangle', newStateId, newStateLabel, 'blue');
+ 				this.newDFA.insertNode('triangle', newStateId, newStateLabel, normalStateColorGlobal);
  			else
- 				this.newDFA.insertNode('circle', newStateId, newStateLabel, 'blue');
+ 				this.newDFA.insertNode('circle', newStateId, newStateLabel, normalStateColorGlobal);
  		}
  	}
  };
@@ -65,7 +65,7 @@ CrossProduct.prototype.execute = function() {
  		else result[L[i].label] = L[i].label;
  	}
  	for (var i = 0; i < R.length; i++) {
- 		if (R[i].label.length > 1) 
+ 		if (R[i].label.length > 1)
  		{
  			var subResult = null;
  			var pattern = new RegExp(', ');

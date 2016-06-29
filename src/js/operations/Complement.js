@@ -16,16 +16,16 @@ var Complement = function Complement(dfa) {
 Complement.prototype.compute = function() {
   var nodes = this.dfa.data.nodes;
   for (var i = 0; i < nodes.length; i++) {
-    if (nodes[i].color.background == "red") {
+    if (nodes[i].color.background == finalStateColorGlobal) {
       nodes[i].color = {
-        background: "blue",
-        border: "blue"
+        background: normalStateColorGlobal,
+        border: normalStateColorGlobal
       }
     }
-    else if (nodes[i].color.background == "blue") {
+    else if (nodes[i].color.background == normalStateColorGlobal) {
       nodes[i].color = {
-        background: "red",
-        border: "red"
+        background: finalStateColorGlobal,
+        border: finalStateColorGlobal
       }
     }
   }
