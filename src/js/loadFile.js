@@ -7,6 +7,8 @@ var automata = new Array();
  */
 var index = 1;
 
+var idDotEditor;
+
 /**
  * Upload file listener
  */
@@ -61,7 +63,7 @@ function fileListener(){
   id = $(this).attr("data-id");
   $( ".listFiles li" ).click(function() {
     id = $(this).attr("data-id");
-    swal(automata[id].name, automata[id].dot);
+    openDotEditor(automata[id].name, automata[id].dot);
   });
   $( ".listFiles button" ).click(function() {
     id = $(this).attr("data-id");
@@ -73,6 +75,46 @@ function fileListener(){
       $('#navtabs a:last').tab('show');
     automata.splice(id, 1);
   });
+}
+
+function openDotEditor(name, dot){
+  $("#editDot").modal();
+  $("#editorDotName").val(name);
+  $("#editorDotText").val(dot);
+}
+
+function submitButton(){
+  var dotName = $("#editorDotName").val();
+  var dotText = $("#editorDotText").val();
+
+  if (dotName != "" && dotText != ""){
+    automata[index] = {id:"file"+index, name:dotName, dot:dotText};
+
+    document.getElementById("input").value = "";
+    var listFiles = document.getElementsByClassName("listFiles").innerHTML;
+    var buttonToAdd = "<li data-id='" + index +"' class='fileItem btn btn-success col-md-11'>" + automata[index].name + "</li><button data-id='" + index +"' class='btn btn-danger pull-right'>X</button>";
+    var navTabToAdd = "<li><a data-toggle='tab' href='#file" + index + "'>" + automata[index].name + "</a></li>";
+    var tabToAdd = "<div id='file" + index + "' class='tab-pane fade in'><div id='mynetwork" + index + "'></div></div>";
+    $(".listFiles").append(buttonToAdd);
+    $("#navtabs").append(navTabToAdd);
+    $("#contentTabs").append(tabToAdd);
+    $('#navtabs a:last').tab('show');
+    var fa = read(dotText, "mynetwork" + index);
+
+    if (fa != null) {
+      var nfa = new NFA_to_DFA(fa);
+      TreeProcess.hashmapFiles[dotName] = nfa.convert();
+    }
+
+    index++;
+    fileListener();
+    $('#editDot').modal('toggle');
+
+    swal("Success!", "File successfully created!", "success");
+  }
+  else {
+    swal("Error!", "Null value!", "error");
+  }
 }
 
 /**
