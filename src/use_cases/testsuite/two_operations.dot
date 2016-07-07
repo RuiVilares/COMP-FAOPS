@@ -7,8 +7,8 @@ dinetwork{
   "B, D"->"B, C"[label="b"];
   "B, C"->"A, C"[label="a"];
   "B, C"->"B, D"[label="b"];
-  "A, D"[color=red, shape=triangle]
-  "A, C"[color=red, shape=circle]
-  "B, D"[color=blue, shape=circle]
-  "B, C"[color=red, shape=circle]
+  "A, D"[color=lime, shape=triangle]
+  "A, C"[color=lime, shape=circle]
+  "B, D"[color=cyan, shape=circle]
+  "B, C"[color=lime, shape=circle]
 }

@@ -5,7 +5,7 @@ dinetwork{
   "A"->"A"[label="b"];
   "B"->"A"[label="a"];
   "B"->"B"[label="b"];
-  "B, Start"[color=red, shape=triangle]
-  "A"[color=blue, shape=circle]
-  "B"[color=red, shape=circle]
+  "B, Start"[color=lime, shape=triangle]
+  "A"[color=cyan, shape=circle]
+  "B"[color=lime, shape=circle]
 }

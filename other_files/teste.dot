@@ -5,7 +5,7 @@ dinetwork {
     B -> B [label="b"];
     C -> C [label="a"];
     C -> C [label="b"];
-    A[ color=blue, shape=triangle]
-    B[ color=red, shape=circle]
-    C[ color=red, shape=circle]
+    A[ color=cyan, shape=triangle]
+    B[ color=lime, shape=circle]
+    C[ color=lime, shape=circle]
 }

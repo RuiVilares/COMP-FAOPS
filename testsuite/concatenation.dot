@@ -11,10 +11,10 @@ dinetwork{
   "A, C"->"A, D"[label="b"];
   "A, C, D"->"B, C, D"[label="a"];
   "A, C, D"->"A, C, D"[label="b"];
-  "A"[color=blue, shape=triangle]
-  "B, D"[color=red, shape=circle]
-  "A, D"[color=red, shape=circle]
-  "B, C, D"[color=red, shape=circle]
+  "A"[color=cyan, shape=triangle]
+  "B, D"[color=lime, shape=circle]
+  "A, D"[color=lime, shape=circle]
+  "B, C, D"[color=lime, shape=circle]
   "A, C"[color=blue, shape=circle]
-  "A, C, D"[color=red, shape=circle]
+  "A, C, D"[color=lime, shape=circle]
 }
