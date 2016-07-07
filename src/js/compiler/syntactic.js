@@ -132,12 +132,14 @@ Syntactic.prototype.newExpression = function(parent) {
  * [fileExists Semantic verification of the requires file]
  */
 Syntactic.prototype.fileExists = function(filename) {
-	for (var i = 1; i < automata.length; i++) {
-		if (automata[i].name == filename)
-			return true;
-	}
-
-	return false;
+	var result = false;
+	automata.forEach(function(item){
+    if(item.name == filename){
+      result = true;
+      return;
+    }
+  });
+	return result;
 };
 
 /**

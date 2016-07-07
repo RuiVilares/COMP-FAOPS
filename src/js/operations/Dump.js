@@ -15,6 +15,7 @@ var Dump = function Dump(dfa, name) {
  * Dump.prototype.compute - performs the dump operation
  */
 Dump.prototype.compute = function(){
+  if(this.dfa == null) return;
   if(this.dfa.data == null) return;
   
   var content='dinetwork{\n';

@@ -69,7 +69,7 @@
   </div>
   <div class="col-md-12">
     <div class="col-md-6">
-      <a data-toggle="modal" class="btn btn-info btn-file btn-space col-md-3" data-target="#editDot">Write DOT file</a>
+      <a id="writeDotButton" class="btn btn-info btn-file btn-space col-md-3">Write DOT file</a>
       <span class="btn btn-info btn-file col-md-3">
         Upload DOT file<input type="file" id="input">
       </span>
@@ -140,7 +140,7 @@ dinetwork {
         <button type="button" class="btn btn-default" onclick="loadExample(5)">1 FA</button>
       </div>
       <!-- Modal -->
-      <div class="modal fade" id="editDot" role="dialog" role="dialog" aria-labelledby="editDot" aria-hidden="true">
+      <div class="modal fade" id="editDot" role="dialog" role="dialog" aria-labelledby="editDot" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">

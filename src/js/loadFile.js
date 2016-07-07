@@ -19,9 +19,24 @@ inputElement.addEventListener("change", handleFiles, false);
  * Upload DOTfile
  */
 function handleFiles() {
+  console.log(automata);
   var files = this.files;
   var file = files[0];
   var textType = /^[a-zA-Z][a-zA-Z0-9_\- \.]*\.dot/g;
+
+  var result = true;
+  automata.forEach(function(item){
+    if(item.name == file.name){
+      result = false;
+      return;
+    }
+  });
+
+  if(!result){
+    swal("Error!", "There is already an automata named '" + file.name + "'", "error");
+    document.getElementById("input").value = "";
+    return;
+  }
 
   if (textType.test(file.name)) {
     var reader = new FileReader();
@@ -73,9 +88,20 @@ function fileListener(){
     $("#contentTabs #file" + id).remove();
     if($('#navtabs >li').size() > 0)
       $('#navtabs a:last').tab('show');
-    automata.splice(id, 1);
+    var i = null;
+    automata.forEach(function(item, position){
+      if(item.id == 'file'+ id){
+        i = position;
+        return;
+      }
+    });
+    console.log(i);
+    if(i != null)
+      automata.splice(i, 1);
   });
 }
+
+$("#writeDotButton").click(function(){openDotEditor("","");});
 
 function openDotEditor(name, dot){
   $("#editDot").modal();
@@ -86,6 +112,20 @@ function openDotEditor(name, dot){
 function submitButton(){
   var dotName = $("#editorDotName").val();
   var dotText = $("#editorDotText").val();
+
+  var result = true;
+  automata.forEach(function(item){
+    if(item.name == dotName){
+      result = false;
+      return;
+    }
+  });
+
+  if(!result){
+    swal("Error!", "There is already an automata named '" + dotName + "'", "error");
+    document.getElementById("input").value = "";
+    return;
+  }
 
   if (dotName != "" && dotText != ""){
     automata[index] = {id:"file"+index, name:dotName, dot:dotText};

@@ -10,8 +10,10 @@ CrossProduct.prototype.execute = function() {
 	this.crossStates();
 	var alphabet = this.getAlphabet();
 	this.processEdges(alphabet);
-	console.log(this.newDFA.data);
-	return this.clean(this.newDFA);
+	if(this.newDFA == null)
+		return null;
+	else
+		return this.clean(this.newDFA);
 };
 
 /**
