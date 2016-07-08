@@ -5,10 +5,7 @@ var automata = new Array();
 /**
  * Index of automata
  */
-var index = 1;
-
-var idDotEditor;
-
+var index = 1
 /**
  * Upload file listener
  */
@@ -19,7 +16,6 @@ inputElement.addEventListener("change", handleFiles, false);
  * Upload DOTfile
  */
 function handleFiles() {
-  console.log(automata);
   var files = this.files;
   var file = files[0];
   var textType = /^[a-zA-Z][a-zA-Z0-9_\- \.]*\.dot/g;
@@ -53,15 +49,14 @@ function handleFiles() {
       $("#navtabs").append(navTabToAdd);
       $("#contentTabs").append(tabToAdd);
       $('#navtabs a:last').tab('show');
+      fileListener();
       var fa = read(readerResult, "mynetwork" + index);
-
       if (fa != null) {
         var nfa = new NFA_to_DFA(fa);
         TreeProcess.hashmapFiles[file.name] = nfa.convert();
       }
 
       index++;
-      fileListener();
     }
     textType.lastIndex = 0;
     reader.readAsText(file);
@@ -95,7 +90,6 @@ function fileListener(){
         return;
       }
     });
-    console.log(i);
     if(i != null)
       automata.splice(i, 1);
   });
@@ -113,18 +107,31 @@ function submitButton(){
   var dotName = $("#editorDotName").val();
   var dotText = $("#editorDotText").val();
 
-  var result = true;
+  var result = null;
   automata.forEach(function(item){
-    if(item.name == dotName){
-      result = false;
+    if(item.name == dotName || item.dot == dotText){
+      result = item.id;
       return;
     }
   });
 
-  if(!result){
-    swal("Error!", "There is already an automata named '" + dotName + "'", "error");
-    document.getElementById("input").value = "";
-    return;
+  if(result != null){
+    result = result.split("file")[1];
+    $(".listFiles li[data-id='" + result + "']").remove();
+    $(".listFiles button[data-id='" + result + "']").remove();
+    $("#navtabs a[href='#file" + result +"']").remove();
+    $("#contentTabs #file" + result).remove();
+    if($('#navtabs >li').size() > 0)
+      $('#navtabs a:last').tab('show');
+    var i = null;
+    automata.forEach(function(item, position){
+      if(item.id == 'file'+ result){
+        i = position;
+        return;
+      }
+    });
+    if(i != null)
+      automata.splice(i, 1);
   }
 
   if (dotName != "" && dotText != ""){
@@ -139,18 +146,23 @@ function submitButton(){
     $("#navtabs").append(navTabToAdd);
     $("#contentTabs").append(tabToAdd);
     $('#navtabs a:last').tab('show');
-    var fa = read(dotText, "mynetwork" + index);
+    fileListener();
+    index++;
+    $('#editDot').modal('toggle');
+    loadEditor();
+    if(result != null){
+      swal("Success!", "File successfully edited!", "success");
+    }
+    else{
+      swal("Success!", "File successfully created!", "success");
+    }
 
+    var fa = read(dotText, "mynetwork" + index);
+    
     if (fa != null) {
       var nfa = new NFA_to_DFA(fa);
       TreeProcess.hashmapFiles[dotName] = nfa.convert();
     }
-
-    index++;
-    fileListener();
-    $('#editDot').modal('toggle');
-
-    swal("Success!", "File successfully created!", "success");
   }
   else {
     swal("Error!", "Null value!", "error");
