@@ -147,21 +147,22 @@ function submitButton(){
     $("#contentTabs").append(tabToAdd);
     $('#navtabs a:last').tab('show');
     fileListener();
-    index++;
+    
     $('#editDot').modal('toggle');
     loadEditor();
+   
+    var fa = read(dotText, "mynetwork" + index);
+    if (fa != null) {
+      var nfa = new NFA_to_DFA(fa);
+      TreeProcess.hashmapFiles[dotName] = nfa.convert();
+    }
+
+    index++;
     if(result != null){
       swal("Success!", "File successfully edited!", "success");
     }
     else{
       swal("Success!", "File successfully created!", "success");
-    }
-
-    var fa = read(dotText, "mynetwork" + index);
-    
-    if (fa != null) {
-      var nfa = new NFA_to_DFA(fa);
-      TreeProcess.hashmapFiles[dotName] = nfa.convert();
     }
   }
   else {
@@ -187,11 +188,6 @@ function read(DOTstring, mynetwork){
   var options = parsedData.options;
 
   options.height = '400px';
-
-  // you can extend the options like a normal JSON variable:
-  options.nodes = {
-    color: 'blue'
-  }
 
   /*for (var i = 0; i < data.nodes.length; i++) {
     data.nodes[i].color = data.nodes[i].color.background;
@@ -223,15 +219,9 @@ function draw(DOTstring, mynetwork){
     nodes: parsedData.nodes,
     edges: parsedData.edges
   }
-
   var options = parsedData.options;
 
   options.height = '400px';
-
-  // you can extend the options like a normal JSON variable:
-  options.nodes = {
-    color: 'blue'
-  }
 
   for (var i = 0; i < data.nodes.length; i++) {
     data.nodes[i].color = data.nodes[i].color.background;
