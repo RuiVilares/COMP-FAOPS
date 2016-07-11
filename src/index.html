@@ -20,22 +20,19 @@
   <div class="modal fade" id="modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
           <div class="modal-content">
-
           </div>
           <!-- /.modal-content -->
       </div>
       <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
-
-
 <!-- Begin page content -->
 <div class="container">
   <div class="page-header col-md-12">
-    <div class="col-md-10">
+    <div class="col-md-8">
       <h1>FEUP/EIC0028 Compilers - FAOPS</h1>
     </div>
-    <div class="col-md-2" style="text-align:right;">
+    <div class="col-md-2" style="text-align:right;" >
         <h1><a class="btn btn-info" data-toggle="modal" data-target="#aboutUsModal">About Us <i
                 class="glyphicon glyphicon-question-sign"></i></a></h1>
     </div>
@@ -66,6 +63,58 @@
           </div>
         </div>
       </div>
+      <div class="col-md 2" >
+          <h1><a class="btn btn-info " data-toggle="modal" data-target="#operations">Operations <i
+                  class="glyphicon glyphicon-question-sign"></i></a></h1>
+      </div>
+      <div class="modal fade" id="operations" role="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Operations</h4>
+            </div>
+            <div class="modal-body">
+              <h2>How we implement the operations</h2>
+              <ul class="list-group">
+                  <li class="list-group-item"><h4>Multiply</h4>
+                    <p>We can run two DFAs in parallel on the same input via the
+product construction, as long as they share the same alphabet. Q1x2 = Q1 x Q2.  </p></li>
+                  <li class="list-group-item"><h4>Concatenate</h4>
+                    <p>The set of states of the concatenated NFA is just the (disjoint) union of the states of the two automata.
+The initial state of the new NFA is the initial state of the first NFA.
+The accepting states of the new NFA are the accepting states of the second NFA.
+Every transition from either original NFA is a transition in the new NFA.
+The only new transitions are εε-moves from each accepting state of the first NFA to the initial state of the second NFA.    </p></li>
+                  <li class="list-group-item"><h4>Complement</h4>
+                    <p>If DFA accepts language L, then <span class="uperline">L</span> is accepted by DFA,
+a version of complement <span class="uperline">DFA</span> in which the accepting and
+non-accepting states have been swapped. </p></li>
+                  <li class="list-group-item"><h4>Reverse</h4>
+                    <p>Assigns to each pair of strings (x;y) what T assigns to its mirror images (<span class="uperline">x</span>;<span class="uperline">y</span>) </p></li>
+                  <li class="list-group-item"><h4>Intersection </h4>
+                    <p>We can intersect DFA1 and DFA2 (written DFA1 &#8745  DFA2) by
+defining the accepting states of DFA1 x DFA2 as those state
+pairs in which both states are final states of their DFAs.</p> </li>
+                  <li class="list-group-item"><h4>Union</h4>
+                    <p>We can union DFA1 and DFA2 (written DFA1 &#8746 DFA2) by
+  defining the accepting states of DFA1 x DFA2 as those state
+  pairs in which either state is a final state of its DFA. </p></li>
+                </ul>
+                <ul class="list-group"> <h3>Theoretical support </h3>
+                    <li class="list-group-item"><a href="http://cs.wellesley.edu/~cs235/fall09/lectures/14_DFA_operations/14_DFA_operations_revised.pdf">Link1 </a></li>
+                    <li class="list-group-item"><a href="http://math.stackexchange.com/questions/205924/existence-of-nfa-of-a-reverse-of-a-language">Link2</a></li>
+                    <li class="list-group-item"><a href="http://www.tutorialspoint.com/automata_theory/dfa_complement.htm"s>Link3</a></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
   <div class="col-md-12">
     <div class="col-md-6">
@@ -89,15 +138,15 @@
             <p>You need to submit a dot file with the follow structure:</p>
 <pre>
 dinetwork {
-   A[ color=blue, shape=triangle]
-   B[ color=red, shape=circle]
-   C[ color=red, shape=circle]
-   A -> B [label="a"];
-   A -> C [label="b"];
-   B -> B [label="a"];
-   B -> B [label="b"];
-   C -> C [label="a"];
-   C -> C [label="b"];
+  A[ color=blue, shape=triangle]
+  B[ color=red, shape=circle]
+  C[ color=red, shape=circle]
+  A -> B [label="a"];
+  A -> C [label="b"];
+  B -> B [label="a"];
+  B -> B [label="b"];
+  C -> C [label="a"];
+  C -> C [label="b"];
 }</pre>
               <footer>According to <a href="http://visjs.org/docs/network/#importDot">vis library</a></footer>
             </div>
@@ -185,15 +234,14 @@ dinetwork {
             <div class="te">
                 <p>Your code need to follow the following :</p>
                 <pre>
-                  FA A = new(“A.dot”);
-                  FA B = new(“B.dot”);
-                  FA C = A int B;
-                  FA D = rev(A);
-                  FA E = A + B;
-                  FA F= A . B;
-                  FA G= A * B
-                  C.dump(“dot”);
-                </pre>
+ FA A = new(“A.dot”);
+ FA B = new(“B.dot”);
+ FA C = A int B;
+ FA D = rev(A);
+ FA E = A + B;
+ FA F= A . B;
+ FA G= A * B
+ C.dump(“dot”);</pre>
                 <br>
                 <p>
                 The supported operations are <strong>x</strong> (multiply), <strong>.</strong> (concatenate), <strong>not</strong> (complement), <strong>rev</strong> (reverse), <strong>int</strong> (intersection), and <strong>+</strong> (union)
@@ -273,9 +321,9 @@ dinetwork {
              <div class="te">
                <p>Labels</p>
                  <ul class="list-group">
-                  <p class="list-group-item">Final states are represented by the red color </p>
-                  <p class="list-group-item">Initial state is represented by a triangle shape</p>
-                  <p class="list-group-item">Transitions are labelled according to dot file or operation result</p>
+                  <p class="list-group-item">Final states are represented by the cyan color <img src="/comp/other_files/images/finalState.png" alt="cyan"> </p>
+                  <p class="list-group-item">Initial state is represented by a triangle shape <img src="/comp/other_files/images/initialState.png" alt="triangle"> </p>
+                  <p class="list-group-item">Transitions are labelled according to dot file or operation result <img src="/comp/other_files/images/transition.png" alt="arrow"> </p>
                  </ul>
                  <footer>According to our specification </footer>
              </div>
@@ -311,7 +359,10 @@ dinetwork {
             </div>
             <div class="modal-body">
                 <div class="te">
-                    <p>Resultant DFA of all user operations </p>
+                  <p>Resultant DFA of all user operations </p>
+                  <p class="list-group-item">Final states are represented by the cyan color <img src="/comp/other_files/images/finalState.png" alt="cyan"> </p>
+                  <p class="list-group-item">Initial state is represented by a triangle shape <img src="/comp/other_files/images/initialState.png" alt="triangle"> </p>
+                  <p class="list-group-item">Transitions are labelled according to dot file or operation result <img src="/comp/other_files/images/transition.png" alt="arrow"> </p>
                 </div>
             </div>
             <div class="modal-footer">
