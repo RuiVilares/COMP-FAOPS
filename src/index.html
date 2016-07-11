@@ -138,9 +138,9 @@ pairs in which both states are final states of their DFAs.</p> </li>
             <p>You need to submit a dot file with the follow structure:</p>
 <pre>
 dinetwork {
-  A[ color=blue, shape=triangle]
-  B[ color=red, shape=circle]
-  C[ color=red, shape=circle]
+  A[ color=cyab, shape=triangle]
+  B[ color=lime, shape=circle]
+  C[ color=lime, shape=circle]
   A -> B [label="a"];
   A -> C [label="b"];
   B -> B [label="a"];
@@ -234,14 +234,14 @@ dinetwork {
             <div class="te">
                 <p>Your code need to follow the following :</p>
                 <pre>
- FA A = new(“A.dot”);
- FA B = new(“B.dot”);
+ FA A = new("A.dot");
+ FA B = new("B.dot");
  FA C = A int B;
  FA D = rev(A);
  FA E = A + B;
  FA F= A . B;
  FA G= A * B
- C.dump(“dot”);</pre>
+ C.dump("dot");</pre>
                 <br>
                 <p>
                 The supported operations are <strong>x</strong> (multiply), <strong>.</strong> (concatenate), <strong>not</strong> (complement), <strong>rev</strong> (reverse), <strong>int</strong> (intersection), and <strong>+</strong> (union)
@@ -321,9 +321,9 @@ dinetwork {
              <div class="te">
                <p>Labels</p>
                  <ul class="list-group">
-                  <p class="list-group-item">Final states are represented by the cyan color <img src="/comp/other_files/images/finalState.png" alt="cyan"> </p>
-                  <p class="list-group-item">Initial state is represented by a triangle shape <img src="/comp/other_files/images/initialState.png" alt="triangle"> </p>
-                  <p class="list-group-item">Transitions are labelled according to dot file or operation result <img src="/comp/other_files/images/transition.png" alt="arrow"> </p>
+                  <p class="list-group-item">Final states are represented by the lime color <img src="/images/finalState.png" alt="cyan"> </p>
+                  <p class="list-group-item">Initial state is represented by a triangle shape <img src="/images/initialState.png" alt="triangle"> </p>
+                  <p class="list-group-item">Transitions are labelled according to dot file or operation result <img src="/images/transition.png" alt="arrow"> </p>
                  </ul>
                  <footer>According to our specification </footer>
              </div>
@@ -360,9 +360,9 @@ dinetwork {
             <div class="modal-body">
                 <div class="te">
                   <p>Resultant DFA of all user operations </p>
-                  <p class="list-group-item">Final states are represented by the cyan color <img src="/comp/other_files/images/finalState.png" alt="cyan"> </p>
-                  <p class="list-group-item">Initial state is represented by a triangle shape <img src="/comp/other_files/images/initialState.png" alt="triangle"> </p>
-                  <p class="list-group-item">Transitions are labelled according to dot file or operation result <img src="/comp/other_files/images/transition.png" alt="arrow"> </p>
+                  <p class="list-group-item">Final states are represented by the lime color <img src="/images/finalState.png" alt="cyan"> </p>
+                  <p class="list-group-item">Initial state is represented by a triangle shape <img src="/images/initialState.png" alt="triangle"> </p>
+                  <p class="list-group-item">Transitions are labelled according to dot file or operation result <img src="/images/transition.png" alt="arrow"> </p>
                 </div>
             </div>
             <div class="modal-footer">
