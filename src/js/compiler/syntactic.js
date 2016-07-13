@@ -90,6 +90,8 @@ Syntactic.prototype.declarationHandler = function(parent) {
 		var data = this.operation(parent, this.tree);
 		if (data != null)
 		{
+			if(this.sequence.peek() == null)
+				return false;
 			if (this.sequence.peek().id == TOKENS.SEMI_COLON)
 			  return true;
 		}
@@ -344,6 +346,9 @@ Syntactic.prototype.operationR = function(parent) {
  * @return {[type]} [description]
  */
 Syntactic.prototype.checkOPC = function() {
+	if(this.sequence.peek() == null)
+		return null;
+
 	if (this.sequence.peek().id == TOKENS.MULTIPLY
 		|| this.sequence.peek().id == TOKENS.CONCATENATE
 		|| this.sequence.peek().id == TOKENS.INTERSECTION

@@ -25,6 +25,7 @@ Multiplication.prototype.compute = function(){
  * @return {DFA}        dfa cleaned
  */
 Multiplication.prototype.clean = function(retDFA) {
+	if(retDFA == null) return null;
 
 	for (var i = 0; i < retDFA.data.nodes.length; i++) {
 		if (retDFA.data.nodes[i].shape == "triangle") {
