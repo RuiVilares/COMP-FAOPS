@@ -82,8 +82,9 @@ We consider to have accomplished a considerably good project, capable of reachin
 * Efficient proccessing and analysis of the specified language;
 * Can be used as a tool to support academic courses;
 * Implemmented precedence between operations using parentheses.
-
+* Easy to edit uploaded files in the Graphical User Interface
 
 ###CONS
 
 * Missing DFA minimization.
+# COMP
