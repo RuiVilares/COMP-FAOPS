@@ -88,3 +88,4 @@ We consider to have accomplished a considerably good project, capable of reachin
 
 * Missing DFA minimization.
 # COMP
+# COMP
